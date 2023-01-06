@@ -68,7 +68,7 @@ function checkout_cart($data)
           </div>
           <div class="card-body">
             <table class="table table-sm table-striped table-hover table-bordered">
-              <thead class="table-primary">
+              <thead class="table-secondary">
                 <tr>
                   <th scope="col">ID#</th>
                   <th scope="col">Name</th>
