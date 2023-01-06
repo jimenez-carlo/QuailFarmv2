@@ -53,7 +53,7 @@ function change_password($data)
           <h5 class="card-title mb-0">Personal Information</h5>
         </div>
         <div class="card-body">
-          <form method="post" autocomplete="off">
+          <form method="post" autocomplete="off" onsubmit="return confirm('Are You Sure?');">
             <div class="row">
               <div class="mb-3 col-md-6">
                 <label class="form-label" for="inputEmail4">Username</label>
@@ -111,7 +111,7 @@ function change_password($data)
           <h5 class="card-title mb-0">Change Password</h5>
         </div>
         <div class="card-body">
-          <form method="post" autocomplete="off">
+          <form method="post" autocomplete="off" onsubmit="return confirm('Are You Sure?');">
             <div class="row">
               <div class="mb-3 col-md-12">
                 <label class="form-label" for="inputPassword4">Old Password</label>

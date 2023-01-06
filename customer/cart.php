@@ -92,7 +92,7 @@ function checkout_cart($data)
                     <td><?php echo $res['name']; ?></td>
                     <td class="text-end"><?php echo number_format($res['price'], 2); ?></td>
                     <td class="col-md-2">
-                      <form method="post">
+                      <form method="post" onsubmit="return confirm('Are You Sure?');">
                         <input type="hidden" name="transaction_id" value="<?php echo $res['id']; ?>">
                         <input type="hidden" name="price" value="<?php echo $res['price']; ?>">
                         <div class="input-group mb-2">
@@ -105,7 +105,7 @@ function checkout_cart($data)
                     </td>
                     <td class="text-end" data-sub-total-id="<?php echo $res['id']; ?>"><?php echo number_format($res['sum_price'], 2); ?></td>
                     <td class="">
-                      <form method="post">
+                      <form method="post" onsubmit="return confirm('Are You Sure?');">
                         <input type="hidden" name="transaction_id" value="<?php echo $res['id']; ?>">
                         <button type="submit" class="btn btn-sm btn-secondary btn-remove-row" name="remove_from_cart"><i data-feather="trash"></i> </button>
                       </form>
@@ -125,7 +125,7 @@ function checkout_cart($data)
               </tbody>
             </table>
           </div>
-          <form action="post" name="checkout_cart">
+          <form action="post" name="checkout_cart" onsubmit="return confirm('Are You Sure?');">
             <button class="btn btn-lg btn-secondary font-bold rounded-0 w-100" name="checkout_cart">Checkout Now <i class="fa fa-check fa-lg"></i></button>
           </form>
         </div>

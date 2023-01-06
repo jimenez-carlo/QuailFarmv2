@@ -61,7 +61,7 @@ function add_to_cart($data)
                         <img class="card-img-top" src="../images/products/<?php echo $res['image']; ?>" style="width:100px;height:100px;text-align:center">
                       </center>
                       <div class="card-body">
-                        <form method="POST" name="add_to_cart">
+                        <form method="POST" name="add_to_cart" onsubmit="return confirm('Are You Sure?');">
                           <input type="hidden" name="product_id" value="<?php echo $res['id']; ?>">
                           <input type="hidden" name="price" value="<?php echo $res['price']; ?>">
                           <div class="btn-group btn-group-sm" role="group" aria-label="Large button group" style="width:100%">

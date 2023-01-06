@@ -58,19 +58,19 @@ if (isset($_SESSION['user'])) {
               <div class="collapse navbar-collapse" id="navbarsExample04">
                 <ul class="navbar-nav mr-auto">
                   <li class="nav-item active">
-                    <a class="nav-link" href="index.php#home"> Home </a>
+                    <a class="nav-link" href="index.php"> Home </a>
                   </li>
                   <li class="nav-item active">
-                    <a class="nav-link" href="index.php#tutorial">Tutorial</a>
+                    <a class="nav-link" href="tutorial.php">Tutorial</a>
                   </li>
                   <li class="nav-item active">
-                    <a class="nav-link" href="index.php#about_us">About Us</a>
+                    <a class="nav-link" href="about_us.php">About Us</a>
                   </li>
                   <li class="nav-item active">
-                    <a class="nav-link" href="index.php#products">Products </a>
+                    <a class="nav-link" href="products.php">Products </a>
                   </li>
                   <li class="nav-item active">
-                    <a class="nav-link" href="index.php#contact">Contact</a>
+                    <a class="nav-link" href="contact.php">Contact</a>
                   </li>
                   <li class=" d_none get_btn">
                     <a href="login.php">Login</a>
