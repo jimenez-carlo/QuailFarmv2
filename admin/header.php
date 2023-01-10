@@ -85,6 +85,11 @@ if (isset($_SESSION['user'])) {
               <i class="align-middle" data-feather="file"></i> <span class="align-middle">Reports</span>
             </a>
           </li>
+          <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'report') !== false || strpos($_SERVER['REQUEST_URI'], 'report_edit') !== false) ? 'active' : '' ?>">
+            <a class="sidebar-link" href="tae.php">
+              <i class="align-middle" data-feather="file"></i> <span class="align-middle">Tae</span>
+            </a>
+          </li>
 
 
 

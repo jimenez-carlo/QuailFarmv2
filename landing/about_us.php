@@ -7,13 +7,22 @@
 
 <!-- three_box -->
 <!-- hottest -->
-<div class="choose ">
+<style>
+   .choose .titlepage h2 {
+      color: black;
+   }
+
+   .choose::after {
+      display: none;
+   }
+</style>
+<div class="choose " style="background: #fff;margin:unset">
    <div class="container" id="about_us">
       <div class="row">
          <div class="col-md-8">
             <div class="titlepage">
                <h2>About Us </h2>
-               <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta sapiente accusamus quas ipsam, culpa eligendi exercitationem eos recusandae sint reiciendis quos animi repellat ab eum impedit a, eveniet dolores. Iste.</p>
+               <p class="text-dark">Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta sapiente accusamus quas ipsam, culpa eligendi exercitationem eos recusandae sint reiciendis quos animi repellat ab eum impedit a, eveniet dolores. Iste.</p>
             </div>
          </div>
       </div>

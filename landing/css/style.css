@@ -548,9 +548,9 @@ ul.btn li:last-child {
      left: -30px;
      width: 31px;
      height: 100%;
-     background: url(../images/h_cross.png);
+     background: url(../images/h_crossv2.png);
      background-repeat: no-repeat;
-     display: block;
+     display: none;
      background-position: center center;
 }
 

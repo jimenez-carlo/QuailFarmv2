@@ -7,7 +7,7 @@
       <div class="row">
          <div class="col-md-12 ">
             <div class="text-bg">
-               <h1>Fresh out of farm</h1>
+               <h1 style="font-size:80px">Fresh out of farm</h1>
                <p>Always Fresh Eggs!</p>
                <a href="#products">Check Products!</a>
             </div>

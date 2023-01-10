@@ -34,6 +34,47 @@ if (isset($_SESSION['user'])) {
   </div> -->
   <!-- end loader -->
   <!-- header -->
+  <style>
+    .logo::after {
+      background: grey;
+    }
+
+    .navigation.navbar-dark .navbar-nav .active>.nav-link,
+    .navigation.navbar-dark .navbar-nav .nav-link.active,
+    .navigation.navbar-dark .navbar-nav .nav-link.show,
+    .navigation.navbar-dark .navbar-nav .show>.nav-link {
+      color: white;
+      font-size: 30px;
+    }
+
+    .get_btn a {
+      color: #fff;
+      background: #363636;
+    }
+
+    .copyright {
+      background: grey;
+    }
+
+    .text-bg a {
+      border: grey solid 4px;
+    }
+
+    .hottest .hottest_box {
+      background: grey;
+    }
+
+    .navigation.navbar-dark .navbar-nav .active>.nav-link:hover,
+    .navigation.navbar-dark .navbar-nav .nav-link.active:hover,
+    .navigation.navbar-dark .navbar-nav .nav-link.show:hover,
+    .navigation.navbar-dark .navbar-nav .show>.nav-link:hover {
+      color: yellow;
+    }
+
+    /* .hottest .hottest_box::after {
+      background: url(../images/h_crossv2.png) !important;
+    } */
+  </style>
   <header>
     <!-- header inner -->
     <div class="header">
@@ -71,6 +112,9 @@ if (isset($_SESSION['user'])) {
                   </li>
                   <li class="nav-item active">
                     <a class="nav-link" href="contact.php">Contact</a>
+                  </li>
+                  <li class="nav-item active">
+                    <a class="nav-link" href="test.php">Contact</a>
                   </li>
                   <li class=" d_none get_btn">
                     <a href="login.php">Login</a>

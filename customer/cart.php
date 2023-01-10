@@ -125,8 +125,8 @@ function checkout_cart($data)
               </tbody>
             </table>
           </div>
-          <form action="post" name="checkout_cart" onsubmit="return confirm('Are You Sure?');">
-            <button class="btn btn-lg btn-secondary font-bold rounded-0 w-100" name="checkout_cart">Checkout Now <i class="fa fa-check fa-lg"></i></button>
+          <form method="post" name="checkout_cart" onsubmit="return confirm('Are You Sure?');">
+            <button class="btn btn-lg btn-secondary font-bold rounded-0 w-100" name="checkout_cart" value="1">Checkout Now <i class="fa fa-check fa-lg"></i></button>
           </form>
         </div>
       </div>
