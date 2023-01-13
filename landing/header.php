@@ -44,7 +44,7 @@ if (isset($_SESSION['user'])) {
     .navigation.navbar-dark .navbar-nav .nav-link.show,
     .navigation.navbar-dark .navbar-nav .show>.nav-link {
       color: white;
-      font-size: 30px;
+      font-size: 20px;
     }
 
     .get_btn a {
@@ -70,7 +70,18 @@ if (isset($_SESSION['user'])) {
     .navigation.navbar-dark .navbar-nav .show>.nav-link:hover {
       color: yellow;
     }
+.footer{
 
+  padding-top:unset;
+}
+.copyright{
+
+  margin-top:unset;
+}
+.logo::after{
+/* display:none; */
+
+}
     /* .hottest .hottest_box::after {
       background: url(../images/h_crossv2.png) !important;
     } */
@@ -84,8 +95,8 @@ if (isset($_SESSION['user'])) {
             <div class="full">
               <div class="center-desk">
                 <div class="logo">
-                  <a href="index.html">
-                    <h1 style="font-size:40px;color:#fff;font-weight:bold">Menor's Quail Farm</h1>
+                  <a href="index.php">
+                    <h1 style="font-size:34px;color:#fff;font-weight:bold">Menor's Quail Farm</h1>
                   </a>
                 </div>
               </div>
@@ -112,9 +123,6 @@ if (isset($_SESSION['user'])) {
                   </li>
                   <li class="nav-item active">
                     <a class="nav-link" href="contact.php">Contact</a>
-                  </li>
-                  <li class="nav-item active">
-                    <a class="nav-link" href="test.php">Contact</a>
                   </li>
                   <li class=" d_none get_btn">
                     <a href="login.php">Login</a>

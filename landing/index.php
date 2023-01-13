@@ -2,6 +2,13 @@
 <!-- end header inner -->
 <!-- end header -->
 <!-- banner -->
+<style>
+
+.banner_main{
+min-height:550px;
+
+}
+</style>
 <section class="banner_main">
    <div class="container">
       <div class="row">

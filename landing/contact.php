@@ -1,9 +1,14 @@
 <?php include_once('header.php'); ?>
+<style> 
+.container{
+padding-top: 60px;
+}
 
+</style>
 <!--  footer -->
 <footer id="contact">
    <div class="footer">
-      <div class="container" style="height: 65vh;">
+      <div class="container" style="height: 75.5vh;">
          <div class="row">
             <div class="col-md-4">
                <div class="titlepage">
@@ -25,7 +30,8 @@
          </div>
       </div>
       <div class="copyright">
-         <div class="container">
+   
+      <div class="container"style="padding-top: unset">
             <div class="row">
                <div class="col-md-12">
                   <p>Copyright 2020</p>

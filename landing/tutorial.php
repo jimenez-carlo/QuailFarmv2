@@ -9,17 +9,47 @@
 <!-- hottest -->
 <div class="hottest">
    <div class="container" id="tutorial">
-      <div class="row d_flex">
+   <div class="row d_flex">
          <div class="col-md-5">
             <div class="titlepage">
                <h2>Tutorial<br>Here!</h2>
             </div>
          </div>
          <div class="col-md-7">
-            <div class="hottest_box">
-               <img src="../images/landing/farm.webp" alt="">
+            <div class="hottest_box"style="color:white">
+            Female quails start laying eggs from their 6 to 7 weeks of age
+At present there are 18 species of quails are available, which are very suitable for profitable quail farming business. Some of these breeds are famous for egg production and some are popular for meat production. According to their production, quail breeds are of two types such as broilers and layers. Here we have stated some popular broiler and layer quail breeds.
+<br/>
+<br/>
+
+From Chick to 6 weeks
+Quails require more protein than Quail or other poultry birds. Continue feeding the chick starter till their 6 weeks of age and also, they need more water.
+
+After 6 weeks of age, start feeding them a (Laying mash). You need to continue also the watering system with electrolytes. Use electrolyte trice a week to avoid stress of Quail and to maintain egg production. Two tables spoon of electrolytes in one gallon of water. Also, they need vitamins at least ones a week. Quails need the radio or sound to avoid sudden noise around them so that they are not disturbed in their egg laying. One of the reasons for the death of the Quail layers is because they were unable to release their eggs due to stress, they were disturbed by the sudden noise around them. For quails healthy, proper growing and highly productive, provide them balanced feed regularly.
+While taking care of Quail, it is inevitable that someone dies, due to stress and lack of water or food, sometimes there are mice or cats that eat them from the cage.
+
+When the quail reaches the age of one year, their egg production decreases and causes your losses, so they have to be dressed and sell their meat.
+
             </div>
          </div>
+         
+      </div>
+
+<br>
+      <div class="row d_flex">
+         <div class="col-md-7">
+            <div class="hottest_box"style="color:white">
+            Female quails start laying eggs from their 6 to 7 weeks of age
+At present there are 18 species of quails are available, which are very suitable for profitable quail farming business. Some of these breeds are famous for egg production and some are popular for meat production. According to their production, quail breeds are of two types such as broilers and layers. Here we have stated some popular broiler and layer quail breeds.
+
+            </div>
+         </div>
+         <div class="col-md-5">
+            <div class="titlepage">
+               <h2>Tutorial<br>Here!</h2>
+            </div>
+         </div>
+         
       </div>
    </div>
 </div>
