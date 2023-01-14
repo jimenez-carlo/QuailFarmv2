@@ -1,9 +1,19 @@
 <?php include_once('header.php') ?>
+<?php
 
+function delete($data)
+{
+  extract($data);
+  query("UPDATE tbl_users set is_deleted = 1 where id = $delete");
+  return alert("User Deleted!");
+}
+
+echo isset($_POST['delete']) ? delete($_POST) : '';
+?>
 <main class="content">
   <div class="container-fluid p-0">
 
-    <h1 class="h3 mb-3"><strong>Customers</strong></h1>
+    <h1 class="h3 mb-3"><strong>Customer's</strong></h1>
 
     <div class="row">
       <div class="col-12 col-lg-12">
@@ -33,11 +43,10 @@
                     <td><?php echo $res['contact_no']; ?></td>
                     <td><?php echo $res['date_created']; ?></td>
                     <td>
-                      <form method="post" name="update_user">
-                        <button type="button" class="btn btn-sm btn-secondary btn-edit" name="customer_edit" value="<?php echo $res['id']; ?>"> Edit </button>
-                        <button type="button" class="btn btn-sm btn-secondary btn-edit" name="customer_view" value="<?php echo $res['id']; ?>"> View </button>
-                        <input type="hidden" value="<?php echo $res['id']; ?>" name="user_id">
-                        <button type="submit" class="btn btn-sm btn-secondary" name="type" value="delete_customer"> Delete </button>
+                      <form method="post" onsubmit="return confirm('Are You Sure?')">
+                        <a href="customer_edit.php?id=<?php echo $res['id']; ?>" class="btn btn-sm btn-secondary btn-edit"> Edit </a>
+                        <a href="customer_view.php?id=<?php echo $res['id']; ?>" class="btn btn-sm btn-secondary btn-edit"> View </a>
+                        <button type="submit" class="btn btn-sm btn-secondary" name="delete" value="<?php echo $res['id']; ?>"> Delete </button>
                       </form>
                     </td>
                   </tr>
@@ -56,9 +65,9 @@
     dom: '<"top"<"left-col"B><"center-col"><"right-col"f>> <"row"<"col-sm-12"tr>><"row"<"col-sm-10"i><"col-sm-2"p>>',
     buttons: [{
       className: 'btn btn-sm btn-secondary',
-      text: 'Register User',
+      text: 'Register Customer',
       action: function(e, dt, node, config) {
-        $("#content").load(base_url + 'module/page.php?page=customer_register');
+        window.location = "customer_register.php";
       }
     }]
   });

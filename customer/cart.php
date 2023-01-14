@@ -5,7 +5,7 @@ function remove_cart($data)
 {
   extract($data);
   query("update tbl_transactions set is_deleted = 1  where id = $transaction_id");
-  return alert("Product Removed From Cart!");
+  return alert_redirect("Product Removed From Cart!", "cart.php");
 }
 
 function update_cart($data)
@@ -14,7 +14,7 @@ function update_cart($data)
   $new_price = intval($price) * intval($qty);
   if ($qty > 0) {
     query("update tbl_transactions set price = '$new_price', qty = '$qty' where id = $transaction_id");
-    return alert("Product Quantity Updated From Cart!");
+    return alert_redirect("Product Quantity Updated From Cart!", "cart.php");
   } else {
     return alert("Invalid Product Quantity");
   }
@@ -47,7 +47,7 @@ function checkout_cart($data)
       query("insert into tbl_status_history (transaction_id,status_id,created_by) VALUES('$id',2,'$customer_id')");
     }
     query("update tbl_transactions set status_id = 2, invoice_id= '$invoice_id' where status_id = 1 and is_deleted = 0 and buyer_id = '$customer_id'");
-    return alert("Successfully Checked Out!");
+    return alert_redirect("Successfully Checked Out!", "cart.php");
   }
 }
 

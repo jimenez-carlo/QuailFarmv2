@@ -32,7 +32,7 @@ function signup($data)
    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
    $last_id = get_inserted_id("INSERT INTO tbl_users (username,`password`,access_id) values ('$username', '$hashed_password', '3')");
-   query("INSERT INTO tbl_users_info (id,first_name,last_name,`address`,contact_no) VALUES ('$last_id', '$firstname', '$lastname', '$address','$contact')");
+   query("INSERT INTO tbl_users_info (id,first_name,last_name,`address`,contact_no,`province`,`city`,`barangay`) VALUES ('$last_id', '$firstname', '$lastname', '$address','$contact','$province','$city','$barangay')");
    unset($_POST);
    return success_landing_message("User Registered!");
 }
@@ -97,7 +97,13 @@ function signup($data)
                               <input class="contactus" placeholder="Contact" type="number" required name="contact" value="<?= isset($_POST['contact']) && isset($_POST['signup']) ? $_POST['contact'] : '' ?>">
                            </div>
                            <div class="col-md-12">
-                              <textarea class="contactus1" placeholder="Address" required name="address"><?= isset($_POST['address']) && isset($_POST['signup']) ? $_POST['address'] : '' ?></textarea>
+                              <input class="contactus" placeholder="Provice" type="text" required name="province" value="<?= isset($_POST['province']) && isset($_POST['signup']) ? $_POST['province'] : '' ?>">
+                           </div>
+                           <div class="col-md-12">
+                              <input class="contactus" placeholder="City" type="text" required name="city" value="<?= isset($_POST['city']) && isset($_POST['signup']) ? $_POST['city'] : '' ?>">
+                           </div>
+                           <div class="col-md-12">
+                              <input class="contactus" placeholder="Barangay" type="text" required name="barangay" value="<?= isset($_POST['barangay']) && isset($_POST['signup']) ? $_POST['barangay'] : '' ?>">
                            </div>
                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                               <button class="send_btn" type="submit" name="signup">Sign Up</button>

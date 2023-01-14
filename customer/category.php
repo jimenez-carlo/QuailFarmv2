@@ -29,17 +29,17 @@ function add_to_cart($data)
         $last_id = get_inserted_id("insert into tbl_transactions (price,qty,product_id,buyer_id,status_id) VALUES ('$total_price', '$qty', '$product_id', '$customer_id', 1) ");
         query("insert into tbl_status_history (transaction_id,status_id,created_by) VALUES ('$last_id', 1, '$customer_id') ");
       }
-      return alert("Product Added To Cart Successfully!");
+      return alert_redirect("Product Added To Cart Successfully!", "category.php?filter=" . $_GET['filter']);
     }
   } else {
-    return alert("Product Out Of Stock.");
+    return alert_redirect("Product Out Of Stock.", "category.php?filter=" . $_GET['filter']);
   }
 }
 ?>
 <main class="content">
   <div class="container-fluid p-0">
     <?= (isset($_POST['add_to_cart'])) ? add_to_cart($_POST) : ''; ?>
-    <h1 class="h3 mb-3"><a href="products.php" style="color:unset"><strong>Products</strong></a> <i data-feather="chevrons-right"></i> <?= ucfirst(strtolower($_GET['filter'])) ?></h1>
+    <h1 class="h3 mb-3"><strong>Products</strong> <i data-feather="chevrons-right"></i> <?= ucfirst(strtolower($_GET['filter'])) ?> <a href="products.php" class="btn btn-secondary btn-sm" style="float:right">Back</a></h1>
 
     <div class="row">
       <div class="col-12 col-lg-12">
@@ -52,7 +52,7 @@ function add_to_cart($data)
               <br>
               <div class="row">
                 <?php foreach ($data['inventory'] as $res) { ?>
-                  <div class="col-3 col-md-3">
+                  <div class="col-3 col-md-3 item-box" data-name="<?php echo strtolower($res['name']); ?>">
                     <div class="card">
                       <div class="card-header">
                         <h5 class="card-title mb-0" data-name="<?php echo strtolower($res['name']); ?>"><?php echo $res['name']; ?></h5>
@@ -88,6 +88,30 @@ function add_to_cart($data)
   $(document).on("change", '.category ', function() {
     var id = $(this).val();
     window.location = 'category.php?filter=' + id;
+
   });
+
+  var search = document.querySelector("#search-item"),
+    images = document.querySelectorAll(".item-box");
+
+  search.addEventListener("keyup", e => {
+    // if (e.key == "Enter") {
+    let searcValue = search.value,
+      value = searcValue.toLowerCase();
+    images.forEach(image => {
+      if (image.dataset.name.includes(value)) {
+        return image.style.display = "block";
+      }
+      image.style.display = "none";
+    });
+    // }
+  });
+
+  search.addEventListener("keyup", () => {
+    if (search.value != "") return;
+    images.forEach(image => {
+      image.style.display = "block";
+    })
+  })
 </script>
 <?php include_once('footer.php') ?>
