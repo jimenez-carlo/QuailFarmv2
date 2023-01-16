@@ -3,7 +3,7 @@
 $id = $_GET['id'];
 $info = get_one("SELECT * from tbl_users u inner join tbl_users_info ui on ui.id = u.id where u.id = $id");
 
-function update()
+function update($data)
 {
   extract($data);
   $check_username = get_one("select count(username) as `exists` from tbl_users where username = '$username' and id <> '$id' group by username limit 1");
@@ -24,7 +24,7 @@ function update()
   return alert("Customer Updated!");
 }
 
-echo isset($_POST['register']) ? update($_POST) : '';
+echo isset($_POST['update']) ? update($_POST) : '';
 ?>
 <main class="content">
   <div class="container-fluid p-0">
@@ -41,10 +41,14 @@ echo isset($_POST['register']) ? update($_POST) : '';
                 <label for="password" class="form-label">*Username</label>
                 <input type="text" class="form-control form-control-sm" id="username" name="username" placeholder="John Doe" required value="<?= isset($_POST['update']) ? $_POST['username'] : $info->username; ?>">
               </div>
+
               <div class="col-md-6">
-                <label for="email" class="form-label">*Access</label>
-                <input type="text" class="form-control form-control-sm" id="email" name="email" value="Customer" disabled>
-                <input type="hidden" name="access" value="3">
+                <label for="contact" class="form-label">*Access</label>
+                <select class="form-select form-select-sm" aria-label=".form-select-lg example" id="access" required name="access" style="width: 100%;">
+                  <?php foreach (get_list("select * from tbl_access where id not in (1,3) order by name asc") as $res) {
+                    echo '<option value="' . $res['id'] . '"  ' . (($res['id'] == $info->gendeaccess_idr_id) ? 'selected' : $info->access_id) . ' >' . strtoupper($res['name']) . '</option>';
+                  } ?>
+                </select>
               </div>
               <div class="col-md-6">
                 <label for="password" class="form-label">*Password</label>

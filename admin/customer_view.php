@@ -83,7 +83,7 @@ foreach ($order_history as $res) {
                         <th scope="col">Qty</th>
                         <th scope="col">Total Price</th>
                         <th scope="col">Last Updated</th>
-                        <th scope="col"></th>
+                        <!-- <th scope="col"></th> -->
                       </tr>
                     </thead>
                     <tbody>
@@ -102,9 +102,9 @@ foreach ($order_history as $res) {
                           <td class="text-end"><?php echo number_format($sub_res['qty'], 0); ?></td>
                           <td class="text-end"><?php echo number_format($sub_res['product_price'] * $sub_res['qty'], 2); ?></td>
                           <td><?php echo $sub_res['date_updated']; ?></td>
-                          <td>
+                          <!-- <td>
                             <button type="button" class="btn btn-sm btn-secondary btn-view" name="transaction_view" value="<?php echo $sub_res['id']; ?>">View</button>
-                          </td>
+                          </td> -->
                         </tr>
                         </td>
                         <?php $price +=       (in_array(intval($sub_res['status_id']), array(1, 5, 6))) ? 0 :  $sub_res['product_price']; ?>
@@ -117,7 +117,7 @@ foreach ($order_history as $res) {
                         <td id="total_qty" class="text-end"><?php echo number_format($qty, 0); ?></td>
                         <td id="total_final_price" class="text-end"><?php echo number_format($total_price, 2); ?></td>
                         <td></td>
-                        <td></td>
+                        <!-- <td></td> -->
                       </tr>
                     </tbody>
                   </table>

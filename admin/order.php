@@ -1,5 +1,21 @@
 <?php include_once('header.php') ?>
+<?php
 
+function update_order($id, $status)
+{
+
+  $invoice_id = get_one("select id from tbl_invoice where invoice = $id")->id;
+  $list = get_list("select * from tbl_transactions where invoice_id = $invoice_id");
+
+  foreach ($list as $res) {
+    update_transaction($res['id'], $status);
+  }
+
+  return alert("Order Updated!");
+}
+echo isset($_POST['approve']) ? update_order($_POST['id'], 3) : '';
+echo isset($_POST['reject']) ? update_order($_POST['id'], 6) : '';
+?>
 <main class="content">
   <div class="container-fluid p-0">
 
@@ -31,21 +47,21 @@
                     <td><?php echo $res['status']; ?></td>
                     <td class="text-end"><?php echo $res['qty']; ?></td>
                     <td class="text-end"><?php echo number_format($res['total_price'], 2); ?></td>
-                    <td><a href="#" class="a-view" name="customer_view" value="<?php echo $res['buyer_id']; ?>"><?php echo $res['buyer_name']; ?></a></td>
-                    <td><a href="#" class="a-view" name="user_view" value="<?php echo $res['seller_id']; ?>"><?php echo $res['seller_name']; ?></a></td>
+                    <td><a href="customer_view.php?id=<?php echo $res['buyer_id']; ?>" target="_blank"> <?php echo $res['buyer_name']; ?> </a> </td>
+                    <td><a href="user_edit.php?id=<?php echo $res['seller_id']; ?>" target="_blank"> <?php echo $res['seller_name']; ?> </a></td>
                     <td><?php echo $res['date_updated']; ?></td>
                     <td>
                       <?php if (in_array($res['status_id'], array(1, 2))) { ?>
-                        <form method="post" name="update_order">
+                        <form method="post" onsubmit="return confirm('Are You Sure?')">
                           <input type="hidden" name="id" value="<?php echo $res['invoice']; ?>">
-                          <button type="submit" class="btn btn-sm btn-secondary" name="status" value="3"> Approve </button>
-                          <button type="submit" class="btn btn-sm btn-secondary" name="status" value="6"> Reject </button>
-                          <button type="button" class="btn btn-sm btn-secondary btn-view" name="orders_view" value="<?php echo $res['invoice']; ?>"> View </button>
+                          <button type="submit" class="btn btn-sm btn-secondary" name="approve"> Approve </button>
+                          <button type="submit" class="btn btn-sm btn-secondary" name="reject"> Reject </button>
+                          <a href="order_view.php?id=<?php echo $res['invoice']; ?>" class="btn btn-sm btn-secondary btn-view"> View </a>
                         </form>
                       <?php } else { ?>
                         <button type="button" class="btn btn-sm btn-secondary" disabled> Approve </button>
                         <button type="button" class="btn btn-sm btn-secondary" disabled> Reject </button>
-                        <button type="button" class="btn btn-sm btn-secondary btn-view" name="orders_view" value="<?php echo $res['invoice']; ?>"> View </button>
+                        <a href="order_view.php?id=<?php echo $res['invoice']; ?>" class="btn btn-sm btn-secondary btn-view"> View </a>
                       <?php } ?>
                     </td>
                   </tr>

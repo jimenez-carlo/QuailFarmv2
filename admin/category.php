@@ -1,5 +1,15 @@
 <?php include_once('header.php') ?>
+<?php
 
+function delete($data)
+{
+  extract($data);
+  query("UPDATE tbl_category set is_deleted = 1 where id = $delete");
+  return alert("Category Deleted!");
+}
+
+echo isset($_POST['delete']) ? delete($_POST) : '';
+?>
 <main class="content">
   <div class="container-fluid p-0">
 
@@ -25,10 +35,9 @@
                     <td><?php echo $res['name']; ?></td>
                     <td><?php echo $res['date_created']; ?></td>
                     <td style="width: 25%;">
-                      <form method="post" name="update_category">
-                        <input type="hidden" value="<?php echo $res['id']; ?>" name="category_id">
-                        <button type="button" class="btn btn-sm btn-secondary btn-edit" name="category_edit" value="<?php echo $res['id']; ?>"> Edit </button>
-                        <button type="submit" class="btn btn-sm btn-secondary" name="type" value="delete"> Delete </button>
+                      <form method="post" onsubmit="return confirm('Are You Sure?')">
+                        <a href="category_edit.php?id=<?php echo $res['id']; ?>" class="btn btn-sm btn-secondary btn-edit"> Edit </a>
+                        <button type="submit" class="btn btn-sm btn-secondary" name="delete" value="<?php echo $res['id']; ?>"> Delete </button>
                       </form>
                     </td>
                   </tr>
@@ -49,7 +58,7 @@
       className: 'btn btn-sm btn-secondary',
       text: ' Add Category',
       action: function(e, dt, node, config) {
-        $("#content").load(base_url + 'module/page.php?page=category_add');
+        window.location = "category_add.php";
       }
     }]
   });

@@ -15,10 +15,9 @@ function register($data)
     return alert("Username Already In-Used!");
   }
 
-
   $password = password_hash($new_password, PASSWORD_DEFAULT);
 
-  $last_id = get_inserted_id("INSERT INTO tbl_users (username,`password`,access_id) values ('$username', '$password', 3)");
+  $last_id = get_inserted_id("INSERT INTO tbl_users (username,`password`,access_id) values ('$username', '$password', $access)");
   query("INSERT INTO tbl_users_info (id,first_name,last_name,contact_no,gender_id,province,city,barangay) VALUES ('$last_id', '$firstname', '$lastname','$contact','$gender','$province','$city','$barangay')");
   unset($_POST);
   return alert("User Registered!");
@@ -29,7 +28,7 @@ echo isset($_POST['register']) ? register($_POST) : '';
 <main class="content">
   <div class="container-fluid p-0">
 
-    <h1 class="h3 mb-3"><strong>Customer Registration</strong></h1>
+    <h1 class="h3 mb-3"><strong>User Registration</strong></h1>
     <form method="post" name="register_user" onSubmit="return confirm('Are You Sure?') ">
       <div class="card">
 
@@ -41,9 +40,12 @@ echo isset($_POST['register']) ? register($_POST) : '';
                 <input type="text" class="form-control form-control-sm" id="username" name="username" placeholder="John Doe" required value="<?= isset($_POST['register']) ? $_POST['username'] : ''; ?>">
               </div>
               <div class="col-md-6">
-                <label for="email" class="form-label">*Access</label>
-                <input type="text" class="form-control form-control-sm" id="email" name="email" value="Customer" disabled>
-                <input type="hidden" name="access" value="3">
+                <label for="contact" class="form-label">*Access</label>
+                <select class="form-select form-select-sm" aria-label=".form-select-lg example" id="access" required name="access" style="width: 100%;">
+                  <?php foreach (get_list("select * from tbl_access where id not in (1,3) order by name asc") as $res) {
+                    echo '<option value="' . $res['id'] . '"  ' . ((isset($_POST['register']) && $res['id'] == $_POST['access']) ? 'selected' : '') . ' >' . strtoupper($res['name']) . '</option>';
+                  } ?>
+                </select>
               </div>
               <div class="col-md-6">
                 <label for="password" class="form-label">*Password</label>
@@ -81,7 +83,10 @@ echo isset($_POST['register']) ? register($_POST) : '';
                   } ?>
                 </select>
 
+
+
               </div>
+
               <div class="col-md-12 mt-3">
                 <div class="pull-right">
                   <a href="customer.php" class="btn btn-sm btn-secondary"> Back</a>

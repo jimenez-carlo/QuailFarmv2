@@ -42,7 +42,7 @@ function checkout_cart($data)
     $invoice = time();
     $invoice_id = get_inserted_id("insert into tbl_invoice (invoice,customer_id,status_id) VALUES('$invoice','$customer_id',1)");
 
-    foreach ($items as $res) {
+    foreach (get_list("select t.* from tbl_transactions t where t.status_id = 1 and t.is_deleted = 0 and t.buyer_id = '$customer_id'") as $res) {
       $id = $res['id'];
       query("insert into tbl_status_history (transaction_id,status_id,created_by) VALUES('$id',2,'$customer_id')");
     }

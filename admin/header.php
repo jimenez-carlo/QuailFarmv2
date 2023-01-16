@@ -74,7 +74,7 @@ if (isset($_SESSION['user'])) {
             </a>
           </li>
 
-          <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'order') !== false || strpos($_SERVER['REQUEST_URI'], 'order_edit') !== false) ? 'active' : '' ?>">
+          <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'order') !== false || strpos($_SERVER['REQUEST_URI'], 'order_view') !== false) ? 'active' : '' ?>">
             <a class="sidebar-link" href="order.php">
               <i class="align-middle" data-feather="shopping-bag"></i> <span class="align-middle">Orders</span>
             </a>

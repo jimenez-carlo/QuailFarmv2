@@ -1,5 +1,15 @@
 <?php include_once('header.php') ?>
+<?php
 
+function delete($data)
+{
+  extract($data);
+  query("UPDATE tbl_product set is_deleted = 1 where id = $delete");
+  return alert("Product Deleted!");
+}
+
+echo isset($_POST['delete']) ? delete($_POST) : '';
+?>
 <main class="content">
   <div class="container-fluid p-0">
 
@@ -36,10 +46,9 @@
                     <!-- <td><?php echo $res['date_created']; ?></td> -->
                     <td><?php echo $res['created_by']; ?></td>
                     <td>
-                      <form method="post" name="update_product">
-                        <button type="button" class="btn btn-sm btn-secondary btn-edit" name="product_edit" value="<?php echo $res['id']; ?>"> Edit </button>
-                        <input type="hidden" value="<?php echo $res['id']; ?>" name="product_id">
-                        <button type="submit" class="btn btn-sm btn-secondary" name="type" value="delete"> Delete </button>
+                      <form method="post" onsubmit="return confirm('Are You Sure?')">
+                        <a href="product_edit.php?id=<?php echo $res['id']; ?>" class="btn btn-sm btn-secondary btn-edit"> Edit </a>
+                        <button type="submit" class="btn btn-sm btn-secondary" name="delete" value="<?php echo $res['id']; ?>"> Delete </button>
                       </form>
                     </td>
                   </tr>
@@ -60,7 +69,7 @@
       className: 'btn btn-sm btn-secondary',
       text: 'Add Product',
       action: function(e, dt, node, config) {
-        $("#content").load(base_url + 'module/page.php?page=product_add');
+        window.location = "product_add.php";
       }
     }]
   });

@@ -71,6 +71,7 @@ function success_message($message = "Successfull")
 
 function has_stocks($id)
 {
+    // $invoice_id = get_one("select id from tbl_invoice where invoice = $id");
     $transaction = get_one("select product_id,qty from tbl_transactions where id = $id limit 1");
     $stock = get_one("select qty from tbl_inventory where product_id = $transaction->product_id")->qty;
     return ($transaction->qty > $stock) ? false : $stock;
@@ -82,7 +83,7 @@ function get_transaction_count($where_id, $status_id)
     return isset($res->result) ? $res->result : 0;
 }
 
-function update_transaction($id, $status)
+function update_transaction($id, $status, $redirect = false)
 {
     $user_id = $_SESSION['user']->id;
     $id = intval($id);
