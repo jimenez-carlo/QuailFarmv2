@@ -1,4 +1,10 @@
 <?php include_once('header.php'); ?>
+<style>
+   /* .get_btn a {
+      color: #fff;
+      background: red;
+   } */
+</style>
 <?php
 
 function login($data)

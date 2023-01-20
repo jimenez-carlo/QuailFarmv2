@@ -85,7 +85,17 @@ if (isset($_SESSION['user'])) {
               <i class="align-middle" data-feather="file"></i> <span class="align-middle">Reports</span>
             </a>
           </li>
-
+          <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'walkin') !== false || strpos($_SERVER['REQUEST_URI'], 'walkin_edit') !== false) ? 'active' : '' ?>">
+            <a class="sidebar-link" href="walkin.php">
+              <i class="align-middle" data-feather="monitor"></i> <span class="align-middle">Walkin</span>
+            </a>
+          </li>
+          <!-- <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'profile') !== false || strpos($_SERVER['REQUEST_URI'], 'profile_edit') !== false) ? 'active' : '' ?>">
+            <a class="sidebar-link" href="profile.php">
+              <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
+            </a>
+          </li>
+ -->
 
 
       </div>
@@ -110,6 +120,7 @@ if (isset($_SESSION['user'])) {
                 <img src="img/avatars/avatar.jpg" class="avatar img-fluid rounded me-1" alt="Charles Hall" /> <span class="text-dark"><?= $_SESSION['user']->first_name . " " . $_SESSION['user']->last_name ?></span>
               </a>
               <div class="dropdown-menu dropdown-menu-end">
+                <a class="dropdown-item" href="profile.php">Profile</a>
                 <a class="dropdown-item" href="../logout.php">Log out</a>
               </div>
             </li>

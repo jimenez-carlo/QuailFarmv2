@@ -27,7 +27,7 @@ echo isset($_POST['update']) ? update(array_merge($_POST, $_FILES)) : '';
 <main class="content">
   <div class="container-fluid p-0">
 
-    <h1 class="h3 mb-3"><strong>Edit Product ID#<?= $id ?> </strong> <a href="products.php" class="btn btn-sm btn-secondary" style="float:right"> Back</a></h1>
+    <h1 class="h3 mb-3"><strong>Edit Product ID#<?= $id ?> </strong> <a href="product.php" class="btn btn-sm btn-secondary" style="float:right"> Back</a></h1>
     <form method="post" onSubmit="return confirm('Are You Sure?') " enctype="multipart/form-data">
       <input type="hidden" name="id" value="<?= $id ?>">
       <div class="card">

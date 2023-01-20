@@ -70,21 +70,40 @@ if (isset($_SESSION['user'])) {
     .navigation.navbar-dark .navbar-nav .show>.nav-link:hover {
       color: yellow;
     }
-.footer{
 
-  padding-top:unset;
-}
-.copyright{
+    .footer {
 
-  margin-top:unset;
-}
-.logo::after{
-/* display:none; */
+      padding-top: unset;
+    }
 
-}
+    .copyright {
+
+      margin-top: unset;
+    }
+
+    .logo::after {
+      /* tangaling yung logo */
+      /* display: none; */
+    }
+
+    .header {
+      font-family: arial;
+    }
+
     /* .hottest .hottest_box::after {
       background: url(../images/h_crossv2.png) !important;
     } */
+    .testing {}
+
+    .main_form .send_btn {
+      background-color: grey;
+      color: white;
+    }
+
+    .main_form .send_btn:hover {
+      background-color: grey;
+      color: white;
+    }
   </style>
   <header>
     <!-- header inner -->
@@ -96,7 +115,7 @@ if (isset($_SESSION['user'])) {
               <div class="center-desk">
                 <div class="logo">
                   <a href="index.php">
-                    <h1 style="font-size:34px;color:#fff;font-weight:bold">Menor's Quail Farm</h1>
+                    <h1 style="font-size:34px;color:#fff;font-weight:bold" class="testing">Menor's Quail Farm</h1>
                   </a>
                 </div>
               </div>
@@ -116,13 +135,13 @@ if (isset($_SESSION['user'])) {
                     <a class="nav-link" href="tutorial.php">Tutorial</a>
                   </li>
                   <li class="nav-item active">
-                    <a class="nav-link" href="about_us.php">About Us</a>
-                  </li>
-                  <li class="nav-item active">
                     <a class="nav-link" href="products.php">Products </a>
                   </li>
                   <li class="nav-item active">
                     <a class="nav-link" href="contact.php">Contact</a>
+                  </li>
+                  <li class="nav-item active">
+                    <a class="nav-link" href="about_us.php">About Us</a>
                   </li>
                   <li class=" d_none get_btn">
                     <a href="login.php">Login</a>

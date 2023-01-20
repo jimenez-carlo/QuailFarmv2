@@ -19,7 +19,7 @@ function update_order($id, $status)
     update_transaction($res['id'], $status);
   }
 
-  $new_status = get_one("select * from tbl_transactions where invoice_id = $invoice_id group by status_id ");
+  $new_status = get_one("select sum() from tbl_transactions where invoice_id = $invoice_id group by status_id ");
   return alert("Order Updated!");
 }
 

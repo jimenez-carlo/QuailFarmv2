@@ -22,7 +22,7 @@
          <div class="col-md-8">
             <div class="titlepage">
                <h2>About Us </h2>
-               <p class="text-dark">Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta sapiente accusamus quas ipsam, culpa eligendi exercitationem eos recusandae sint reiciendis quos animi repellat ab eum impedit a, eveniet dolores. Iste.</p>
+               <p class="text-dark">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sit corporis, laboriosam voluptatem vel doloribus cupiditate nihil nemo, laudantium excepturi possimus in velit reiciendis beatae, aspernatur saepe minima expedita consectetur commodi.</p>
             </div>
          </div>
       </div>

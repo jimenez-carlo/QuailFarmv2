@@ -3,19 +3,18 @@
 <!-- end header -->
 <!-- banner -->
 <style>
+   .banner_main {
+      min-height: 550px;
 
-.banner_main{
-min-height:550px;
-
-}
+   }
 </style>
 <section class="banner_main">
    <div class="container">
       <div class="row">
          <div class="col-md-12 ">
             <div class="text-bg">
-               <h1 style="font-size:80px">Fresh out of farm</h1>
-               <p>Always Fresh Eggs!</p>
+               <h1 style="font-size:80px">Fresh out of farm </h1>
+               <p>Always Fresh Eggs</p>
                <a href="#products">Check Products!</a>
             </div>
          </div>

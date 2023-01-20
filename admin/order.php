@@ -5,12 +5,13 @@ function update_order($id, $status)
 {
 
   $invoice_id = get_one("select id from tbl_invoice where invoice = $id")->id;
-  $list = get_list("select * from tbl_transactions where invoice_id = $invoice_id");
+  $list = get_list("select * from tbl_transactions where invoice_id = $invoice_id and status_id = 1");
 
   foreach ($list as $res) {
     update_transaction($res['id'], $status);
   }
 
+  update_transaction($invoice_id, $status);
   return alert("Order Updated!");
 }
 echo isset($_POST['approve']) ? update_order($_POST['id'], 3) : '';
@@ -56,12 +57,14 @@ echo isset($_POST['reject']) ? update_order($_POST['id'], 6) : '';
                           <input type="hidden" name="id" value="<?php echo $res['invoice']; ?>">
                           <button type="submit" class="btn btn-sm btn-secondary" name="approve"> Approve </button>
                           <button type="submit" class="btn btn-sm btn-secondary" name="reject"> Reject </button>
-                          <a href="order_view.php?id=<?php echo $res['invoice']; ?>" class="btn btn-sm btn-secondary btn-view"> View </a>
+                          <button type="button" class="btn btn-sm btn-secondary"> View </button>
+                          <!-- <a href="order_view.php?id=<?php echo $res['invoice']; ?>" class="btn btn-sm btn-secondary btn-view"> View </a> -->
                         </form>
                       <?php } else { ?>
                         <button type="button" class="btn btn-sm btn-secondary" disabled> Approve </button>
                         <button type="button" class="btn btn-sm btn-secondary" disabled> Reject </button>
-                        <a href="order_view.php?id=<?php echo $res['invoice']; ?>" class="btn btn-sm btn-secondary btn-view"> View </a>
+                        <button type="button" class="btn btn-sm btn-secondary"> View </button>
+                        <!-- <a href="order_view.php?id=<?php echo $res['invoice']; ?>" class="btn btn-sm btn-secondary btn-view"> View </a> -->
                       <?php } ?>
                     </td>
                   </tr>
