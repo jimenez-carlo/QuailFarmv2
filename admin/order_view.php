@@ -13,18 +13,79 @@ function update_order($id, $status)
 {
 
   $invoice_id = get_one("select id from tbl_invoice where invoice = $id")->id;
-  $list = get_list("select * from tbl_transactions where invoice_id = $invoice_id and status_id = 1");
+  $transaction_items = get_list("select id from tbl_transactions where invoice_id = $invoice_id and status_id = 2");
+  $created_by = $_SESSION['user']->id;
 
-  foreach ($list as $res) {
-    update_transaction($res['id'], $status);
+  // update transaction
+  foreach ($transaction_items as $res) {
+    $transaction_id = $res['id'];
+    query("update tbl_transactions set status_id = $status, seller_id = '$created_by' where id = $transaction_id");
+    query("insert into tbl_status_history (transaction_id, status_id, created_by) values('$transaction_id', '$status', '$created_by')");
   }
 
-  $new_status = get_one("select sum() from tbl_transactions where invoice_id = $invoice_id group by status_id ");
+
+  $transaction_count = get_one("select sum(CASE WHEN status_id = 3 THEN 1 ELSE 0 END) AS `approved`, sum(CASE WHEN status_id = 5 THEN 1 ELSE 0 END) AS `cancelled`, sum(CASE WHEN status_id = 6 THEN 1 ELSE 0 END) AS `rejected` from tbl_transactions where invoice_id = $invoice_id group by invoice_id");
+
+  $data = array(
+    'approved' => $transaction_count->approved,
+    'cancelled' => $transaction_count->cancelled,
+    'rejected' => $transaction_count->rejected
+  );
+
+  $max_transaction_status = array_keys($data, max($data));
+
+  $status = array(
+    'approved' => 3,
+    'cancelled' => 6,
+    'rejected' => 7
+  );
+
+  $new_invoice_status = ($transaction_count->cancelled == $transaction_count->approved || $transaction_count->rejected == $transaction_count->approved) ? 3 : $status[$max_transaction_status[0]];
+  // update invoice & insert invoice history
+  query("update tbl_invoice set status_id = $new_invoice_status where id = $invoice_id ");
+  query("insert into tbl_invoice_status_history (invoice_id, status_id, created_by) values('$invoice_id','$new_invoice_status','$created_by')");
+
+
   return alert("Order Updated!");
 }
 
-echo isset($_POST['approve']) ? update_transaction($_POST['id'], 3) : '';
-echo isset($_POST['reject']) ? update_transaction($_POST['id'], 6) : '';
+function update_item($id, $invoice_id, $status)
+{
+  $created_by = $_SESSION['user']->id;
+  $invoice_id = get_one("select id from tbl_invoice where invoice = $invoice_id")->id;
+  query("update tbl_transactions set status_id = $status, seller_id = '$created_by' where id = $id");
+  query("insert into tbl_status_history (transaction_id, status_id, created_by) values('$id', '$status', '$created_by')");
+
+  $transaction_count = get_one("select sum(CASE WHEN status_id = 2 THEN 1 ELSE 0 END) AS `pending`,sum(CASE WHEN status_id = 3 THEN 1 ELSE 0 END) AS `approved`, sum(CASE WHEN status_id = 5 THEN 1 ELSE 0 END) AS `cancelled`, sum(CASE WHEN status_id = 6 THEN 1 ELSE 0 END) AS `rejected` from tbl_transactions where invoice_id = $invoice_id group by invoice_id");
+
+  $data = array(
+    'approved' => $transaction_count->approved,
+    'cancelled' => $transaction_count->cancelled,
+    'rejected' => $transaction_count->rejected
+  );
+
+  $max_transaction_status = array_keys($data, max($data));
+
+  // invoice status partial approve or approved
+  $approved_status = (empty($transaction_count->pending)) ? 3 : 2;
+
+  $status = array(
+    'approved' => $approved_status,
+    'cancelled' => 6,
+    'rejected' => 7
+  );
+
+  $new_invoice_status = ($transaction_count->cancelled == $transaction_count->approved || $transaction_count->rejected == $transaction_count->approved) ? $approved_status : $status[$max_transaction_status[0]];
+  // update invoice & insert invoice history
+  query("update tbl_invoice set status_id = $new_invoice_status where id = $invoice_id ");
+  query("insert into tbl_invoice_status_history (invoice_id, status_id, created_by) values('$invoice_id','$new_invoice_status','$created_by')");
+
+
+  return alert("Order Updated!");
+}
+
+echo isset($_POST['approve']) ? update_item($_POST['id'], $_POST['invoice_id'], 3) : '';
+echo isset($_POST['reject']) ? update_item($_POST['id'], $_POST['invoice_id'], 6) : '';
 
 echo isset($_POST['pay']) ? pay($_POST['pay'], $_POST['amount_post'], $_POST['change_post'], $_POST['total']) : '';
 
