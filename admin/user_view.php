@@ -20,7 +20,7 @@ foreach ($order_history as $res) {
             <div class="row">
               <div class="col-md-6">
                 <label for="password" class="form-label">*Username</label>
-                <input disabled type="text" class="form-control form-control-sm" id="username" name="username" placeholder="John Doe" required value="<?= $info->username ?>">
+                <input disabled type="text" class="form-control form-control-sm" id="username" name="username" placeholder="username" required value="<?= $info->username ?>">
               </div>
               <div class="col-md-6">
                 <label for="contact" class="form-label">*Access</label>

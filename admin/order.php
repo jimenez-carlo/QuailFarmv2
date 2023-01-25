@@ -31,8 +31,9 @@ function update_order($id, $status)
     'cancelled' => 6,
     'rejected' => 7
   );
+  $new_invoice_status = (($transaction_count->cancelled == $transaction_count->approved && $transaction_count->approved > 0) || ($transaction_count->rejected == $transaction_count->approved && $transaction_count->approved > 0)) ? 3 : $status[$max_transaction_status[0]];
 
-  $new_invoice_status = ($transaction_count->cancelled == $transaction_count->approved || $transaction_count->rejected == $transaction_count->approved) ? 3 : $status[$max_transaction_status[0]];
+
   // update invoice & insert invoice history
   query("update tbl_invoice set status_id = $new_invoice_status where id = $invoice_id ");
   query("insert into tbl_invoice_status_history (invoice_id, status_id, created_by) values('$invoice_id','$new_invoice_status','$created_by')");
@@ -78,20 +79,21 @@ echo isset($_POST['reject']) ? update_order($_POST['id'], 6) : '';
                     <td><a href="user_edit.php?id=<?php echo $res['seller_id']; ?>" target="_blank"> <?php echo $res['seller_name']; ?> </a></td>
                     <td><?php echo $res['date_updated']; ?></td>
                     <td>
-                      <?php if (in_array($res['status_id'], array(1, 2))) { ?>
-                        <form method="post" onsubmit="return confirm('Are You Sure?')">
+                      <form method="post" onsubmit="return confirm('Are You Sure?')">
+                        <?php if (in_array($res['status_id'], array(1, 2))) { ?>
                           <input type="hidden" name="id" value="<?php echo $res['invoice']; ?>">
                           <button type="submit" class="btn btn-sm btn-secondary" name="approve"> Approve </button>
                           <button type="submit" class="btn btn-sm btn-secondary" name="reject"> Reject </button>
-                          <!-- <button type="button" class="btn btn-sm btn-secondary"> View </button> -->
-                          <a href="order_view.php?id=<?php echo $res['invoice']; ?>" class="btn btn-sm btn-secondary btn-view"> View </a>
-                        </form>
-                      <?php } else { ?>
-                        <button type="button" class="btn btn-sm btn-secondary" disabled> Approve </button>
-                        <button type="button" class="btn btn-sm btn-secondary" disabled> Reject </button>
-                        <!-- <button type="button" class="btn btn-sm btn-secondary"> View </button> -->
-                        <a href="order_view.php?id=<?php echo $res['invoice']; ?>" class="btn btn-sm btn-secondary btn-view"> View </a>
-                      <?php } ?>
+                          <button type="button" class="btn btn-sm btn-secondary"> View </button>
+                          <!-- <a href="order_view.php?id=<?php echo $res['invoice']; ?>" class="btn btn-sm btn-secondary btn-view"> View </a> -->
+                        <?php } else { ?>
+                          <input type="hidden" name="id" value="<?php echo $res['invoice']; ?>">
+                          <button type="button" class="btn btn-sm btn-secondary" disabled> Approve </button>
+                          <button type="submit" class="btn btn-sm btn-secondary"> Reject </button>
+                          <button type="button" class="btn btn-sm btn-secondary"> View </button>
+                          <!--    <a href="order_view.php?id=<?php echo $res['invoice']; ?>" class="btn btn-sm btn-secondary btn-view"> View </a> -->
+                        <?php } ?>
+                      </form>
                     </td>
                   </tr>
                 <?php } ?>

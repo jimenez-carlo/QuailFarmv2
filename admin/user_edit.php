@@ -29,7 +29,7 @@ echo isset($_POST['update']) ? update($_POST) : '';
 <main class="content">
   <div class="container-fluid p-0">
 
-    <h1 class="h3 mb-3"><strong>Edit Customer ID#<?= $id ?> </strong> <a href="customer.php" class="btn btn-sm btn-secondary" style="float:right"> Back</a></h1>
+    <h1 class="h3 mb-3"><strong>Edit Customer ID#<?= $id ?> </strong> <a href="user.php" class="btn btn-sm btn-secondary" style="float:right"> Back</a></h1>
     <form method="post" onSubmit="return confirm('Are You Sure?') ">
       <input type="hidden" name="id" value="<?= $id ?>">
       <div class="card">
@@ -39,7 +39,7 @@ echo isset($_POST['update']) ? update($_POST) : '';
             <div class="row">
               <div class="col-md-6">
                 <label for="password" class="form-label">*Username</label>
-                <input type="text" class="form-control form-control-sm" id="username" name="username" placeholder="John Doe" required value="<?= isset($_POST['update']) ? $_POST['username'] : $info->username; ?>">
+                <input type="text" class="form-control form-control-sm" id="username" name="username" placeholder="username" required value="<?= isset($_POST['update']) ? $_POST['username'] : $info->username; ?>">
               </div>
 
               <div class="col-md-6">
@@ -66,6 +66,21 @@ echo isset($_POST['update']) ? update($_POST) : '';
                 <label for="lastname" class="form-label">*Last Name</label>
                 <input type="text" class="form-control form-control-sm" id="lastname" required name="lastname" placeholder="lastname" value="<?= isset($_POST['update']) ? $_POST['lastname'] : $info->last_name; ?>">
               </div>
+
+              <div class="col-md-6">
+                <label for="contact" class="form-label">*Gender</label>
+                <select class="form-select form-select-sm" aria-label=".form-select-lg example" id="gender" required name="gender" style="width: 100%;">
+                  <?php foreach (get_list("select * from tbl_gender") as $res) {
+                    echo '<option value="' . $res['id'] . '"  ' . ((isset($_POST['update']) && $res['id'] == $_POST['gender']) ? 'selected' : '') . ' >' . $res['gender'] . '</option>';
+                  } ?>
+                </select>
+
+              </div>
+              <div class="col-md-6">
+                <label for="contact" class="form-label">*Contact No</label>
+                <input type="text" class="form-control form-control-sm" id="contact" required name="contact" placeholder="09xxxxxxxxx" value="<?= isset($_POST['update']) ? $_POST['contact'] : $info->contact_no; ?>">
+              </div>
+              
               <div class="col-md-4">
                 <div class="col-md-12">
                   <label for="lastname" class="form-label">*Province</label>
@@ -84,19 +99,7 @@ echo isset($_POST['update']) ? update($_POST) : '';
                   <input type="text" class="form-control form-control-sm" id="barangay" required name="barangay" placeholder="barangay" value="<?= isset($_POST['update']) ? $_POST['barangay'] : $info->barangay; ?>">
                 </div>
               </div>
-              <div class="col-md-6">
-                <label for="contact" class="form-label">*Gender</label>
-                <select class="form-select form-select-sm" aria-label=".form-select-lg example" id="gender" required name="gender" style="width: 100%;">
-                  <?php foreach (get_list("select * from tbl_gender") as $res) {
-                    echo '<option value="' . $res['id'] . '"  ' . ((isset($_POST['update']) && $res['id'] == $_POST['gender']) ? 'selected' : '') . ' >' . $res['gender'] . '</option>';
-                  } ?>
-                </select>
-
-              </div>
-              <div class="col-md-6">
-                <label for="contact" class="form-label">*Contact No</label>
-                <input type="text" class="form-control form-control-sm" id="contact" required name="contact" placeholder="09xxxxxxxxx" value="<?= isset($_POST['update']) ? $_POST['contact'] : $info->contact_no; ?>">
-              </div>
+              
               <div class="col-md-12 mt-3">
                 <div class="pull-right">
                   <button type="submit" name="update" class="btn btn-sm btn-secondary">Update </button>

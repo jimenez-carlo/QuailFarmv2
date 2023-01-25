@@ -40,6 +40,7 @@ if (isset($_SESSION['user'])) {
 
           <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'products') !== false || strpos($_SERVER['REQUEST_URI'], 'category') !== false) ? 'active' : '' ?>">
             <a class="sidebar-link" href="products.php">
+              <!-- <a class="sidebar-link" href="category.php?filter=all"> -->
               <i class="align-middle" data-feather="tag"></i> <span class="align-middle">Products</span>
             </a>
           </li>
@@ -56,11 +57,11 @@ if (isset($_SESSION['user'])) {
             </a>
           </li>
 
-          <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'profile') !== false) ? 'active' : '' ?>">
+          <!--   <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'profile') !== false) ? 'active' : '' ?>">
             <a class="sidebar-link" href="profile.php">
               <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
             </a>
-          </li>
+          </li> -->
 
       </div>
     </nav>
@@ -83,8 +84,11 @@ if (isset($_SESSION['user'])) {
               <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
                 <img src="img/avatars/avatar.jpg" class="avatar img-fluid rounded me-1" alt="Charles Hall" /> <span class="text-dark"><?= $_SESSION['user']->first_name . " " . $_SESSION['user']->last_name ?></span>
               </a>
+
               <div class="dropdown-menu dropdown-menu-end">
+                <a class="dropdown-item" href="../customer/profile.php">Profile</a>
                 <a class="dropdown-item" href="../logout.php">Log out</a>
+
               </div>
             </li>
           </ul>

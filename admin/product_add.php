@@ -25,7 +25,7 @@ echo isset($_POST['register']) ? register(array_merge($_POST, $_FILES)) : '';
 <main class="content">
   <div class="container-fluid p-0">
 
-    <h1 class="h3 mb-3"><strong>Add Product</strong> <a href="products.php" class="btn btn-sm btn-secondary" style="float:right"> Back</a></h1>
+    <h1 class="h3 mb-3"><strong>Add Product </strong> <a href="product.php" class="btn btn-sm btn-secondary" style="float:right"> Back</a></h1>
     <form method="post" onSubmit="return confirm('Are You Sure?') " enctype="multipart/form-data">
       <div class="card">
 

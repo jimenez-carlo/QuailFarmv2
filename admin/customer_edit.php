@@ -39,7 +39,7 @@ echo isset($_POST['register']) ? update($_POST) : '';
             <div class="row">
               <div class="col-md-6">
                 <label for="password" class="form-label">*Username</label>
-                <input type="text" class="form-control form-control-sm" id="username" name="username" placeholder="John Doe" required value="<?= isset($_POST['update']) ? $_POST['username'] : $info->username; ?>">
+                <input type="text" class="form-control form-control-sm" id="username" name="username" placeholder="Username" required value="<?= isset($_POST['update']) ? $_POST['username'] : $info->username; ?>">
               </div>
               <div class="col-md-6">
                 <label for="email" class="form-label">*Access</label>
@@ -64,6 +64,19 @@ echo isset($_POST['register']) ? update($_POST) : '';
               </div>
 
 
+              <div class="col-md-6">
+                <label for="contact" class="form-label">*Gender</label>
+                <select class="form-select form-select-sm" aria-label=".form-select-lg example" id="gender" required name="gender" style="width: 100%;">
+                  <?php foreach (get_list("select * from tbl_gender") as $res) {
+                    echo '<option value="' . $res['id'] . '"  ' . ((isset($_POST['update']) && $res['id'] == $_POST['gender']) ? 'selected' : '') . ' >' . $res['gender'] . '</option>';
+                  } ?>
+                </select>
+
+              </div>
+              <div class="col-md-6">
+                <label for="contact" class="form-label">*Contact No</label>
+                <input type="text" class="form-control form-control-sm" id="contact" required name="contact" placeholder="09xxxxxxxxx" value="<?= isset($_POST['update']) ? $_POST['contact'] : $info->contact_no; ?>">
+              </div>
               <div class="col-md-4">
                 <div class="col-md-12">
                   <label for="lastname" class="form-label">*Province</label>
@@ -82,20 +95,6 @@ echo isset($_POST['register']) ? update($_POST) : '';
                   <input type="text" class="form-control form-control-sm" id="barangay" required name="barangay" placeholder="barangay" value="<?= isset($_POST['update']) ? $_POST['barangay'] : $info->barangay; ?>">
                 </div>
               </div>
-              <div class="col-md-6">
-                <label for="contact" class="form-label">*Gender</label>
-                <select class="form-select form-select-sm" aria-label=".form-select-lg example" id="gender" required name="gender" style="width: 100%;">
-                  <?php foreach (get_list("select * from tbl_gender") as $res) {
-                    echo '<option value="' . $res['id'] . '"  ' . ((isset($_POST['update']) && $res['id'] == $_POST['gender']) ? 'selected' : '') . ' >' . $res['gender'] . '</option>';
-                  } ?>
-                </select>
-
-              </div>
-              <div class="col-md-6">
-                <label for="contact" class="form-label">*Contact No</label>
-                <input type="text" class="form-control form-control-sm" id="contact" required name="contact" placeholder="09xxxxxxxxx" value="<?= isset($_POST['update']) ? $_POST['contact'] : $info->contact_no; ?>">
-              </div>
-
 
               <div class="col-md-12 mt-3">
                 <div class="pull-right">

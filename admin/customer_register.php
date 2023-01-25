@@ -38,7 +38,7 @@ echo isset($_POST['register']) ? register($_POST) : '';
             <div class="row">
               <div class="col-md-6">
                 <label for="password" class="form-label">*Username</label>
-                <input type="text" class="form-control form-control-sm" id="username" name="username" placeholder="John Doe" required value="<?= isset($_POST['register']) ? $_POST['username'] : ''; ?>">
+                <input type="text" class="form-control form-control-sm" id="username" name="username" placeholder="username" required value="<?= isset($_POST['register']) ? $_POST['username'] : ''; ?>">
               </div>
               <div class="col-md-6">
                 <label for="email" class="form-label">*Access</label>
@@ -61,6 +61,20 @@ echo isset($_POST['register']) ? register($_POST) : '';
                 <label for="lastname" class="form-label">*Last Name</label>
                 <input type="text" class="form-control form-control-sm" id="lastname" required name="lastname" placeholder="lastname" value="<?= isset($_POST['register']) ? $_POST['lastname'] : ''; ?>">
               </div>
+              
+              <div class="col-md-6">
+                <label for="contact" class="form-label">*Gender</label>
+                <select class="form-select form-select-sm" aria-label=".form-select-lg example" id="gender" required name="gender" style="width: 100%;">
+                  <?php foreach (get_list("select * from tbl_gender") as $res) {
+                    echo '<option value="' . $res['id'] . '"  ' . ((isset($_POST['register']) && $res['id'] == $_POST['gender']) ? 'selected' : '') . ' >' . $res['gender'] . '</option>';
+                  } ?>
+                </select>
+
+              </div>
+              <div class="col-md-6">
+                <label for="contact" class="form-label">*Contact No</label>
+                <input type="text" class="form-control form-control-sm" id="contact" required name="contact" placeholder="09xxxxxxxxx" value="<?= isset($_POST['register']) ? $_POST['contact'] : ''; ?>">
+              </div>
               <div class="col-md-4">
                 <div class="col-md-12">
                   <label for="lastname" class="form-label">*Province</label>
@@ -78,19 +92,6 @@ echo isset($_POST['register']) ? register($_POST) : '';
                   <label for="lastname" class="form-label">*Barangay</label>
                   <input type="text" class="form-control form-control-sm" id="barangay" required name="barangay" placeholder="barangay" value="<?= isset($_POST['register']) ? $_POST['barangay'] : ''; ?>">
                 </div>
-              </div>
-              <div class="col-md-6">
-                <label for="contact" class="form-label">*Gender</label>
-                <select class="form-select form-select-sm" aria-label=".form-select-lg example" id="gender" required name="gender" style="width: 100%;">
-                  <?php foreach (get_list("select * from tbl_gender") as $res) {
-                    echo '<option value="' . $res['id'] . '"  ' . ((isset($_POST['register']) && $res['id'] == $_POST['gender']) ? 'selected' : '') . ' >' . $res['gender'] . '</option>';
-                  } ?>
-                </select>
-
-              </div>
-              <div class="col-md-6">
-                <label for="contact" class="form-label">*Contact No</label>
-                <input type="text" class="form-control form-control-sm" id="contact" required name="contact" placeholder="09xxxxxxxxx" value="<?= isset($_POST['register']) ? $_POST['contact'] : ''; ?>">
               </div>
 
 
