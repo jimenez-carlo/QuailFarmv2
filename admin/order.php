@@ -89,7 +89,7 @@ echo isset($_POST['reject']) ? update_order($_POST['id'], 6) : '';
                         <?php } else { ?>
                           <input type="hidden" name="id" value="<?php echo $res['invoice']; ?>">
                           <button type="button" class="btn btn-sm btn-secondary" disabled> Approve </button>
-                          <button type="submit" class="btn btn-sm btn-secondary"> Reject </button>
+                          <button type="submit" class="btn btn-sm btn-secondary" disabled> Reject </button>
                           <button type="button" class="btn btn-sm btn-secondary"> View </button>
                           <!--    <a href="order_view.php?id=<?php echo $res['invoice']; ?>" class="btn btn-sm btn-secondary btn-view"> View </a> -->
                         <?php } ?>
