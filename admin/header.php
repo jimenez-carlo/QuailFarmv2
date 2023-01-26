@@ -36,68 +36,117 @@ if (isset($_SESSION['user'])) {
         </a>
 
         <ul class="sidebar-nav">
+          <?php if (in_array($_SESSION['user']->access_id, array(1, 5))) { ?>
+            <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'index') !== false) ? 'active' : '' ?>">
+              <a class="sidebar-link" href="index.php">
+                <i class="align-middle" data-feather="home"></i> <span class="align-middle">Dashboard</span>
+              </a>
+            </li>
 
+            <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'customer') !== false) ? 'active' : '' ?>">
+              <a class="sidebar-link" href="customer.php">
+                <i class="align-middle" data-feather="users"></i> <span class="align-middle">Customer's Accounts</span>
+              </a>
+            </li>
 
-          <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'index') !== false) ? 'active' : '' ?>">
-            <a class="sidebar-link" href="index.php">
-              <i class="align-middle" data-feather="home"></i> <span class="align-middle">Dashboard</span>
-            </a>
-          </li>
+            <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'user') !== false) ? 'active' : '' ?>">
+              <a class="sidebar-link" href="user.php">
+                <i class="align-middle" data-feather="users"></i> <span class="align-middle">Users Account</span>
+              </a>
+            </li>
 
-          <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'customer') !== false) ? 'active' : '' ?>">
-            <a class="sidebar-link" href="customer.php">
-              <i class="align-middle" data-feather="users"></i> <span class="align-middle">Customer's Accounts</span>
-            </a>
-          </li>
+            <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'category') !== false || strpos($_SERVER['REQUEST_URI'], 'category_edit') !== false) ? 'active' : '' ?>">
+              <a class="sidebar-link" href="category.php">
+                <i class="align-middle" data-feather="layers"></i> <span class="align-middle">Categories</span>
+              </a>
+            </li>
 
-          <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'user') !== false) ? 'active' : '' ?>">
-            <a class="sidebar-link" href="user.php">
-              <i class="align-middle" data-feather="users"></i> <span class="align-middle">Users Account</span>
-            </a>
-          </li>
+            <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'product') !== false || strpos($_SERVER['REQUEST_URI'], 'product_edit') !== false) ? 'active' : '' ?>">
+              <a class="sidebar-link" href="product.php">
+                <i class="align-middle" data-feather="tag"></i> <span class="align-middle">Products</span>
+              </a>
+            </li>
 
-          <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'category') !== false || strpos($_SERVER['REQUEST_URI'], 'category_edit') !== false) ? 'active' : '' ?>">
-            <a class="sidebar-link" href="category.php">
-              <i class="align-middle" data-feather="layers"></i> <span class="align-middle">Categories</span>
-            </a>
-          </li>
+            <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'inventory') !== false || strpos($_SERVER['REQUEST_URI'], 'inventory_edit') !== false) ? 'active' : '' ?>">
+              <a class="sidebar-link" href="inventory.php">
+                <i class="align-middle" data-feather="package"></i> <span class="align-middle">Inventory</span>
+              </a>
+            </li>
 
-          <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'product') !== false || strpos($_SERVER['REQUEST_URI'], 'product_edit') !== false) ? 'active' : '' ?>">
-            <a class="sidebar-link" href="product.php">
-              <i class="align-middle" data-feather="tag"></i> <span class="align-middle">Products</span>
-            </a>
-          </li>
+            <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'order') !== false || strpos($_SERVER['REQUEST_URI'], 'order_view') !== false) ? 'active' : '' ?>">
+              <a class="sidebar-link" href="order.php">
+                <i class="align-middle" data-feather="shopping-bag"></i> <span class="align-middle">Orders</span>
+              </a>
+            </li>
 
-          <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'inventory') !== false || strpos($_SERVER['REQUEST_URI'], 'inventory_edit') !== false) ? 'active' : '' ?>">
-            <a class="sidebar-link" href="inventory.php">
-              <i class="align-middle" data-feather="package"></i> <span class="align-middle">Inventory</span>
-            </a>
-          </li>
-
-          <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'order') !== false || strpos($_SERVER['REQUEST_URI'], 'order_view') !== false) ? 'active' : '' ?>">
-            <a class="sidebar-link" href="order.php">
-              <i class="align-middle" data-feather="shopping-bag"></i> <span class="align-middle">Orders</span>
-            </a>
-          </li>
-
-          <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'report') !== false || strpos($_SERVER['REQUEST_URI'], 'report_edit') !== false) ? 'active' : '' ?>">
-            <a class="sidebar-link" href="report.php">
-              <i class="align-middle" data-feather="file"></i> <span class="align-middle">Reports</span>
-            </a>
-          </li>
-          <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'walkin') !== false || strpos($_SERVER['REQUEST_URI'], 'walkin_edit') !== false) ? 'active' : '' ?>">
-            <a class="sidebar-link" href="walkin.php">
-              <i class="align-middle" data-feather="monitor"></i> <span class="align-middle">Walkin</span>
-            </a>
-          </li>
-          <!-- <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'profile') !== false || strpos($_SERVER['REQUEST_URI'], 'profile_edit') !== false) ? 'active' : '' ?>">
+            <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'report') !== false || strpos($_SERVER['REQUEST_URI'], 'report_edit') !== false) ? 'active' : '' ?>">
+              <a class="sidebar-link" href="report.php">
+                <i class="align-middle" data-feather="file"></i> <span class="align-middle">Reports</span>
+              </a>
+            </li>
+            <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'walkin') !== false || strpos($_SERVER['REQUEST_URI'], 'walkin_edit') !== false) ? 'active' : '' ?>">
+              <a class="sidebar-link" href="walkin.php">
+                <i class="align-middle" data-feather="monitor"></i> <span class="align-middle">Walkin</span>
+              </a>
+            </li>
+            <!-- <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'profile') !== false || strpos($_SERVER['REQUEST_URI'], 'profile_edit') !== false) ? 'active' : '' ?>">
             <a class="sidebar-link" href="profile.php">
               <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
             </a>
           </li>
  -->
 
+          <?php } else { ?>
 
+            <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'index') !== false) ? 'active' : '' ?>">
+              <a class="sidebar-link" href="index.php">
+                <i class="align-middle" data-feather="home"></i> <span class="align-middle">Dashboard</span>
+              </a>
+            </li>
+
+
+
+            <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'category') !== false || strpos($_SERVER['REQUEST_URI'], 'category_edit') !== false) ? 'active' : '' ?>">
+              <a class="sidebar-link" href="category.php">
+                <i class="align-middle" data-feather="layers"></i> <span class="align-middle">Categories</span>
+              </a>
+            </li>
+
+            <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'product') !== false || strpos($_SERVER['REQUEST_URI'], 'product_edit') !== false) ? 'active' : '' ?>">
+              <a class="sidebar-link" href="product.php">
+                <i class="align-middle" data-feather="tag"></i> <span class="align-middle">Products</span>
+              </a>
+            </li>
+
+            <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'inventory') !== false || strpos($_SERVER['REQUEST_URI'], 'inventory_edit') !== false) ? 'active' : '' ?>">
+              <a class="sidebar-link" href="inventory.php">
+                <i class="align-middle" data-feather="package"></i> <span class="align-middle">Inventory</span>
+              </a>
+            </li>
+
+            <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'order') !== false || strpos($_SERVER['REQUEST_URI'], 'order_view') !== false) ? 'active' : '' ?>">
+              <a class="sidebar-link" href="order.php">
+                <i class="align-middle" data-feather="shopping-bag"></i> <span class="align-middle">Orders</span>
+              </a>
+            </li>
+
+            <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'report') !== false || strpos($_SERVER['REQUEST_URI'], 'report_edit') !== false) ? 'active' : '' ?>">
+              <a class="sidebar-link" href="report.php">
+                <i class="align-middle" data-feather="file"></i> <span class="align-middle">Reports</span>
+              </a>
+            </li>
+            <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'walkin') !== false || strpos($_SERVER['REQUEST_URI'], 'walkin_edit') !== false) ? 'active' : '' ?>">
+              <a class="sidebar-link" href="walkin.php">
+                <i class="align-middle" data-feather="monitor"></i> <span class="align-middle">Walkin</span>
+              </a>
+            </li>
+            <!-- <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'profile') !== false || strpos($_SERVER['REQUEST_URI'], 'profile_edit') !== false) ? 'active' : '' ?>">
+            <a class="sidebar-link" href="profile.php">
+              <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
+            </a>
+          </li>
+ -->
+          <?php } ?>
       </div>
     </nav>
 
