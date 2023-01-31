@@ -105,7 +105,7 @@ $actual_invoice = get_one("SELECT * FROM tbl_invoice where invoice = '$id' limit
 <main class="content">
   <div class="container-fluid p-0">
 
-    <h1 class="h3 mb-3"><strong> Order #<?php echo reset($transactions)['invoice']; ?></strong> <a href="order.php" class="btn btn-sm btn-secondary" style="float:right"> Back</a></h1>
+    <h1 class="h3 mb-3"><strong> Order #<?php echo reset($transactions)['invoice']; ?></strong> <a href="order.php" class="btn btn-sm btn-secondary float-end"> Back</a></h1>
     <div class="card">
 
       <div class="card-header">

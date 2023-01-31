@@ -22,7 +22,7 @@ echo isset($_POST['delete']) ? delete($_POST) : '';
             <table class="table table-sm table-striped table-hover table-bordered">
               <thead class="table-secondary">
                 <tr>
-                  <th scope="col">ID#</th>
+                  <!-- <th scope="col">ID#</th> -->
                   <th scope="col">Access</th>
                   <th scope="col">Username</th>
                   <!-- <th scope="col">Email</th> -->
@@ -36,7 +36,7 @@ echo isset($_POST['delete']) ? delete($_POST) : '';
               <tbody>
                 <?php foreach (get_list("select g.gender,UPPER(a.name) as 'access',ui.*,u.* from tbl_users u inner join tbl_users_info ui on ui.id = u.id inner join tbl_access a on a.id = u.access_id inner join tbl_gender g on g.id = ui.gender_id and u.is_deleted = 0 where u.access_id != 3") as $res) { ?>
                   <tr>
-                    <td><?php echo $res['id']; ?></td>
+                    <!-- <td><?php echo $res['id']; ?></td> -->
                     <td><span class="badge bg-secondary text-light"><?php echo $res['access']; ?></span></td>
                     <td><?php echo $res['username']; ?></td>
                     <!-- <td><?php echo $res['email']; ?></td> -->

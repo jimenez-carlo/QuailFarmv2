@@ -29,7 +29,7 @@ echo isset($_POST['re_stock']) ? re_stock($_POST) : '';
             <table class="table table-sm table-striped table-hover table-bordered">
               <thead class="table-secondary">
                 <tr>
-                  <th scope="col">PID#</th>
+                  <!-- <th scope="col">PID#</th> -->
                   <th scope="col">Name</th>
                   <th scope="col">Stock</th>
                   <th scope="col">Price</th>
@@ -40,7 +40,7 @@ echo isset($_POST['re_stock']) ? re_stock($_POST) : '';
               <tbody>
                 <?php foreach (get_list("select i.qty,p.* from tbl_product p inner join tbl_inventory i on i.product_id = p.id where is_deleted = 0") as $res) { ?>
                   <tr>
-                    <td><?php echo $res['id']; ?></td>
+                    <!-- <td><?php echo $res['id']; ?></td> -->
                     <td><?php echo $res['name']; ?></td>
                     <td class="text-end"><?php echo $res['qty']; ?></td>
                     <td class="text-end"><?php echo $res['price']; ?></td>

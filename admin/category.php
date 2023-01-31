@@ -22,7 +22,7 @@ echo isset($_POST['delete']) ? delete($_POST) : '';
             <table class="table table-sm table-striped table-hover table-bordered">
               <thead class="table-secondary">
                 <tr>
-                  <th scope="col">ID#</th>
+                  <!-- <th scope="col">ID#</th> -->
                   <th scope="col">Name</th>
                   <th scope="col">Date Created</th>
                   <th scope="col">Actions</th>
@@ -31,7 +31,7 @@ echo isset($_POST['delete']) ? delete($_POST) : '';
               <tbody>
                 <?php foreach (get_list("select * from tbl_category where is_deleted = 0") as $res) { ?>
                   <tr>
-                    <td><?php echo $res['id']; ?></td>
+                    <!-- <td><?php echo $res['id']; ?></td> -->
                     <td><?php echo $res['name']; ?></td>
                     <td><?php echo $res['date_created']; ?></td>
                     <td style="width: 25%;">
