@@ -11,15 +11,14 @@
    <div class="container" id="tutorial">
       <!-- eto copy mo -->
       <div class="row d_flex">
-         <div class="col-md-7">
+         <!-- <div class="col-md-7">
             <div class="hottest_box" style="color:white">
 
-               <img src="https://cdn.download.ams.birds.cornell.edu/api/v1/asset/241998281/1800" alt="">
 
 
             </div>
-         </div>
-         <div class="col-md-5">
+         </div> -->
+         <div class="col-md-12">
             <div class="titlepage hottest_box">
                <h2>Tutorial<br>Here!</h2>
                <p>
@@ -40,22 +39,7 @@
       </div>
       <!-- hanngang dito -->
 
-      <br>
-      <div class="row d_flex">
-         <div class="col-md-7">
-            <div class="hottest_box" style="color:white">
-               Female quails start laying eggs from their 6 to 7 weeks of age
-               At present there are 18 species of quails are available, which are very suitable for profitable quail farming business. Some of these breeds are famous for egg production and some are popular for meat production. According to their production, quail breeds are of two types such as broilers and layers. Here we have stated some popular broiler and layer quail breeds.
 
-            </div>
-         </div>
-         <div class="col-md-5">
-            <div class="titlepage">
-               <h2>Tutorial<br>Here!</h2>
-            </div>
-         </div>
-
-      </div>
    </div>
 </div>
 <br>

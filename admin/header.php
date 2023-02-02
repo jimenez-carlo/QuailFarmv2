@@ -140,6 +140,7 @@ if (isset($_SESSION['user'])) {
                 <i class="align-middle" data-feather="monitor"></i> <span class="align-middle">Walkin</span>
               </a>
             </li>
+
             <!-- <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'profile') !== false || strpos($_SERVER['REQUEST_URI'], 'profile_edit') !== false) ? 'active' : '' ?>">
             <a class="sidebar-link" href="profile.php">
               <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
