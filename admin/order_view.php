@@ -179,7 +179,7 @@ $actual_invoice = get_one("SELECT * FROM tbl_invoice where invoice = '$id' limit
                 </tbody>
               </table>
             </div>
-
+            <!-- 
             <div class="row">
               <div class="col-md-4">
                 <label for="" class="form-label">Total</label>
@@ -210,7 +210,7 @@ $actual_invoice = get_one("SELECT * FROM tbl_invoice where invoice = '$id' limit
                 <input type="text" class="form-control form-control-sm" disabled id="change" value="<?= ($actual_invoice->paid_status_id == 2) ? $actual_invoice->change : 0 ?>">
               </div>
 
-            </div>
+            </div> -->
 
             <div class="col-md-12 mt-3">
               <div class="pull-right">
@@ -235,7 +235,7 @@ $actual_invoice = get_one("SELECT * FROM tbl_invoice where invoice = '$id' limit
 
     <!-- <input type="hidden" id="product_id" name="product_id" requireds value="<?php echo $product->id; ?>"> -->
 
-    <div class="card">
+    <!-- <div class="card">
       <div class="card-header">
         <h5 class="card-title mb-0">Customer Details</h5>
       </div>
@@ -296,7 +296,7 @@ $actual_invoice = get_one("SELECT * FROM tbl_invoice where invoice = '$id' limit
         </div>
 
       </div>
-    </div>
+    </div> -->
   </div>
 </main>
 <script>

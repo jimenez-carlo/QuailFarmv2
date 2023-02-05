@@ -3,7 +3,7 @@
     <div class="row text-muted">
       <div class="col-6 text-start">
         <p class="mb-0">
-          <a class="text-muted" href="#" target="_blank"><strong>Quail Farm</strong></a> &copy;2021
+          <a class="text-muted" href="#" target="_blank"><strong>Quail Farm</strong></a>
         </p>
       </div>
 
