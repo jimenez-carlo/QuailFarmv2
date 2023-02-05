@@ -13,6 +13,14 @@ function update_order($id, $status)
     $transaction_id = $res['id'];
     query("update tbl_transactions set status_id = $status, seller_id = '$created_by' where id = $transaction_id");
     query("insert into tbl_status_history (transaction_id, status_id, created_by) values('$transaction_id', '$status', '$created_by')");
+    if ($status == 3) {
+      $trxn = get_one("select product_id,qty from tbl_transactions where id = '$transaction_id'");
+      $quantity = $trxn->qty;
+      $prd_id = $trxn->product_id;
+      $original_qty = get_one("select * from tbl_inventory where product_id = $prd_id")->qty;
+      query("update tbl_inventory set qty = qty - $quantity where product_id = $prd_id");
+      query("insert into tbl_inventory_history (product_id,original_qty,qty,created_by) values($prd_id,$original_qty,-$quantity,'$created_by')");
+    }
   }
 
 
@@ -84,14 +92,14 @@ echo isset($_POST['reject']) ? update_order($_POST['id'], 6) : '';
                           <input type="hidden" name="id" value="<?php echo $res['invoice']; ?>">
                           <button type="submit" class="btn btn-sm btn-secondary" name="approve"> Approve </button>
                           <button type="submit" class="btn btn-sm btn-secondary" name="reject"> Reject </button>
-                          <button type="button" class="btn btn-sm btn-secondary"> View </button>
-                          <!-- <a href="order_view.php?id=<?php echo $res['invoice']; ?>" class="btn btn-sm btn-secondary btn-view"> View </a> -->
+                          <!-- <button type="button" class="btn btn-sm btn-secondary"> View </button> -->
+                          <a href="order_view.php?id=<?php echo $res['invoice']; ?>" class="btn btn-sm btn-secondary btn-view"> View </a>
                         <?php } else { ?>
                           <input type="hidden" name="id" value="<?php echo $res['invoice']; ?>">
                           <button type="button" class="btn btn-sm btn-secondary" disabled> Approve </button>
                           <button type="submit" class="btn btn-sm btn-secondary" disabled> Reject </button>
-                          <button type="button" class="btn btn-sm btn-secondary"> View </button>
-                          <!--    <a href="order_view.php?id=<?php echo $res['invoice']; ?>" class="btn btn-sm btn-secondary btn-view"> View </a> -->
+                          <!-- <button type="button" class="btn btn-sm btn-secondary"> View </button> -->
+                          <a href="order_view.php?id=<?php echo $res['invoice']; ?>" class="btn btn-sm btn-secondary btn-view"> View </a>
                         <?php } ?>
                       </form>
                     </td>

@@ -5,7 +5,7 @@ $host = "localhost";
 $username = "root";
 $password = "";
 $database = "db_menor";
-$base_url = "http://localhost/Quailfarmv2/";
+$base_url = "http://localhost/QuailFarmv2/";
 $conn = mysqli_connect($host, $username, $password, $database);
 
 if (!$conn) {

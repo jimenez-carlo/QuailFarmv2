@@ -12,7 +12,9 @@ function update($data)
     return alert("Product Name Already In-Used!");
   }
 
-  $image_name = 'default.png';
+  
+$info = get_one("SELECT * from tbl_product p WHERE is_deleted = 0 and p.id = $id");
+  $image_name = $info->image;
   if ($_FILES['image']['error'] == 0) {
     $image_name = 'image_' . date('YmdHis') . '.jpeg';
     move_uploaded_file($_FILES["image"]["tmp_name"],   '../images/products/' . $image_name);

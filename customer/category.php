@@ -3,7 +3,7 @@
 $filter = $_GET['filter'];
 $where = '';
 $where .= ($filter == 'all') ? '' : "and c.name LIKE '%$filter%'";
-$data['inventory'] = get_list("select i.qty,p.* from tbl_product p inner join tbl_inventory i on i.product_id = p.id inner join tbl_category c on c.id = p.category_id where 1 = 1 and p.is_deleted = 0 $where");
+$data['inventory'] = get_list("select i.qty,p.* from tbl_product p inner join tbl_inventory i on i.product_id = p.id inner join tbl_category c on c.id = p.category_id where 1 = 1  and i.qty > 0 and p.is_deleted = 0 $where");
 
 
 function add_to_cart($data)

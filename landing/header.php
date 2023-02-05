@@ -83,9 +83,11 @@ if (isset($_SESSION['user'])) {
 
     .logo::after {
       /* tangaling yung logo */
-      /* display: none; */
+      display: none;
     }
-
+  .logo{
+    padding-left: 0px;
+  }
     .header {
       font-family: arial;
     }
