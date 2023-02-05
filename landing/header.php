@@ -85,9 +85,11 @@ if (isset($_SESSION['user'])) {
       /* tangaling yung logo */
       display: none;
     }
-  .logo{
-    padding-left: 0px;
-  }
+
+    .logo {
+      padding-left: 0px;
+    }
+
     .header {
       font-family: arial;
     }
@@ -142,9 +144,9 @@ if (isset($_SESSION['user'])) {
                   <li class="nav-item active">
                     <a class="nav-link" href="contact.php">Contact</a>
                   </li>
-                  <li class="nav-item active">
+                  <!-- <li class="nav-item active">
                     <a class="nav-link" href="about_us.php">About Us</a>
-                  </li>
+                  </li> -->
                   <li class=" d_none get_btn">
                     <a href="login.php">Login</a>
                   </li>
