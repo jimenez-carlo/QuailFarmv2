@@ -21,6 +21,14 @@ function update_order($id, $status)
     $transaction_id = $res['id'];
     query("update tbl_transactions set status_id = $status, seller_id = '$created_by' where id = $transaction_id");
     query("insert into tbl_status_history (transaction_id, status_id, created_by) values('$transaction_id', '$status', '$created_by')");
+    if ($status == 3) {
+      $trxn = get_one("select product_id,qty from tbl_transactions where id = '$transaction_id'");
+      $quantity = $trxn->qty;
+      $prd_id = $trxn->product_id;
+      $original_qty = get_one("select * from tbl_inventory where product_id = $prd_id")->qty;
+      query("update tbl_inventory set qty = qty - $quantity where product_id = $prd_id");
+      query("insert into tbl_inventory_history (product_id,original_qty,qty,created_by) values($prd_id,$original_qty,-$quantity,'$created_by')");
+    }
   }
 
 
@@ -39,8 +47,8 @@ function update_order($id, $status)
     'cancelled' => 6,
     'rejected' => 7
   );
-
   $new_invoice_status = (($transaction_count->cancelled == $transaction_count->approved && $transaction_count->approved > 0) || ($transaction_count->rejected == $transaction_count->approved && $transaction_count->approved > 0)) ? 3 : $status[$max_transaction_status[0]];
+
 
   // update invoice & insert invoice history
   query("update tbl_invoice set status_id = $new_invoice_status where id = $invoice_id ");
@@ -56,6 +64,15 @@ function update_item($id, $invoice_id, $status)
   $invoice_id = get_one("select id from tbl_invoice where invoice = $invoice_id")->id;
   query("update tbl_transactions set status_id = $status, seller_id = '$created_by' where id = $id");
   query("insert into tbl_status_history (transaction_id, status_id, created_by) values('$id', '$status', '$created_by')");
+
+  if ($status == 3) {
+    $trxn = get_one("select product_id,qty from tbl_transactions where id = '$id'");
+    $quantity = $trxn->qty;
+    $prd_id = $trxn->product_id;
+    $original_qty = get_one("select * from tbl_inventory where product_id = $prd_id")->qty;
+    query("update tbl_inventory set qty = qty - $quantity where product_id = $prd_id");
+    query("insert into tbl_inventory_history (product_id,original_qty,qty,created_by) values($prd_id,$original_qty,-$quantity,'$created_by')");
+  }
 
   $transaction_count = get_one("select sum(CASE WHEN status_id = 2 THEN 1 ELSE 0 END) AS `pending`,sum(CASE WHEN status_id = 3 THEN 1 ELSE 0 END) AS `approved`, sum(CASE WHEN status_id = 5 THEN 1 ELSE 0 END) AS `cancelled`, sum(CASE WHEN status_id = 6 THEN 1 ELSE 0 END) AS `rejected` from tbl_transactions where invoice_id = $invoice_id group by invoice_id");
 
