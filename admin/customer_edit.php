@@ -6,21 +6,21 @@ $info = get_one("SELECT * from tbl_users u inner join tbl_users_info ui on ui.id
 function update()
 {
   extract($data);
-  $check_username = get_one("select count(username) as `exists` from tbl_users where username = '$username' and id <> '$id' group by username limit 1");
+  // $check_username = get_one("select count(username) as `exists` from tbl_users where username = '$username' and id <> '$id' group by username limit 1");
 
   if (!empty($new_password) && !empty($re_password) && $new_password != $re_password) {
     return alert("New Password & Re-Type New Password Doest Not Match!");
   }
 
-  if (isset($check_username->exists) && !empty($check_username->exists)) {
-    return alert("Username Already In-Used!");
-  }
+  // if (isset($check_username->exists) && !empty($check_username->exists)) {
+  //   return alert("Username Already In-Used!");
+  // }
 
 
-  $password = password_hash($new_password, PASSWORD_DEFAULT);
+  // $password = password_hash($new_password, PASSWORD_DEFAULT);
 
   query("UPDATE tbl_users_info set first_name = '$firstname', last_name = '$lastname', contact_no = '$contact', gender_id = '$gender',province = '$province', city = '$city', barangay = '$barangay' where id = '$id'");
-  query("UPDATE tbl_users set username = '$username', password = '$password' where id = '$id'");
+  // query("UPDATE tbl_users set username = '$username', password = '$password' where id = '$id'");
   return alert("Customer Updated!");
 }
 
@@ -37,23 +37,7 @@ echo isset($_POST['register']) ? update($_POST) : '';
         <div class="card-body">
           <div class="container-fluid">
             <div class="row">
-              <div class="col-md-6">
-                <label for="password" class="form-label">*Username</label>
-                <input type="text" class="form-control form-control-sm" id="username" name="username" placeholder="Username" required value="<?= isset($_POST['update']) ? $_POST['username'] : $info->username; ?>">
-              </div>
-              <div class="col-md-6">
-                <label for="email" class="form-label">*Access</label>
-                <input type="text" class="form-control form-control-sm" id="email" name="email" value="Customer" disabled>
-                <input type="hidden" name="access" value="3">
-              </div>
-              <div class="col-md-6">
-                <label for="password" class="form-label">*Password</label>
-                <input type="password" class="form-control form-control-sm" id="new_password" name="new_password" placeholder="password" required value="<?= isset($_POST['update']) ? $_POST['new_password'] : '' ?>">
-              </div>
-              <div class="col-md-6">
-                <label for="password_retype" class="form-label">*Re-Type Password</label>
-                <input type="password" class="form-control form-control-sm" id="re_password" name="re_password" placeholder="re-type password" required value="<?= isset($_POST['update']) ? $_POST['re_password'] : '' ?>">
-              </div>
+
               <div class="col-md-6">
                 <label for="firstname" class="form-label">*First Name</label>
                 <input type="text" class="form-control form-control-sm" id="firstname" required name="firstname" placeholder="firstname" value="<?= isset($_POST['update']) ? $_POST['firstname'] : $info->first_name; ?>">

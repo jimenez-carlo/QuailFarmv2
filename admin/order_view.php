@@ -135,15 +135,15 @@ $actual_invoice = get_one("SELECT * FROM tbl_invoice where invoice = '$id' limit
               <table class="table table-sm table-striped table-hover table-bordered">
                 <thead class="table-secondary">
                   <tr>
-                    <th scope="col">TXN#</th>
-                    <th scope="col">Status</th>
-                    <!-- <th scope="col">PID#</th> -->
-                    <th scope="col">Product Name</th>
-                    <th scope="col">Product Price</th>
-                    <th scope="col">Qty</th>
-                    <th scope="col">Total Price</th>
-                    <th scope="col">Last Updated</th>
-                    <th scope="col"></th>
+                    <th scope="col" class="text-center">Product Name</th>
+                    <th scope="col" class="text-center">TXN#</th>
+                    <th scope="col" class="text-center">Status</th>
+                    <!-- <th scope="col" class="text-center">PID#</th> -->
+                    <th scope="col" class="text-center">Product Price</th>
+                    <th scope="col" class="text-center">Qty</th>
+                    <th scope="col" class="text-center">Total Price</th>
+                    <th scope="col" class="text-center">Last Updated</th>
+                    <th scope="col" class="text-center"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -155,15 +155,15 @@ $actual_invoice = get_one("SELECT * FROM tbl_invoice where invoice = '$id' limit
                   ?>
                   <?php foreach ($transactions as $res) { ?>
                     <tr>
-                      <td><?php echo $res['id']; ?></td>
-                      <td><?php echo strtoupper($res['status']); ?></td>
-                      <!-- <td><a href="#" class="a-view" name="product_edit" value="<?php echo $res['product_id']; ?>"><?php echo $res['product_id']; ?></a></td> -->
-                      <td><?php echo $res['name']; ?></td>
-                      <td class="text-end"><?php echo number_format($res['price'], 2); ?></td>
-                      <td class="text-end"><?php echo $res['qty']; ?></td>
-                      <td class="text-end"><?php echo number_format($res['total_price'], 2); ?></td>
-                      <td><?php echo $res['date_updated']; ?></td>
-                      <td> <?php if (in_array($res['status_id'], array(2))) { ?>
+                      <td class="text-center"><?php echo $res['name']; ?></td>
+                      <td class="text-center"><?php echo $res['id']; ?></td>
+                      <td class="text-center"><?php echo strtoupper($res['status']); ?></td>
+                      <!-- <td class="text-center"><a href="#" class="a-view" name="product_edit" value="<?php echo $res['product_id']; ?>"><?php echo $res['product_id']; ?></a></td> -->
+                      <td class="text-center"><?php echo number_format($res['price'], 2); ?></td>
+                      <td class="text-center"><?php echo $res['qty']; ?></td>
+                      <td class="text-center"><?php echo number_format($res['total_price'], 2); ?></td>
+                      <td class="text-center"><?php echo $res['date_updated']; ?></td>
+                      <td class="text-center"> <?php if (in_array($res['status_id'], array(2))) { ?>
                           <form method="post" onsubmit="return confirm('Are You Sure?')">
                             <input type="hidden" name="id" value="<?php echo $res['id']; ?>">
                             <input type="hidden" name="invoice_id" value="<?php echo reset($transactions)['invoice']; ?>">
@@ -185,13 +185,13 @@ $actual_invoice = get_one("SELECT * FROM tbl_invoice where invoice = '$id' limit
                   <?php } ?>
                   <tr class="fw-bold">
                     <td colspan="3">Grand Total</td>
-                    <td id="total_price" class="text-end"><?php //echo number_format($price, 2);  
-                                                          ?></td>
-                    <td id="total_qty" class="text-end"><?php //echo $qty; 
-                                                        ?></td>
-                    <td id="total_final_price" class="text-end"><?php echo number_format($total_price, 2); ?></td>
-                    <td></td>
-                    <td></td>
+                    <td id="total_price" class="text-center"><?php //echo number_format($price, 2);  
+                                                              ?></td>
+                    <td id="total_qty" class="text-center"><?php //echo $qty; 
+                                                            ?></td>
+                    <td id="total_final_price" class="text-center"><?php echo number_format($total_price, 2); ?></td>
+                    <td class="text-center"></td>
+                    <td class="text-center"></td>
                   </tr>
                 </tbody>
               </table>
@@ -289,21 +289,21 @@ $actual_invoice = get_one("SELECT * FROM tbl_invoice where invoice = '$id' limit
               <table class="table table-sm table-striped table-hover table-bordered">
                 <thead class="table-secondary">
                   <tr>
-                    <th scope="col">ID#</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Created By</th>
-                    <th scope="col">Date Created</th>
+                    <th scope="col" class="text-center">ID#</th>
+                    <th scope="col" class="text-center">Status</th>
+                    <th scope="col" class="text-center">Created By</th>
+                    <th scope="col" class="text-center">Date Created</th>
                   </tr>
                 </thead>
                 <tbody>
                   <?php foreach (get_list('select sh.date_created,sh.id,UPPER(s.status) as `status`,u.id as user_id,concat("(ID#",u.id,") ",u.last_name,", ", u.first_name) as `user`,ac.access_id FROM tbl_invoice_status_history sh inner join tbl_invoice_status s on s.id = sh.status_id inner join tbl_users_info u on u.id = sh.created_by inner join tbl_users ac on ac.id = sh.created_by where sh.invoice_id = ' . $invoice_id . ' order by id desc') as $res) { ?>
                     <tr>
-                      <td><?php echo $res['id']; ?></td>
-                      <td><?php echo $res['status']; ?></td>
-                      <td>
+                      <td class="text-center"><?php echo $res['id']; ?></td>
+                      <td class="text-center"><?php echo $res['status']; ?></td>
+                      <td class="text-center">
                         <a href="<?php echo ($res['access_id'] == 3) ? 'customer_view' : 'user_view'; ?>_view.php?id=<?php echo $res['user_id']; ?>"><?php echo $res['user']; ?></a></a>
                       </td>
-                      <td><?php echo $res['date_created']; ?></td>
+                      <td class="text-center"><?php echo $res['date_created']; ?></td>
                     </tr>
                   <?php } ?>
                 </tbody>

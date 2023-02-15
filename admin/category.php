@@ -22,23 +22,25 @@ echo isset($_POST['delete']) ? delete($_POST) : '';
             <table class="table table-sm table-striped table-hover table-bordered">
               <thead class="table-secondary">
                 <tr>
-                  <!-- <th scope="col">ID#</th> -->
-                  <th scope="col">Name</th>
-                  <th scope="col">Date Created</th>
-                  <th scope="col">Actions</th>
+                  <!-- <th scope="col" class="text-center">ID#</th> -->
+                  <th scope="col" class="text-center">Name</th>
+                  <th scope="col" class="text-center">Date Created</th>
+                  <th scope="col" class="text-center">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 <?php foreach (get_list("select * from tbl_category where is_deleted = 0") as $res) { ?>
                   <tr>
                     <!-- <td><?php echo $res['id']; ?></td> -->
-                    <td><?php echo $res['name']; ?></td>
-                    <td><?php echo $res['date_created']; ?></td>
+                    <td class="text-center"><?php echo $res['name']; ?></td>
+                    <td class="text-center"><?php echo $res['date_created']; ?></td>
                     <td style="width: 25%;">
-                      <form method="post" onsubmit="return confirm('Are You Sure?')">
-                        <a href="category_edit.php?id=<?php echo $res['id']; ?>" class="btn btn-sm btn-secondary btn-edit"> Edit </a>
-                        <button type="submit" class="btn btn-sm btn-secondary" name="delete" value="<?php echo $res['id']; ?>"> Delete </button>
-                      </form>
+                      <center>
+                        <form method="post" onsubmit="return confirm('Are You Sure?')">
+                          <a href="category_edit.php?id=<?php echo $res['id']; ?>" class="btn btn-sm btn-secondary btn-edit"> Edit </a>
+                          <button type="submit" class="btn btn-sm btn-secondary" name="delete" value="<?php echo $res['id']; ?>"> Delete </button>
+                        </form>
+                      </center>
                     </td>
                   </tr>
                 <?php } ?>

@@ -6,21 +6,21 @@ $info = get_one("SELECT * from tbl_product p WHERE is_deleted = 0 and p.id = $id
 function update($data)
 {
   extract($data);
-  $check_name = get_one("select count(name) as `exists` from tbl_product where name = '$name' and id <> '$id' group by name limit 1");
+  // $check_name = get_one("select count(name) as `exists` from tbl_product where name = '$name' and id <> '$id' group by name limit 1");
 
-  if (isset($check_name->exists) && !empty($check_name->exists)) {
-    return alert("Product Name Already In-Used!");
-  }
+  // if (isset($check_name->exists) && !empty($check_name->exists)) {
+  //   return alert("Product Name Already In-Used!");
+  // }
 
-  
-$info = get_one("SELECT * from tbl_product p WHERE is_deleted = 0 and p.id = $id");
+
+  $info = get_one("SELECT * from tbl_product p WHERE is_deleted = 0 and p.id = $id");
   $image_name = $info->image;
   if ($_FILES['image']['error'] == 0) {
     $image_name = 'image_' . date('YmdHis') . '.jpeg';
     move_uploaded_file($_FILES["image"]["tmp_name"],   '../images/products/' . $image_name);
   }
 
-  query("UPDATE tbl_product set `name` = '$name', `description` = '$description', price = '$price', `image`='$image_name',category_id ='$category'  where id = '$id'");
+  query("UPDATE tbl_product set `name` = '$name', `description` = '$description', price = '$price', `image`='$image_name',category_id ='$category','expiration_date' ='$expiration'  where id = '$id'");
   return alert("Product Updated!");
 }
 
@@ -48,6 +48,8 @@ echo isset($_POST['update']) ? update(array_merge($_POST, $_FILES)) : '';
                 </select>
                 <label for="password2" class="form-label">*Price</label>
                 <input type="number" class="form-control form-control-sm" id="price" name="price" placeholder="Product Price" required value="<?= isset($_POST['update']) ? $_POST['price'] : $info->price ?>">
+                <label for="password2" class="form-label">*Expiration Date</label>
+                <input type="date" class="form-control form-control-sm" id="expiration" name="expiration" placeholder="Product Expiration Date" required value="<?= isset($_POST['update']) ? $_POST['expiration'] : '' ?>">
                 <label for="password" class="form-label">Description</label>
                 <textarea name="description" class="form-control" id="" cols="30" rows="3" placeholder="Product Description"><?= isset($_POST['update']) ? $_POST['price'] : $info->description ?></textarea>
               </div>

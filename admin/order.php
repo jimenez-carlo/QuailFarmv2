@@ -69,35 +69,35 @@ echo isset($_POST['reject']) ? update_order($_POST['id'], 6) : '';
             <table class="table table-sm table-striped table-hover table-bordered">
               <thead class="table-secondary">
                 <tr>
-                  <th scope="col">Order#</th>
-                  <th scope="col">Paid/Unpaid</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Total Qty</th>
-                  <th scope="col">Total Price</th>
-                  <th scope="col">Buyer</th>
-                  <th scope="col">Seller</th>
-                  <th scope="col">Updated Date</th>
-                  <th scope="col">Actions</th>
+                  <th scope="col" class="text-center">Order#</th>
+                  <th scope="col" class="text-center">Status</th>
+                  <th scope="col" class="text-center">Buyer</th>
+                  <th scope="col" class="text-center">Seller</th>
+                  <th scope="col" class="text-center">Updated Date</th>
+                  <th scope="col" class="text-center">Paid/Unpaid</th>
+                  <th scope="col" class="text-center">Total Qty</th>
+                  <th scope="col" class="text-center">Total Price</th>
+                  <th scope="col" class="text-center">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 <?php foreach (get_list("select i.paid_status_id,ps.name as `paid_status`,t.date_updated, s.id as `seller_id`, b.id as `buyer_id`, t.id,sum(IF(t.status_id in (2,3,4), t.price, 0)) as `total_price`,sum(IF(t.status_id in (2,3,4), t.qty, 0)) as qty,i.invoice,p.name,p.price,i.status_id,concat('',b.last_name,', ',b.first_name) as buyer_name ,concat(' ',s.last_name,', ',s.first_name) as seller_name,is.status as `status` FROM tbl_transactions t inner join tbl_invoice i on i.id = t.invoice_id inner join tbl_invoice_status `is` on `is`.id = i.status_id inner join tbl_product p on p.id = t.product_id inner join tbl_users_info b on b.id = t.buyer_id left join tbl_users_info s on s.id = t.seller_id inner join tbl_paid_status ps on ps.id = i.paid_status_id where t.status_id > 1 and t.is_deleted = 0 group by t.invoice_id order by t.date_updated desc") as $res) { ?>
                   <tr>
-                    <td><?php echo $res['invoice']; ?></td>
-                    <td><?php echo $res['paid_status']; ?></td>
-                    <td><?php echo $res['status']; ?></td>
-                    <td class="text-end"><?php echo $res['qty']; ?></td>
-                    <td class="text-end"><?php echo number_format($res['total_price'], 2); ?></td>
-                    <td><?php echo $res['buyer_name']; ?> </td>
-                    <td><?php echo $res['seller_name']; ?> </td>
-                    <!-- <td><a href="customer_view.php?id=<?php echo $res['buyer_id']; ?>" target="_blank"> <?php echo $res['buyer_name']; ?> </a> </td>
-                    <td><a href="user_edit.php?id=<?php echo $res['seller_id']; ?>" target="_blank"> <?php echo $res['seller_name']; ?> </a></td> -->
-                    <td><?php echo $res['date_updated']; ?></td>
-                    <td>
+                    <td class="text-center"><?php echo $res['invoice']; ?></td>
+                    <td class="text-center"><?php echo $res['status']; ?></td>
+                    <td class="text-center"><?php echo $res['buyer_name']; ?> </td>
+                    <td class="text-center"><?php echo $res['seller_name']; ?> </td>
+                    <!-- <td class="text-center"><a href="customer_view.php?id=<?php echo $res['buyer_id']; ?>" target="_blank"> <?php echo $res['buyer_name']; ?> </a> </td>
+                    <td class="text-center"><a href="user_edit.php?id=<?php echo $res['seller_id']; ?>" target="_blank"> <?php echo $res['seller_name']; ?> </a></td> -->
+                    <td class="text-center"><?php echo $res['date_updated']; ?></td>
+                    <td class="text-center"><?php echo $res['paid_status']; ?></td>
+                    <td class="text-center"><?php echo $res['qty']; ?></td>
+                    <td class="text-center"><?php echo number_format($res['total_price'], 2); ?></td>
+                    <td class="text-center">
                       <form method="post" onsubmit="return confirm('Are You Sure?')">
                         <?php if (in_array($res['status_id'], array(1, 2))) { ?>
                           <input type="hidden" name="id" value="<?php echo $res['invoice']; ?>">
-                          <button type="submit" class="btn btn-sm btn-secondary" name="paid" <?= ($res['paid_status_id'] == 1) ? '' : 'disabled' ?>> Paid </button>
+                          <button type="submit" class="btn btn-sm btn-secondary" name="paid" <?= ($res['paid_status_id'] != 1 || $res['status'] != 'APPROVED') ? 'disabled' : '' ?>> Paid </button>
                           <!-- <button type="submit" class="btn btn-sm btn-secondary" name="approve"> Approve </button>
                           <button type="submit" class="btn btn-sm btn-secondary" name="reject"> Reject </button> -->
                           <!-- <button type="button" class="btn btn-sm btn-secondary"> View </button> -->
@@ -105,7 +105,7 @@ echo isset($_POST['reject']) ? update_order($_POST['id'], 6) : '';
                         <?php } else { ?>
                           <input type="hidden" name="id" value="<?php echo $res['invoice']; ?>">
                           <input type="hidden" name="id" value="<?php echo $res['invoice']; ?>">
-                          <button type="submit" class="btn btn-sm btn-secondary" name="paid" <?= ($res['paid_status_id'] == 1) ? '' : 'disabled' ?>> Paid </button>
+                          <button type="submit" class="btn btn-sm btn-secondary" name="paid" <?= ($res['paid_status_id'] != 1 || $res['status'] != 'APPROVED')  ? 'disabled' : '' ?>> Paid </button>
                           <!-- <button type="button" class="btn btn-sm btn-secondary" disabled> Approve </button>
                           <button type="submit" class="btn btn-sm btn-secondary" disabled> Reject </button> -->
                           <!-- <button type="button" class="btn btn-sm btn-secondary"> View </button> -->

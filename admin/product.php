@@ -22,34 +22,38 @@ echo isset($_POST['delete']) ? delete($_POST) : '';
             <table class="table table-sm table-striped table-hover table-bordered">
               <thead class="table-secondary">
                 <tr>
-                  <!-- <th scope="col">PID#</th> -->
-                  <th scope="col">Category</th>
-                  <th scope="col" style="width: 0.1%;">Image</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Price</th>
-                  <th scope="col">Description</th>
-                  <!-- <th scope="col">Date Created</th> -->
-                  <th scope="col">Created By</th>
-                  <th scope="col">Actions</th>
+                  <!-- <th scope="col" class="text-center">PID#</th> -->
+                  <th scope="col" class="text-center">Category</th>
+                  <th scope="col" class="text-center" style="width: 0.1%;">Image</th>
+                  <th scope="col" class="text-center">Name</th>
+                  <th scope="col" class="text-center">Price</th>
+                  <th scope="col" class="text-center">Expiration Date</th>
+                  <th scope="col" class="text-center">Description</th>
+                  <!-- <th scope="col" class="text-center">Date Created</th> -->
+                  <th scope="col" class="text-center">Created By</th>
+                  <th scope="col" class="text-center">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 <?php foreach (get_list("select c.name as category_name,p.*,concat('(ID#',i.id,') ',i.last_name,', ',i.first_name) as created_by from tbl_product p left join tbl_users_info i on i.id = p.created_by inner join tbl_category c on c.id = p.category_id where p.is_deleted = 0") as $res) { ?>
                   <tr>
                     <!-- <td><?php echo $res['id']; ?></td> -->
-                    <td><span class="badge bg-secondary text-light"><?php echo $res['category_name']; ?></span></td>
+                    <td class="text-center"><span class="badge bg-secondary text-light"><?php echo $res['category_name']; ?></span></td>
                     <!-- <td><?php echo $res['category_name']; ?></td> -->
                     <td style="width: 0.1%;"><img src="../images/products/<?php echo $res['image']; ?>" style="width:100px;height:100px" /></td>
-                    <td><?php echo $res['name']; ?></td>
-                    <td class="text-end"><?php echo $res['price']; ?></td>
-                    <td><?php echo $res['description']; ?></td>
+                    <td class="text-center"><?php echo $res['name']; ?></td>
+                    <td class="text-center"><?php echo $res['price']; ?></td>
+                    <td class="text-center"><?php echo $res['expiration_date']; ?></td>
+                    <td class="text-center"><?php echo $res['description']; ?></td>
                     <!-- <td><?php echo $res['date_created']; ?></td> -->
-                    <td><?php echo $res['created_by']; ?></td>
+                    <td class="text-center"><?php echo $res['created_by']; ?></td>
                     <td>
-                      <form method="post" onsubmit="return confirm('Are You Sure?')">
-                        <a href="product_edit.php?id=<?php echo $res['id']; ?>" class="btn btn-sm btn-secondary btn-edit"> Edit </a>
-                        <button type="submit" class="btn btn-sm btn-secondary" name="delete" value="<?php echo $res['id']; ?>"> Delete </button>
-                      </form>
+                      <center>
+                        <form method="post" onsubmit="return confirm('Are You Sure?')">
+                          <a href="product_edit.php?id=<?php echo $res['id']; ?>" class="btn btn-sm btn-secondary btn-edit"> Edit </a>
+                          <button type="submit" class="btn btn-sm btn-secondary" name="delete" value="<?php echo $res['id']; ?>"> Delete </button>
+                        </form>
+                      </center>
                     </td>
                   </tr>
                 <?php } ?>

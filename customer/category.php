@@ -11,7 +11,7 @@ function add_to_cart($data)
   extract($data);
 
   $customer_id = $_SESSION['user']->id;
-  $stocks = get_one("select qty from tbl_inventory where id='$product_id' limit 1");
+  $stocks = get_one("select qty from tbl_inventory where product_id='$product_id' limit 1");
   if (!empty($stocks) && isset($stocks->qty)) {
     if ($qty > $stocks->qty) {
       return alert("Not Enough Stocks.");
@@ -66,7 +66,7 @@ function add_to_cart($data)
                           <input type="hidden" name="price" value="<?php echo $res['price']; ?>">
                           <div class="btn-group btn-group-sm" role="group" aria-label="Large button group" style="width:100%">
                             <button type="submit" class="btn btn-secondary" name="add_to_cart">Add&nbsp;To&nbsp;Cart <i class="fa fa-plus"></i></button>
-                            <input type="number" name="qty" class="form-control" placeholder="" value="1" min="1" max="<?php echo $res['qty']; ?>">
+                            <input type="number" name="qty" class="form-control" placeholder="" value="1" min="1" max="<?php echo $res['qty'] + 1; ?>">
 
                           </div>
                         </form>

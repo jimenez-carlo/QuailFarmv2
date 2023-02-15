@@ -9,12 +9,12 @@ $id = $_GET['id'];
     <table class="table table-sm table-striped table-hover table-bordered">
       <thead class="table-secondary">
         <tr>
-          <th scope="col">ID#</th>
-          <th scope="col">Original Qty</th>
-          <th scope="col">Re-stocked Qty</th>
-          <th scope="col">New Qty</th>
-          <th scope="col">Re-stocked By</th>
-          <th scope="col">Date Created</th>
+          <th scope="col" class="text-center">ID#</th>
+          <th scope="col" class="text-center">Original Qty</th>
+          <th scope="col" class="text-center">Re-stocked Qty</th>
+          <th scope="col" class="text-center">New Qty</th>
+          <th scope="col" class="text-center">Re-stocked By</th>
+          <th scope="col" class="text-center">Date Created</th>
         </tr>
       </thead>
       <tbody>

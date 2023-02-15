@@ -3,11 +3,11 @@
 function register($data)
 {
   extract($data);
-  $check_name = get_one("select count(name) as `exists` from tbl_product where name = '$name' group by name limit 1");
+  // $check_name = get_one("select count(name) as `exists` from tbl_product where name = '$name' group by name limit 1");
 
-  if (isset($check_name->exists) && !empty($check_name->exists)) {
-    return alert("Product Name Already In-Used!");
-  }
+  // if (isset($check_name->exists) && !empty($check_name->exists)) {
+  //   return alert("Product Name Already In-Used!");
+  // }
 
   $image_name = 'default.png';
   if ($_FILES['image']['error'] == 0) {
@@ -15,7 +15,8 @@ function register($data)
     move_uploaded_file($_FILES["image"]["tmp_name"],   '../images/products/' . $image_name);
   }
 
-  query("INSERT into tbl_product (`name`,`description`,price,`image`,category_id) values('$name','$description', '$price','$image_name','$category')");
+  $id = get_inserted_id("INSERT into tbl_product (`name`,`description`,price,`image`,category_id,`expiration_date`) values('$name','$description', '$price','$image_name','$category','$expiration')");
+  query("INSERT into tbl_inventory (`product_id`,`qty`) values('$id',0)");
   unset($_POST);
   return alert("Product Created!");
 }
@@ -43,6 +44,8 @@ echo isset($_POST['register']) ? register(array_merge($_POST, $_FILES)) : '';
                 </select>
                 <label for="password2" class="form-label">*Price</label>
                 <input type="number" class="form-control form-control-sm" id="price" name="price" placeholder="Product Price" required value="<?= isset($_POST['update']) ? $_POST['price'] : '' ?>">
+                <label for="password2" class="form-label">*Expiration Date</label>
+                <input type="date" class="form-control form-control-sm" id="expiration" name="expiration" placeholder="Product Expiration Date" required value="<?= isset($_POST['update']) ? $_POST['expiration'] : '' ?>">
                 <label for="password" class="form-label">Description</label>
                 <textarea name="description" class="form-control" id="" cols="30" rows="3" placeholder="Product Description"><?= isset($_POST['update']) ? $_POST['price'] : '' ?></textarea>
               </div>

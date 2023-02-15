@@ -75,15 +75,15 @@ foreach ($order_history as $res) {
                   <table class="table table-sm table-striped table-hover table-bordered" style="width:100%">
                     <thead class="table-secondary">
                       <tr>
-                        <th scope="col">TXN#</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">PID#</th>
-                        <th scope="col">Product Name</th>
-                        <th scope="col">Product Price</th>
-                        <th scope="col">Qty</th>
-                        <th scope="col">Total Price</th>
-                        <th scope="col">Last Updated</th>
-                        <!-- <th scope="col"></th> -->
+                        <th scope="col" class="text-center">TXN#</th>
+                        <th scope="col" class="text-center">Status</th>
+                        <th scope="col" class="text-center">PID#</th>
+                        <th scope="col" class="text-center">Product Name</th>
+                        <th scope="col" class="text-center">Product Price</th>
+                        <th scope="col" class="text-center">Qty</th>
+                        <th scope="col" class="text-center">Total Price</th>
+                        <th scope="col" class="text-center">Last Updated</th>
+                        <!-- <th scope="col" class="text-center"></th> -->
                       </tr>
                     </thead>
                     <tbody>

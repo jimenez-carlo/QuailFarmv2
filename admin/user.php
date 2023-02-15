@@ -22,29 +22,29 @@ echo isset($_POST['delete']) ? delete($_POST) : '';
             <table class="table table-sm table-striped table-hover table-bordered">
               <thead class="table-secondary">
                 <tr>
-                  <!-- <th scope="col">ID#</th> -->
-                  <th scope="col">Access</th>
-                  <th scope="col">Username</th>
-                  <!-- <th scope="col">Email</th> -->
-                  <th scope="col">Full Name</th>
-                  <th scope="col">Gender</th>
-                  <th scope="col">Contact</th>
-                  <th scope="col">Registered Date</th>
-                  <th scope="col">Actions</th>
+                  <!-- <th scope="col" class="text-center">ID#</th> -->
+                  <th scope="col" class="text-center">Access</th>
+                  <th scope="col" class="text-center">Username</th>
+                  <!-- <th scope="col" class="text-center">Email</th> -->
+                  <th scope="col" class="text-center">Full Name</th>
+                  <th scope="col" class="text-center">Gender</th>
+                  <th scope="col" class="text-center">Contact</th>
+                  <th scope="col" class="text-center">Registered Date</th>
+                  <th scope="col" class="text-center">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                <?php foreach (get_list("select g.gender,UPPER(a.name) as 'access',ui.*,u.* from tbl_users u inner join tbl_users_info ui on ui.id = u.id inner join tbl_access a on a.id = u.access_id inner join tbl_gender g on g.id = ui.gender_id and u.is_deleted = 0 where u.access_id != 3") as $res) { ?>
+                <?php foreach (get_list("select g.gender,UPPER(a.name) as 'access',ui.*,u.* from tbl_users u inner join tbl_users_info ui on ui.id = u.id inner join tbl_access a on a.id = u.access_id inner join tbl_gender g on g.id = ui.gender_id and u.is_deleted = 0") as $res) { ?>
                   <tr>
-                    <!-- <td><?php echo $res['id']; ?></td> -->
-                    <td><span class="badge bg-secondary text-light"><?php echo $res['access']; ?></span></td>
-                    <td><?php echo $res['username']; ?></td>
-                    <!-- <td><?php echo $res['email']; ?></td> -->
-                    <td><?php echo ucwords($res['first_name'] . ' ' . $res['last_name']); ?></td>
-                    <td><?php echo strtoupper($res['gender']); ?></td>
-                    <td><?php echo $res['contact_no']; ?></td>
-                    <td><?php echo $res['date_created']; ?></td>
-                    <td>
+                    <!-- <td class="text-center"><?php echo $res['id']; ?></td> -->
+                    <td class="text-center"><span class="badge bg-secondary text-light"><?php echo $res['access']; ?></span></td>
+                    <td class="text-center"><?php echo $res['username']; ?></td>
+                    <!-- <td class="text-center"><?php echo $res['email']; ?></td> -->
+                    <td class="text-center"><?php echo ucwords($res['first_name'] . ' ' . $res['last_name']); ?></td>
+                    <td class="text-center"><?php echo strtoupper($res['gender']); ?></td>
+                    <td class="text-center"><?php echo $res['contact_no']; ?></td>
+                    <td class="text-center"><?php echo $res['date_created']; ?></td>
+                    <td class="text-center">
                       <?php if ($res['access_id'] == 1) { ?>
                         <button type="button" class="btn btn-sm btn-secondary" disabled> Edit </button>
                         <button type="button" class="btn btn-sm btn-secondary" disabled> View </button>
@@ -74,7 +74,7 @@ echo isset($_POST['delete']) ? delete($_POST) : '';
     dom: '<"top"<"left-col"B><"center-col"><"right-col"f>> <"row"<"col-sm-12"tr>><"row"<"col-sm-10"i><"col-sm-2"p>>',
     buttons: [{
       className: 'btn btn-sm btn-secondary',
-      text: 'Register User',
+      text: 'Add User',
       action: function(e, dt, node, config) {
         window.location = "user_register.php";
       }

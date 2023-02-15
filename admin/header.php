@@ -84,11 +84,17 @@ if (isset($_SESSION['user'])) {
                 <i class="align-middle" data-feather="file"></i> <span class="align-middle">Reports</span>
               </a>
             </li>
-            <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'walkin') !== false || strpos($_SERVER['REQUEST_URI'], 'walkin_edit') !== false) ? 'active' : '' ?>">
-              <a class="sidebar-link" href="walkin.php">
-                <i class="align-middle" data-feather="monitor"></i> <span class="align-middle">Walkin</span>
+            <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'walkin_product') !== false || strpos($_SERVER['REQUEST_URI'], 'walkin_edit') !== false) ? 'active' : '' ?>">
+              <a class="sidebar-link" href="walkin_product.php?filter=all">
+                <i class="align-middle" data-feather="monitor"></i> <span class="align-middle">Walkin Products</span>
               </a>
             </li>
+            <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'walkin_checkout') !== false || strpos($_SERVER['REQUEST_URI'], 'walkin_edit') !== false) ? 'active' : '' ?>">
+              <a class="sidebar-link" href="walkin_checkout.php">
+                <i class="align-middle" data-feather="monitor"></i> <span class="align-middle">Walkin Checkout</span>
+              </a>
+            </li>
+
             <!-- <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'profile') !== false || strpos($_SERVER['REQUEST_URI'], 'profile_edit') !== false) ? 'active' : '' ?>">
             <a class="sidebar-link" href="profile.php">
               <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
@@ -135,9 +141,14 @@ if (isset($_SESSION['user'])) {
                 <i class="align-middle" data-feather="file"></i> <span class="align-middle">Reports</span>
               </a>
             </li>
-            <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'walkin') !== false || strpos($_SERVER['REQUEST_URI'], 'walkin_edit') !== false) ? 'active' : '' ?>">
-              <a class="sidebar-link" href="walkin.php">
-                <i class="align-middle" data-feather="monitor"></i> <span class="align-middle">Walkin</span>
+            <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'walkin_product') !== false || strpos($_SERVER['REQUEST_URI'], 'walkin_edit') !== false) ? 'active' : '' ?>">
+              <a class="sidebar-link" href="walkin_product.php?filter=all">
+                <i class="align-middle" data-feather="monitor"></i> <span class="align-middle">Walkin Products</span>
+              </a>
+            </li>
+            <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'walkin_checkout') !== false || strpos($_SERVER['REQUEST_URI'], 'walkin_edit') !== false) ? 'active' : '' ?>">
+              <a class="sidebar-link" href="walkin_checkout.php">
+                <i class="align-middle" data-feather="monitor"></i> <span class="align-middle">Walkin Checkout</span>
               </a>
             </li>
 
