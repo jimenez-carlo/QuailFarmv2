@@ -81,7 +81,7 @@ echo isset($_POST['delete']) ? delete($_POST) : '';
 
 
   $(document).ready(function() {
-    $('<select name="category" id="category" class="select" style="margin-left:5px;vertical-align:middle"> <option value="">All</option><?php foreach (get_list("select id,UPPER(name) as 'category' from tbl_category where is_deleted = 0") as $res) { ?><option><?php echo $res['category']; ?></option><?php } ?></select>').insertAfter(".dt-button");
+    $('<select name="category" id="category" class="select" style="margin-left:5px;vertical-align:middle"> <option value="">All</option><?php foreach (get_list("select id,name as 'category' from tbl_category where is_deleted = 0") as $res) { ?><option><?php echo $res['category']; ?></option><?php } ?></select>').insertAfter(".dt-button");
     $(document).on("change", '#category ', function() {
       var val = $(this).val(); //attr('value');
       tbl
