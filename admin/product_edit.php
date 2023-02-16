@@ -13,14 +13,14 @@ function update($data)
   // }
 
 
-  $info = get_one("SELECT * from tbl_product p WHERE is_deleted = 0 and p.id = $id");
+  $info = get_one("SELECT * from tbl_product p WHERE p.is_deleted = 0 and p.id = $id");
   $image_name = $info->image;
   if ($_FILES['image']['error'] == 0) {
     $image_name = 'image_' . date('YmdHis') . '.jpeg';
     move_uploaded_file($_FILES["image"]["tmp_name"],   '../images/products/' . $image_name);
   }
 
-  query("UPDATE tbl_product set `name` = '$name', `description` = '$description', price = '$price', `image`='$image_name',category_id ='$category','expiration_date' ='$expiration'  where id = '$id'");
+  query("UPDATE tbl_product set `name` = '$name', `description` = '$description', price = '$price', `image`='$image_name',category_id ='$category',`expiration_date` ='$expiration'  where id = '$id'");
   return alert("Product Updated!");
 }
 
