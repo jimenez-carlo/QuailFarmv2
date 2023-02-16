@@ -18,7 +18,7 @@ function register($data)
   $password = password_hash($new_password, PASSWORD_DEFAULT);
 
   $last_id = get_inserted_id("INSERT INTO tbl_users (username,`password`,access_id) values ('$username', '$password', $access)");
-  // query("INSERT INTO tbl_users_info (id,first_name,last_name,contact_no,gender_id,province,city,barangay) VALUES ('$last_id', '$firstname', '$lastname','$contact','$gender','$province','$city','$barangay')");
+  query("INSERT INTO tbl_users_info (id) VALUES ('$last_id')");
   unset($_POST);
   return alert("User Registered!");
 }

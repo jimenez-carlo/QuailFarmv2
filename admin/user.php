@@ -27,21 +27,19 @@ echo isset($_POST['delete']) ? delete($_POST) : '';
                   <th scope="col" class="text-center">Username</th>
                   <!-- <th scope="col" class="text-center">Email</th> -->
                   <th scope="col" class="text-center">Full Name</th>
-                  <th scope="col" class="text-center">Gender</th>
                   <th scope="col" class="text-center">Contact</th>
                   <th scope="col" class="text-center">Registered Date</th>
                   <th scope="col" class="text-center">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                <?php foreach (get_list("select g.gender,UPPER(a.name) as 'access',ui.*,u.* from tbl_users u inner join tbl_users_info ui on ui.id = u.id inner join tbl_access a on a.id = u.access_id inner join tbl_gender g on g.id = ui.gender_id and u.is_deleted = 0") as $res) { ?>
+                <?php foreach (get_list("select g.gender,UPPER(a.name) as 'access',ui.*,u.* from tbl_users u inner join tbl_users_info ui on ui.id = u.id inner join tbl_access a on a.id = u.access_id left join tbl_gender g on g.id = ui.gender_id and u.is_deleted = 0") as $res) { ?>
                   <tr>
                     <!-- <td class="text-center"><?php echo $res['id']; ?></td> -->
                     <td class="text-center"><span class="badge bg-secondary text-light"><?php echo $res['access']; ?></span></td>
                     <td class="text-center"><?php echo $res['username']; ?></td>
                     <!-- <td class="text-center"><?php echo $res['email']; ?></td> -->
                     <td class="text-center"><?php echo ucwords($res['first_name'] . ' ' . $res['last_name']); ?></td>
-                    <td class="text-center"><?php echo strtoupper($res['gender']); ?></td>
                     <td class="text-center"><?php echo $res['contact_no']; ?></td>
                     <td class="text-center"><?php echo $res['date_created']; ?></td>
                     <td class="text-center">
