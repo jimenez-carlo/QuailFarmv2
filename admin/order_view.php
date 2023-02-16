@@ -93,8 +93,7 @@ function update_item($id, $invoice_id, $status)
     'rejected' => 7
   );
 
-  $new_invoice_status = ($transaction_count->cancelled == $transaction_count->approved || $transaction_count->rejected == $transaction_count->approved) ? $approved_status : $status[$max_transaction_status[0]];
-  // update invoice & insert invoice history
+  $new_invoice_status = (($transaction_count->cancelled == $transaction_count->approved && $transaction_count->approved > 0) || ($transaction_count->rejected == $transaction_count->approved && $transaction_count->approved > 0)) ? 3 : $status[$max_transaction_status[0]]; // update invoice & insert invoice history
   query("update tbl_invoice set status_id = $new_invoice_status where id = $invoice_id ");
   query("insert into tbl_invoice_status_history (invoice_id, status_id, created_by) values('$invoice_id','$new_invoice_status','$created_by')");
 
