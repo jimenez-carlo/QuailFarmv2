@@ -44,12 +44,24 @@ echo isset($_POST['delete']) ? delete($_POST['delete']) : '';
                     <td class="text-center"><?php echo $res['contact_no']; ?></td>
                     <td class="text-center"><?php echo $res['date_created']; ?></td>
                     <td class="text-center">
-                      <form method="post" onsubmit="return confirm('Are You Sure?')">
-                        <a href="customer_edit.php?id=<?php echo $res['id']; ?>" class="btn btn-sm btn-secondary btn-edit"> Edit </a>
-                        <a href="customer_view.php?id=<?php echo $res['id']; ?>" class="btn btn-sm btn-secondary btn-edit"> View </a>
-                        <button type="submit" class="btn btn-sm btn-secondary" name="delete" value="<?php echo $res['id']; ?>"> Delete </button>
-                      </form>
+
+
+                      <?php if ($res['access_id'] == 1) { ?>
+                        <button type="button" class="btn btn-sm btn-secondary" disabled> Edit </button>
+                        <button type="button" class="btn btn-sm btn-secondary" disabled> View </button>
+                        <button type="button" class="btn btn-sm btn-secondary" disabled> Delete </button>
                     </td>
+                  <?php } else { ?>
+                    <form method="post" onsubmit="return confirm('Are You Sure?')">
+                      <a href="customer_edit.php?id=<?php echo $res['id']; ?>" class="btn btn-sm btn-secondary btn-edit"> Edit </a>
+                      <a href="customer_view.php?id=<?php echo $res['id']; ?>" class="btn btn-sm btn-secondary btn-edit"> View </a>
+                      <button type="submit" class="btn btn-sm btn-secondary" name="delete" value="<?php echo $res['id']; ?>"> Delete </button>
+                    </form>
+                    </td>
+                  <?php } ?>
+
+
+                  </td>
                   </tr>
                 <?php } ?>
               </tbody>

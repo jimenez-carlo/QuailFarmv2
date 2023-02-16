@@ -4,7 +4,7 @@
 function register($data)
 {
   extract($data);
-  $check_username = get_one("select count(username) as `exists` from tbl_users where username = '$username' group by username limit 1");
+  $check_username = get_one("select count(username) as `exists` from tbl_users where username = '$username' and is_deleted = 0 group by username limit 1");
 
 
   if (!empty($new_password) && !empty($re_password) && $new_password != $re_password) {
