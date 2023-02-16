@@ -33,7 +33,7 @@ echo isset($_POST['delete']) ? delete($_POST) : '';
                 </tr>
               </thead>
               <tbody>
-                <?php foreach (get_list("select g.gender,UPPER(a.name) as 'access',ui.*,u.* from tbl_users u inner join tbl_users_info ui on ui.id = u.id inner join tbl_access a on a.id = u.access_id inner join tbl_gender g on g.id = ui.gender_id and u.is_deleted = 0") as $res) { ?>
+                <?php foreach (get_list("select g.gender,UPPER(a.name) as 'access',ui.*,u.* from tbl_users u inner join tbl_users_info ui on ui.id = u.id inner join tbl_access a on a.id = u.access_id left join tbl_gender g on g.id = ui.gender_id and u.is_deleted = 0") as $res) { ?>
                   <tr>
                     <!-- <td class="text-center"><?php echo $res['id']; ?></td> -->
                     <td class="text-center"><?php echo $res['username']; ?></td>
