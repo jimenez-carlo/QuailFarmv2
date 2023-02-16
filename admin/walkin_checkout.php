@@ -5,7 +5,7 @@ function remove_cart($data)
 {
   extract($data);
   query("update tbl_transactions set is_deleted = 1  where id = $transaction_id");
-  return alert_redirect("Product Removed From Cart!", "cart.php");
+  return alert_redirect("Product Removed From Cart!", "walkin_checkout.php");
 }
 
 function update_cart($data)
@@ -14,7 +14,7 @@ function update_cart($data)
   $new_price = intval($price) * intval($qty);
   if ($qty > 0) {
     query("update tbl_transactions set price = '$new_price', qty = '$qty' where id = $transaction_id");
-    return alert_redirect("Product Quantity Updated From Cart!", "cart.php");
+    return alert_redirect("Product Quantity Updated From Cart!", "walkin_checkout.php");
   } else {
     return alert("Invalid Product Quantity");
   }
