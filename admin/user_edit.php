@@ -52,11 +52,11 @@ echo isset($_POST['update']) ? update($_POST) : '';
               </div>
               <div class="col-md-6">
                 <label for="password" class="form-label">*Password</label>
-                <input type="password" class="form-control form-control-sm" id="new_password" name="new_password" placeholder="password" required value="<?= isset($_POST['update']) ? $_POST['new_password'] : '' ?>">
+                <input type="password" class="form-control form-control-sm" id="new_password" name="new_password" placeholder="password" required value="<?= isset($_POST['update']) ? $_POST['new_password'] : '' ?>" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
               </div>
               <div class="col-md-6">
                 <label for="password_retype" class="form-label">*Re-Type Password</label>
-                <input type="password" class="form-control form-control-sm" id="re_password" name="re_password" placeholder="re-type password" required value="<?= isset($_POST['update']) ? $_POST['re_password'] : '' ?>">
+                <input type="password" class="form-control form-control-sm" id="re_password" name="re_password" placeholder="re-type password" required value="<?= isset($_POST['update']) ? $_POST['re_password'] : '' ?>" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
               </div>
 
 

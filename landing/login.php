@@ -97,7 +97,7 @@ function signup($data)
                               <input class="contactus" placeholder="Last Name" type="text" required name="last_name" value="<?= isset($_POST['last_name']) && isset($_POST['signup']) ? $_POST['last_name'] : '' ?>">
                            </div>
                            <div class="col-md-12">
-                              <input class="contactus" placeholder="Password" type="password" required name="password" value="<?= isset($_POST['password']) && isset($_POST['signup']) ? $_POST['password'] : '' ?>">
+                              <input class="contactus" placeholder="Password" type="password" required name="password" value="<?= isset($_POST['password']) && isset($_POST['signup']) ? $_POST['password'] : '' ?>" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
                            </div>
                            <div class="col-md-12">
                               <input class="contactus" placeholder="Contact" type="number" required name="contact" value="<?= isset($_POST['contact']) && isset($_POST['signup']) ? $_POST['contact'] : '' ?>">
@@ -127,7 +127,7 @@ function signup($data)
          <div class="container">
             <div class="row">
                <div class="col-md-12">
-                  
+
                </div>
             </div>
          </div>

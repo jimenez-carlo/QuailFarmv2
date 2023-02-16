@@ -26,6 +26,14 @@ if (isset($_SESSION['user'])) {
   <script src="js/datable.bootstrap.js"></script>
   <script src="js/datatable.buttons.js"></script>
 </head>
+<style>
+  .sidebar-brand,
+  .sidebar-nav,
+  .sidebar-link,
+  a.sidebar-link {
+    /* background: blue; */
+  }
+</style>
 
 <body>
   <div class="wrapper">

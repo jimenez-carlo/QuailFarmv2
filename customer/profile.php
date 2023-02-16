@@ -126,11 +126,11 @@ function change_password($data)
               </div>
               <div class="mb-3 col-md-6">
                 <label class="form-label" for="inputEmail4">New Password</label>
-                <input type="password" name="new_password" class="form-control form-control-sm" id="inputEmail4" placeholder="Password" value="<?= isset($_POST['new_password']) && isset($_POST['change_password']) ? $_POST['new_password'] : '' ?>" required>
+                <input type="password" name="new_password" class="form-control form-control-sm" id="inputEmail4" placeholder="Password" value="<?= isset($_POST['new_password']) && isset($_POST['change_password']) ? $_POST['new_password'] : '' ?>" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
               </div>
               <div class="mb-3 col-md-6">
                 <label class="form-label" for="inputPassword4">Re-type New Password</label>
-                <input type="password" name="re_password" class="form-control form-control-sm" id="inputPassword4" placeholder="Password" value="<?= isset($_POST['re_password']) && isset($_POST['change_password']) ? $_POST['re_password'] : '' ?>" required>
+                <input type="password" name="re_password" class="form-control form-control-sm" id="inputPassword4" placeholder="Password" value="<?= isset($_POST['re_password']) && isset($_POST['change_password']) ? $_POST['re_password'] : '' ?>" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
               </div>
             </div>
             <button type="submit" class="btn btn-secondary btn-sm" name="change_password">Save Changes</button>
