@@ -28,17 +28,21 @@ function login($data)
 function signup($data)
 {
    extract($data);
+   try {
+      //code...
+      $check_username = get_one("select count(username) as `exists` from tbl_users where username = '$username' group_by username limit 1");
 
-   $check_username = get_one("select count(username) as `exists` from tbl_users where username = '$username' group_by username limit 1");
-
-   if (isset($check_username->exists) && !empty($check_username->exists)) {
-      return error_landing_message("Username Already In-Used!");
+      if (isset($check_username->exists) && !empty($check_username->exists)) {
+         return error_landing_message("Username Already In-Used!");
+      }
+   } catch (\Throwable $th) {
+      //throw $th;
    }
 
    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
    $last_id = get_inserted_id("INSERT INTO tbl_users (username,`password`,access_id) values ('$username', '$hashed_password', '3')");
-   query("INSERT INTO tbl_users_info (id,first_name,last_name,`address`,contact_no,`province`,`city`,`barangay`) VALUES ('$last_id', '$firstname', '$lastname', '$address','$contact','$province','$city','$barangay')");
+   query("INSERT INTO tbl_users_info (id,first_name,last_name,`province`,`city`,`barangay`,contact_no,`province`,`city`,`barangay`) VALUES ('$last_id', '$first_name', '$last_name', '$province','$city','$barangay','$contact','$province','$city','$barangay')");
    unset($_POST);
    return success_landing_message("User Registered!");
 }
