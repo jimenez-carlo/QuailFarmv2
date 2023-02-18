@@ -30,7 +30,7 @@
          </div>
          <div class="col-md-7">
             <div class="hottest_box">
-               <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veniam aliquid rerum praesentium ducimus, soluta pariatur, atque earum, nam inventore ipsa dolores aut odio aspernatur natus alias! Autem rem tempore deleniti. Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, quam. Iure mollitia, blanditiis perspiciatis atque accusamus esse doloribus exercitationem neque. Modi recusandae amet tempora eaque nam veniam neque voluptate aut!</p>
+               <p> </p>
             </div>
          </div>
       </div>
@@ -46,7 +46,7 @@
          <div class="col-md-8">
             <div class="titlepage">
                <h2>About Us </h2>
-               <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta sapiente accusamus quas ipsam, culpa eligendi exercitationem eos recusandae sint reiciendis quos animi repellat ab eum impedit a, eveniet dolores. Iste.</p>
+               <p></p>
             </div>
          </div>
       </div>

@@ -40,7 +40,7 @@ echo isset($_POST['delete']) ? delete($_POST['delete']) : '';
                     <td class="text-center"><?php echo $res['username']; ?></td>
                     <!-- <td class="text-center"><?php echo $res['email']; ?></td> -->
                     <td class="text-center"><?php echo ucwords($res['first_name'] . ' ' . $res['last_name']); ?></td>
-                    <td class="text-center"><?php echo strtoupper($res['gender']); ?></td>
+                   <td class="text-center"><?php echo strtoupper($res['gender']); ?></td>
                     <td class="text-center"><?php echo $res['contact_no']; ?></td>
                     <td class="text-center"><?php echo $res['date_created']; ?></td>
                     <td class="text-center">

@@ -15,7 +15,7 @@
     text-transform: uppercase;
     font-weight: 600;
     text-align:center;
-    margin-bottom:20px;
+    margin-bottom:120px;
    }
    .titlepage>h2{
 margin-top:10px;

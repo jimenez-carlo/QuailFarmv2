@@ -49,7 +49,7 @@ echo isset($_POST['update']) ? update(array_merge($_POST, $_FILES)) : '';
                 <label for="password2" class="form-label">*Price</label>
                 <input type="number" class="form-control form-control-sm" id="price" name="price" placeholder="Product Price" required value="<?= isset($_POST['update']) ? $_POST['price'] : $info->price ?>">
                 <label for="password2" class="form-label">*Expiration Date</label>
-                <input type="date" class="form-control form-control-sm" id="expiration" name="expiration" placeholder="Product Expiration Date" required value="<?= isset($_POST['update']) ? $_POST['expiration'] : '' ?>">
+                <input type="date" class="form-control form-control-sm" id="expiration" name="expiration" placeholder="Product Expiration Date" required value="<?= isset($_POST['update']) ? $_POST['expiration'] : $info->expiration_date ?>">
                 <label for="password" class="form-label">Description</label>
                 <textarea name="description" class="form-control" id="" cols="30" rows="3" placeholder="Product Description"><?= isset($_POST['update']) ? $_POST['price'] : $info->description ?></textarea>
               </div>
@@ -59,7 +59,7 @@ echo isset($_POST['update']) ? update(array_merge($_POST, $_FILES)) : '';
                 <center>
                   <img src="../images/products/<?php echo $info->image; ?>" alt="" style="width:200px;height:200px;align-self: center;" id="preview">
                 </center>
-                <input type="file" class="form-control form-control-sm" id="image" name="image" style="margin-top: 13px;">
+                <input type="file" class="form-control form-control-sm" id="image" name="image" style="margin-top: 13px;" accept="image/png, image/gif, image/jpeg">
               </div>
 
               <div class="col-md-12 mt-3">

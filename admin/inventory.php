@@ -34,6 +34,7 @@ echo isset($_POST['re_stock']) ? re_stock($_POST) : '';
                   <th scope="col" class="text-center">Name</th>
                   <th scope="col" class="text-center">Stock</th>
                   <th scope="col" class="text-center">Price</th>
+                  <th scope="col" class="text-center">Total Price</th>
                   <th scope="col" class="text-center">Expiration Date</th>
                   <th scope="col" class="text-center">Date Created</th>
                   <th scope="col" class="text-center">Actions</th>
@@ -46,8 +47,11 @@ echo isset($_POST['re_stock']) ? re_stock($_POST) : '';
                     <td class="text-center"><?php echo $res['name']; ?></td>
                     <td class="text-center"><?php echo $res['qty']; ?></td>
                     <td class="text-center"><?php echo $res['price']; ?></td>
+                    <td class="text-center"><?php echo number_format($res['price'] * $res['qty'], 2); ?></td>
                     <td class="text-center"><?php echo $res['expiration_date']; ?></td>
                     <td class="text-center"><?php echo $res['date_created']; ?></td>
+                    <!-- <?php $tmp = date_create($res['date_created']); ?>
+                    <td class="text-center"><?php echo date_format($tmp, "F d Y") ?> </td> -->
                     <td style="width: 25%;" class="text-center">
                       <center>
                         <form method="post" onsubmit="return confirm('Are You Sure?')">

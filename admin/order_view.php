@@ -156,7 +156,7 @@ $actual_invoice = get_one("SELECT * FROM tbl_invoice where invoice = '$id' limit
                     <tr>
                       <td class="text-center"><?php echo $res['name']; ?></td>
                       <td class="text-center"><?php echo $res['id']; ?></td>
-                      <td class="text-center"><?php echo strtoupper($res['status']); ?></td>
+                      <td class="text-center"><?php echo ($res['status'] == 'order placed') ? 'PENDING' : strtoupper($res['status']); ?></td>
                       <!-- <td class="text-center"><a href="#" class="a-view" name="product_edit" value="<?php echo $res['product_id']; ?>"><?php echo $res['product_id']; ?></a></td> -->
                       <td class="text-center"><?php echo number_format($res['price'], 2); ?></td>
                       <td class="text-center"><?php echo $res['qty']; ?></td>

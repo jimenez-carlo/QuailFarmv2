@@ -4,7 +4,7 @@
 <!-- banner -->
 <style>
    .banner_main {
-      min-height: 550px;
+      min-height: 670px;
 
    }
 </style>

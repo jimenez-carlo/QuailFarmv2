@@ -27,26 +27,32 @@ echo isset($_POST['delete']) ? delete($_POST) : '';
                   <th scope="col" class="text-center" style="width: 0.1%;">Image</th>
                   <th scope="col" class="text-center">Name</th>
                   <th scope="col" class="text-center">Price</th>
+                  <th scope="col" class="text-center">Qty</th>
+                  <th scope="col" class="text-center">Total</th>
                   <th scope="col" class="text-center">Expiration Date</th>
                   <th scope="col" class="text-center">Description</th>
                   <!-- <th scope="col" class="text-center">Date Created</th> -->
-                  <th scope="col" class="text-center">Created By</th>
+                  <!-- <th scope="col" class="text-center">Created By</th> -->
                   <th scope="col" class="text-center">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                <?php foreach (get_list("select c.name as category_name,p.*,concat('(ID#',i.id,') ',i.last_name,', ',i.first_name) as created_by from tbl_product p left join tbl_users_info i on i.id = p.created_by inner join tbl_category c on c.id = p.category_id where p.is_deleted = 0") as $res) { ?>
+                <?php foreach (get_list("
+
+select i.qty,c.name as category_name,p.*,concat('(ID#',ui.id,') ',ui.last_name,', ',ui.first_name) as created_by from tbl_product p inner join tbl_inventory i on i.product_id = p.id left join tbl_users_info ui on ui.id = p.created_by inner join tbl_category c on c.id = p.category_id where p.is_deleted = 0 order by p.date_created desc") as $res) { ?>
                   <tr>
                     <!-- <td><?php echo $res['id']; ?></td> -->
                     <td class="text-center"><span class="badge bg-secondary text-light"><?php echo $res['category_name']; ?></span></td>
                     <!-- <td><?php echo $res['category_name']; ?></td> -->
                     <td style="width: 0.1%;"><img src="../images/products/<?php echo $res['image']; ?>" style="width:100px;height:100px" /></td>
                     <td class="text-center"><?php echo $res['name']; ?></td>
-                    <td class="text-center"><?php echo $res['price']; ?></td>
+                    <td class="text-center"><?php echo number_format($res['price'], 2); ?></td>
+                    <td class="text-center"><?php echo $res['qty']; ?></td>
+                    <td class="text-center"><?php echo number_format($res['qty'] * (float)$res['price'], 2); ?></td>
                     <td class="text-center"><?php echo $res['expiration_date']; ?></td>
                     <td class="text-center"><?php echo $res['description']; ?></td>
                     <!-- <td><?php echo $res['date_created']; ?></td> -->
-                    <td class="text-center"><?php echo $res['created_by']; ?></td>
+                    <!-- <td class="text-center"><?php echo $res['created_by']; ?></td> -->
                     <td>
                       <center>
                         <form method="post" onsubmit="return confirm('Are You Sure?')">

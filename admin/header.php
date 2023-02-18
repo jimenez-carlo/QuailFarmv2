@@ -31,7 +31,7 @@ if (isset($_SESSION['user'])) {
   .sidebar-nav,
   .sidebar-link,
   a.sidebar-link {
-    /* background: blue; */
+    /* background: red; */
   }
 </style>
 
@@ -75,7 +75,7 @@ if (isset($_SESSION['user'])) {
               </a>
             </li>
 
-            <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'inventory') !== false || strpos($_SERVER['REQUEST_URI'], 'inventory_edit') !== false) ? 'active' : '' ?>">
+            <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'inventory') !== false || strpos($_SERVER['REQUEST_URI'], 'inventory_edit') !== false || strpos($_SERVER['REQUEST_URI'], 'inventory_r') !== false) ? 'active' : '' ?>">
               <a class="sidebar-link" href="inventory.php">
                 <i class="align-middle" data-feather="package"></i> <span class="align-middle">Inventory</span>
               </a>
@@ -87,19 +87,24 @@ if (isset($_SESSION['user'])) {
               </a>
             </li>
 
-            <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'report') !== false || strpos($_SERVER['REQUEST_URI'], 'report_edit') !== false) ? 'active' : '' ?>">
+            <!-- <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'report') !== false || strpos($_SERVER['REQUEST_URI'], 'report_edit') !== false) ? 'active' : '' ?>">
               <a class="sidebar-link" href="report.php">
                 <i class="align-middle" data-feather="file"></i> <span class="align-middle">Reports</span>
               </a>
-            </li>
-            <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'walkin_product') !== false || strpos($_SERVER['REQUEST_URI'], 'walkin_edit') !== false) ? 'active' : '' ?>">
-              <a class="sidebar-link" href="walkin_product.php?filter=all">
+            </li> -->
+            <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'walkin_p') !== false || strpos($_SERVER['REQUEST_URI'], 'walkin_edit') !== false) ? 'active' : '' ?>">
+              <a class="sidebar-link" href="walkin_p.php?filter=all">
                 <i class="align-middle" data-feather="monitor"></i> <span class="align-middle">Walkin Products</span>
               </a>
             </li>
             <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'walkin_checkout') !== false || strpos($_SERVER['REQUEST_URI'], 'walkin_edit') !== false) ? 'active' : '' ?>">
               <a class="sidebar-link" href="walkin_checkout.php">
                 <i class="align-middle" data-feather="monitor"></i> <span class="align-middle">Walkin Checkout</span>
+              </a>
+            </li>
+            <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'Sales_Reports') !== false || strpos($_SERVER['REQUEST_URI'], 'Sales_Reports') !== false) ? 'active' : '' ?>">
+              <a class="sidebar-link" href="Sales_Reports.php">
+                <i class="align-middle" data-feather="monitor"></i> <span class="align-middle">Sales Reports</span>
               </a>
             </li>
 
@@ -132,7 +137,7 @@ if (isset($_SESSION['user'])) {
               </a>
             </li>
 
-            <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'inventory') !== false || strpos($_SERVER['REQUEST_URI'], 'inventory_edit') !== false) ? 'active' : '' ?>">
+            <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'inventory') !== false || strpos($_SERVER['REQUEST_URI'], 'inventory_edit') !== false || strpos($_SERVER['REQUEST_URI'], 'inventory_r') !== false) ? 'active' : '' ?>">
               <a class="sidebar-link" href="inventory.php">
                 <i class="align-middle" data-feather="package"></i> <span class="align-middle">Inventory</span>
               </a>
@@ -144,19 +149,24 @@ if (isset($_SESSION['user'])) {
               </a>
             </li>
 
-            <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'report') !== false || strpos($_SERVER['REQUEST_URI'], 'report_edit') !== false) ? 'active' : '' ?>">
+            <!-- <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'report') !== false || strpos($_SERVER['REQUEST_URI'], 'report_edit') !== false) ? 'active' : '' ?>">
               <a class="sidebar-link" href="report.php">
                 <i class="align-middle" data-feather="file"></i> <span class="align-middle">Reports</span>
               </a>
-            </li>
-            <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'walkin_product') !== false || strpos($_SERVER['REQUEST_URI'], 'walkin_edit') !== false) ? 'active' : '' ?>">
-              <a class="sidebar-link" href="walkin_product.php?filter=all">
+            </li> -->
+            <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'walkin_p') !== false || strpos($_SERVER['REQUEST_URI'], 'walkin_edit') !== false) ? 'active' : '' ?>">
+              <a class="sidebar-link" href="walkin_p.php?filter=all">
                 <i class="align-middle" data-feather="monitor"></i> <span class="align-middle">Walkin Products</span>
               </a>
             </li>
             <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'walkin_checkout') !== false || strpos($_SERVER['REQUEST_URI'], 'walkin_edit') !== false) ? 'active' : '' ?>">
               <a class="sidebar-link" href="walkin_checkout.php">
                 <i class="align-middle" data-feather="monitor"></i> <span class="align-middle">Walkin Checkout</span>
+              </a>
+            </li>
+            <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'Sales_Reports') !== false || strpos($_SERVER['REQUEST_URI'], 'Sales_Reports') !== false) ? 'active' : '' ?>">
+              <a class="sidebar-link" href="Sales_Reports.php">
+                <i class="align-middle" data-feather="monitor"></i> <span class="align-middle">Sales Reports</span>
               </a>
             </li>
 
@@ -178,7 +188,6 @@ if (isset($_SESSION['user'])) {
 
         <div class="navbar-collapse collapse">
           <ul class="navbar-nav navbar-align">
-
 
             <li class="nav-item dropdown">
               <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">

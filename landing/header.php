@@ -6,7 +6,21 @@ if (isset($_SESSION['user'])) {
   } else if ($_SESSION['user']->access_id == 3) {
     header('location:' . $base_url . 'customer/index.php');
   }
-} ?>
+}
+
+function activate($array)
+{
+  $page = $_SERVER['PHP_SELF'];
+  $page = explode("/", $page);
+  $current = end($page);
+  $current = str_replace(".php", "", $current);
+  if (in_array($current, $array)) {
+    return "active";
+  } {
+    return "";
+  }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -108,6 +122,10 @@ if (isset($_SESSION['user'])) {
       background-color: grey;
       color: white;
     }
+
+    .nav-link.active {
+      color: yellow !important;
+    }
   </style>
   <header>
     <!-- header inner -->
@@ -133,21 +151,21 @@ if (isset($_SESSION['user'])) {
               <div class="collapse navbar-collapse" id="navbarsExample04">
                 <ul class="navbar-nav mr-auto">
                   <li class="nav-item active">
-                    <a class="nav-link" href="index.php"> Home </a>
+                    <a class="nav-link <?= activate(array("index")) ?>" href="index.php"> Home </a>
                   </li>
                   <li class="nav-item active">
-                    <a class="nav-link" href="tutorial.php">Tutorial</a>
+                    <a class="nav-link <?= activate(array("tutorial")) ?>" href="tutorial.php">Tutorial</a>
                   </li>
                   <li class="nav-item active">
-                    <a class="nav-link" href="products.php">Products </a>
+                    <a class="nav-link <?= activate(array("products")) ?>" href="products.php">Products </a>
                   </li>
                   <li class="nav-item active">
-                    <a class="nav-link" href="contact.php">Contact</a>
+                    <a class="nav-link <?= activate(array("contact")) ?>" href="contact.php">Contact</a>
                   </li>
                   <!-- <li class="nav-item active">
                     <a class="nav-link" href="about_us.php">About Us</a>
                   </li> -->
-                  <li class=" d_none get_btn">
+                  <li class=" d_none get_btn nav-link<?= activate(array("login")) ?>">
                     <a href="login.php">Login</a>
                   </li>
                 </ul>

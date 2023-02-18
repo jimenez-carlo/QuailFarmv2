@@ -3,28 +3,30 @@
 $id = $_GET['id'];
 $info = get_one("SELECT * from tbl_users u inner join tbl_users_info ui on ui.id = u.id where u.id = $id");
 
-function update()
+function update($data)
 {
   extract($data);
   // $check_username = get_one("select count(username) as `exists` from tbl_users where username = '$username' and id <> '$id' group by username limit 1");
 
-  if (!empty($new_password) && !empty($re_password) && $new_password != $re_password) {
-    return alert("New Password & Re-Type New Password Doest Not Match!");
-  }
+  // if (!empty($new_password) && !empty($re_password) && $new_password != $re_password) {
+  //   return alert("New Password & Re-Type New Password Doest Not Match!");
+  // }
 
   // if (isset($check_username->exists) && !empty($check_username->exists)) {
   //   return alert("Username Already In-Used!");
   // }
 
-
   // $password = password_hash($new_password, PASSWORD_DEFAULT);
+    // echo "UPDATE tbl_users_info set first_name = '$firstname', last_name = '$lastname', contact_no = '$contact', gender_id = '$gender',province = '$province', city = '$city', barangay = '$barangay' where id = '$id'";
+    // die;
+
 
   query("UPDATE tbl_users_info set first_name = '$firstname', last_name = '$lastname', contact_no = '$contact', gender_id = '$gender',province = '$province', city = '$city', barangay = '$barangay' where id = '$id'");
   // query("UPDATE tbl_users set username = '$username', password = '$password' where id = '$id'");
   return alert("Customer Updated!");
 }
 
-echo isset($_POST['register']) ? update($_POST) : '';
+echo isset($_POST['update']) ? update($_POST) : '';
 ?>
 <main class="content">
   <div class="container-fluid p-0">

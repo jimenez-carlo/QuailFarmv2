@@ -42,7 +42,7 @@ function signup($data)
    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
    $last_id = get_inserted_id("INSERT INTO tbl_users (username,`password`,access_id) values ('$username', '$hashed_password', '3')");
-   query("INSERT INTO tbl_users_info (id,first_name,last_name,`province`,`city`,`barangay`,contact_no,`province`,`city`,`barangay`) VALUES ('$last_id', '$first_name', '$last_name', '$province','$city','$barangay','$contact','$province','$city','$barangay')");
+   query("INSERT INTO tbl_users_info (id,first_name,last_name,contact_no,`province`,`city`,`barangay`) VALUES ('$last_id', '$first_name', '$last_name','$contact','$province','$city','$barangay')");
    unset($_POST);
    return success_landing_message("User Registered!");
 }

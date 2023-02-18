@@ -39,9 +39,9 @@ if (isset($_SESSION['user'])) {
           </li>
 
           <li class="sidebar-item <?= (strpos($_SERVER['REQUEST_URI'], 'products') !== false || strpos($_SERVER['REQUEST_URI'], 'category') !== false) ? 'active' : '' ?>">
-            <a class="sidebar-link" href="products.php">
-              <!-- product.php -->
-              <!-- <a class="sidebar-link" href="category.php?filter=all"> -->
+            <!-- <a class="sidebar-link" href="products.php"> -->
+            <!-- product.php -->
+            <a class="sidebar-link" href="category.php?filter=all">
               <i class="align-middle" data-feather="tag"></i> <span class="align-middle">Products</span>
             </a>
           </li>

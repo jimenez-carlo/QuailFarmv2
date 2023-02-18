@@ -55,7 +55,7 @@ echo isset($_POST['register']) ? register(array_merge($_POST, $_FILES)) : '';
                 <center>
                   <img src="../images/products/default.png" alt="" style="width:200px;height:200px;align-self: center;" id="preview">
                 </center>
-                <input type="file" class="form-control form-control-sm" id="image" name="image" style="margin-top: 13px;">
+                <input type="file" class="form-control form-control-sm" id="image" name="image" style="margin-top: 13px;" accept="image/png, image/gif, image/jpeg">
               </div>
 
               <div class="col-md-12 mt-3">

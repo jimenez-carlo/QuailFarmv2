@@ -11,7 +11,7 @@ function remove_cart($data)
 function update_cart($data)
 {
   extract($data);
-  $new_price = intval($price) * intval($qty);
+  $new_price = floatval($price) * floatval($qty);
   if ($qty > 0) {
     query("update tbl_transactions set price = '$new_price', qty = '$qty' where id = $transaction_id");
     return alert_redirect("Product Quantity Updated From Cart!", "walkin_checkout.php");
@@ -31,7 +31,7 @@ function checkout_cart($data)
     $err = "";
     foreach (get_list("select t.id,t.product_id, t.qty, i.qty as stocks,p.name from tbl_transactions t inner join tbl_inventory i on i.product_id = t.product_id inner join tbl_product p on p.id = t.product_id where t.status_id = 1 and t.is_deleted = 0 and t.buyer_id = '$customer_id'") as $res) {
       if ($res['qty'] > $res['stocks']) {
-        $err .= " Product <b>`" . $res['name'] . "`</b> has only " . $res['stocks'] . " stocks.";
+        $err .= " Product " . $res['name'] . " has only " . $res['stocks'] . " stocks.";
       }
     }
 
@@ -44,6 +44,7 @@ function checkout_cart($data)
 
     foreach (get_list("select t.* from tbl_transactions t where t.status_id = 1 and t.is_deleted = 0 and t.buyer_id = '$customer_id'") as $res) {
       $id = $res['id'];
+      // $q = mysqli_query($_SESSION['conn'], "UPDATE tbl_inventory SET qty=qty-'".$res['qty']."' WHERE product_id='".$res['product_id']."'") or die($conn);
       query("insert into tbl_status_history (transaction_id,status_id,created_by) VALUES('$id',2,'$customer_id')");
     }
     query("update tbl_transactions set status_id = 2, invoice_id= '$invoice_id' where status_id = 1 and is_deleted = 0 and buyer_id = '$customer_id'");
@@ -82,7 +83,7 @@ function checkout_cart($data)
                 <?php
                 $id = 1;
                 $price = 0;
-                $total_price = 0;
+                $total_price = (float)0;
                 $qty = 0;  ?>
                 <?php foreach (get_list("select t.id,t.price as sum_price,t.qty,t.product_id,p.name,p.description,p.price from tbl_transactions t inner join tbl_product p on p.id = t.product_id where t.buyer_id = '" . $_SESSION['user']->id . "' and t.status_id = 1 and t.is_deleted = 0 and p.is_deleted = 0")
                   as $res) { ?>
@@ -110,16 +111,16 @@ function checkout_cart($data)
                         <button type="submit" class="btn btn-sm btn-secondary btn-remove-row" name="remove_from_cart"><i data-feather="trash"></i> </button>
                       </form>
                     </td>
-                    <?php $price += $res['price']; ?>
-                    <?php $total_price += $res['sum_price']; ?>
+                    <?php $price += (float)$res['price']; ?>
+                    <?php $total_price += (float)$res['sum_price']; ?>
                     <?php $qty += $res['qty']; ?>
                   </tr>
                 <?php } ?>
                 <tr class="fw-bold">
                   <td colspan="2">Grand Total</td>
-                  <td id="total_price" class="text-end"><?php echo number_format($price, 2); ?></td>
+                  <td id="total_price" class="text-end"><?php echo number_format((float)$price, 2); ?></td>
                   <td id="total_qty" class="text-end"><?php echo $qty; ?></td>
-                  <td id="total_final_price" class="text-end"><?php echo number_format($total_price, 2); ?></td>
+                  <td id="total_final_price" class="text-end"><?php echo number_format((float)$total_price, 2); ?></td>
                   <td></td>
                 </tr>
               </tbody>

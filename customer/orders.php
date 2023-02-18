@@ -1,6 +1,9 @@
 <?php include_once('header.php') ?>
 
 <?php
+
+
+echo isset($_POST['cancel']) ? update_transaction($_POST['id'], $_POST['status']) : '';
 $customer_id = $_SESSION['user']->id;
 $tmp = array();
 $tmp_res = get_list("select t.id,t.qty,s.status,t.date_updated,t.status_id,i.invoice, i.date_created as invoice_date,is.status as `invoice_status`, p.id as `product_id`,p.name,p.price as product_price from tbl_transactions t inner join tbl_status s on s.id = t.status_id inner join tbl_invoice i on i.id = t.invoice_id  inner join tbl_product p on p.id = t.product_id inner join tbl_invoice_status `is` on is.id = i.status_id where t.is_deleted = 0 and t.status_id > 1 and buyer_id = '$customer_id' and p.is_deleted = 0 order by t.date_created desc");
@@ -8,9 +11,8 @@ foreach ($tmp_res as $res) {
   $tmp['invoice'][$res['invoice']][$res['id']] = $res;
   $tmp['status'][$res['invoice']] = $res['invoice_status'];
 }
-
-echo isset($_POST['cancel']) ? update_transaction($_POST['id'], $_POST['status']) : '';
 ?>
+
 <main class="content">
   <div class="container-fluid p-0">
 
