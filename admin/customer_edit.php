@@ -17,8 +17,8 @@ function update($data)
   // }
 
   // $password = password_hash($new_password, PASSWORD_DEFAULT);
-    // echo "UPDATE tbl_users_info set first_name = '$firstname', last_name = '$lastname', contact_no = '$contact', gender_id = '$gender',province = '$province', city = '$city', barangay = '$barangay' where id = '$id'";
-    // die;
+  // echo "UPDATE tbl_users_info set first_name = '$firstname', last_name = '$lastname', contact_no = '$contact', gender_id = '$gender',province = '$province', city = '$city', barangay = '$barangay' where id = '$id'";
+  // die;
 
 
   query("UPDATE tbl_users_info set first_name = '$firstname', last_name = '$lastname', contact_no = '$contact', gender_id = '$gender',province = '$province', city = '$city', barangay = '$barangay' where id = '$id'");
@@ -66,19 +66,46 @@ echo isset($_POST['update']) ? update($_POST) : '';
               <div class="col-md-4">
                 <div class="col-md-12">
                   <label for="lastname" class="form-label">*Province</label>
-                  <input type="text" class="form-control form-control-sm" id="province" required name="province" placeholder="province" value="<?= isset($_POST['update']) ? $_POST['province'] : $info->province; ?>">
+                  <select name="province" id="" class="form-control form-control-sm">
+                    <?php $tmp_dropdown = isset($_POST['province']) ? $_POST['province'] : $info->province ?>
+                    <?php foreach (get_list("select * from tbl_province order by name asc") as $res) {
+                      if ($tmp_dropdown == $res['id']) {
+                        echo '<option value="' . $res['id'] . '" selected>' . $res['name'] . '</option>';
+                      } else {
+                        echo '<option value="' . $res['id'] . '">' . $res['name'] . '</option>';
+                      }
+                    } ?>
+                  </select>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="col-md-12">
                   <label for="lastname" class="form-label">*City</label>
-                  <input type="text" class="form-control form-control-sm" id="city" required name="city" placeholder="city" value="<?= isset($_POST['update']) ? $_POST['city'] : $info->city; ?>">
+                  <select name="city" id="" class="form-control form-control-sm">
+                    <?php $tmp_dropdown = isset($_POST['city']) ? '0128' : $info->province ?>
+                    <?php foreach (get_list("select * from tbl_city where province_id = '$tmp_dropdown' order by name asc") as $res) {
+                      if ($info->city == $res['id']) {
+                        echo '<option value="' . $res['id'] . '" selected>' . $res['name'] . '</option>';
+                      } else {
+                        echo '<option value="' . $res['id'] . '">' . $res['name'] . '</option>';
+                      }
+                    } ?>
+                  </select>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="col-md-12">
                   <label for="lastname" class="form-label">*Barangay</label>
-                  <input type="text" class="form-control form-control-sm" id="barangay" required name="barangay" placeholder="barangay" value="<?= isset($_POST['update']) ? $_POST['barangay'] : $info->barangay; ?>">
+                  <select name="barangay" id="" class="form-control form-control-sm">
+                    <?php $tmp_dropdown = isset($_POST['barangay']) ? '012801' : $info->city ?>
+                    <?php foreach (get_list("select * from tbl_barangay where city_id = '$tmp_dropdown' order by name asc") as $res) {
+                      if ($info->barangay  == $res['id']) {
+                        echo '<option value="' . $res['id'] . '" selected>' . $res['name'] . '</option>';
+                      } else {
+                        echo '<option value="' . $res['id'] . '">' . $res['name'] . '</option>';
+                      }
+                    } ?>
+                  </select>
                 </div>
               </div>
 
@@ -98,3 +125,34 @@ echo isset($_POST['update']) ? update($_POST) : '';
 </main>
 
 <?php include_once('footer.php') ?>
+<script>
+  $('select[name="province"]').on('change', function() {
+    city();
+    barangay();
+  });
+
+  $('select[name="city"]').on('change', function() {
+    barangay();
+  });
+
+  function city() {
+    $.ajax({
+        method: "POST",
+        url: "<?= $base_url ?>city.php?id=" + $('select[name="province"]').val()
+      })
+      .done(function(result) {
+        $('select[name="city"]').html(result);
+        barangay();
+      });
+  }
+
+  function barangay() {
+    $.ajax({
+        method: "POST",
+        url: "<?= $base_url ?>barangay.php?id=" + $('select[name="city"]').val()
+      })
+      .done(function(result) {
+        $('select[name="barangay"]').html(result);
+      });
+  }
+</script>

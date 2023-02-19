@@ -3,7 +3,7 @@
 function register($data)
 {
   extract($data);
-  $check_name = get_one("select count(`name`) as `exists` from tbl_category where `name` = '$name' group by name limit 1");
+  $check_name = get_one("select count(`name`) as `exists` from tbl_category where `name` = '$name' and is_deleted = 0 group by name limit 1");
 
   if (isset($check_name->exists) && !empty($check_name->exists)) {
     return alert("Category Already In-Used!");

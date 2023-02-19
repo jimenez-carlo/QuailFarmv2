@@ -20,7 +20,14 @@ if (isset($_SESSION['user'])) {
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
-
+<style>
+  .sidebar-brand,
+  .sidebar-nav,
+  .sidebar-link,
+  a.sidebar-link {
+    /* background: red; */
+  }
+</style>
 <body>
   <div class="wrapper">
     <nav id="sidebar" class="sidebar js-sidebar">

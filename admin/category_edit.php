@@ -6,7 +6,7 @@ $info = get_one("SELECT * from tbl_category where id = $id and is_deleted = 0");
 function update($data)
 {
   extract($data);
-  $check_name = get_one("select count(`name`) as `exists` from tbl_category where `name` = '$name' and id <> '$id' group by name limit 1");
+  $check_name = get_one("select count(`name`) as `exists` from tbl_category where `name` = '$name' and id <> '$id' and is_deleted = 0 group by name limit 1");
 
   if (isset($check_name->exists) && !empty($check_name->exists)) {
     return alert("Category Already In-Used!");

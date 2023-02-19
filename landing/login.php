@@ -4,6 +4,19 @@
       color: #fff;
       background: red;
    } */
+
+   .main_form select {
+      border: inherit;
+      padding: 0px 15px;
+      margin-bottom: 20px;
+      width: 100%;
+      height: 45px;
+      background: #ffffff;
+      color: #777977;
+      font-size: 18px;
+      font-weight: normal;
+      border-bottom: #ddd solid 1px;
+   }
 </style>
 <?php
 
@@ -107,13 +120,27 @@ function signup($data)
                               <input class="contactus" placeholder="Contact" type="number" required name="contact" value="<?= isset($_POST['contact']) && isset($_POST['signup']) ? $_POST['contact'] : '' ?>">
                            </div>
                            <div class="col-md-12">
-                              <input class="contactus" placeholder="Provice" type="text" required name="province" value="<?= isset($_POST['province']) && isset($_POST['signup']) ? $_POST['province'] : '' ?>">
+
+                              <select name="province" id="">
+                                 <?php foreach (get_list("select * from tbl_province order by name asc") as $res) { ?>
+                                    <option value="<?= $res['id'] ?>"><?= $res['name'] ?></option>
+                                 <?php } ?>
+                              </select>
                            </div>
                            <div class="col-md-12">
-                              <input class="contactus" placeholder="City" type="text" required name="city" value="<?= isset($_POST['city']) && isset($_POST['signup']) ? $_POST['city'] : '' ?>">
+                              <select name="city" id="">
+                                 <?php foreach (get_list("select * from tbl_city where province_id = '0128' order by name asc") as $res) { ?>
+                                    <option value="<?= $res['id'] ?>"><?= $res['name'] ?></option>
+                                 <?php } ?>
+                              </select>
                            </div>
                            <div class="col-md-12">
-                              <input class="contactus" placeholder="Barangay" type="text" required name="barangay" value="<?= isset($_POST['barangay']) && isset($_POST['signup']) ? $_POST['barangay'] : '' ?>">
+
+                              <select name="barangay" id="">
+                                 <?php foreach (get_list("select * from tbl_barangay where city_id = '012801' order by name asc") as $res) { ?>
+                                    <option value="<?= $res['id'] ?>"><?= $res['name'] ?></option>
+                                 <?php } ?>
+                              </select>
                            </div>
                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                               <button class="send_btn" type="submit" name="signup">Sign Up</button>
@@ -139,3 +166,34 @@ function signup($data)
    </div>
 </footer>
 <?php include_once('footer.php'); ?>
+<script>
+   $('select[name="province"]').on('change', function() {
+      city();
+      barangay();
+   });
+
+   $('select[name="city"]').on('change', function() {
+      barangay();
+   });
+
+   function city() {
+      $.ajax({
+            method: "POST",
+            url: "<?= $base_url ?>city.php?id=" + $('select[name="province"]').val()
+         })
+         .done(function(result) {
+            $('select[name="city"]').html(result);
+            barangay();
+         });
+   }
+
+   function barangay() {
+      $.ajax({
+            method: "POST",
+            url: "<?= $base_url ?>barangay.php?id=" + $('select[name="city"]').val()
+         })
+         .done(function(result) {
+            $('select[name="barangay"]').html(result);
+         });
+   }
+</script>

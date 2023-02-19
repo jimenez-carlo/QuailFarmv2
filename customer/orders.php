@@ -2,11 +2,63 @@
 
 <?php
 
+function update_item($id, $invoice_id, $status)
+{
+  $created_by = $_SESSION['user']->id;
+  $invoice_id = get_one("select id from tbl_invoice where invoice = $invoice_id")->id;
+  query("update tbl_transactions set status_id = $status, seller_id = '$created_by' where id = $id");
+  query("insert into tbl_status_history (transaction_id, status_id, created_by) values('$id', '$status', '$created_by')");
 
-echo isset($_POST['cancel']) ? update_transaction($_POST['id'], $_POST['status']) : '';
+  if ($status == 3) {
+    $trxn = get_one("select product_id,qty from tbl_transactions where id = '$id'");
+    $quantity = $trxn->qty;
+    $prd_id = $trxn->product_id;
+    $original_qty = get_one("select * from tbl_inventory where product_id = $prd_id")->qty;
+    query("update tbl_inventory set qty = qty - $quantity where product_id = $prd_id");
+    query("insert into tbl_inventory_history (product_id,original_qty,qty,created_by) values($prd_id,$original_qty,-$quantity,'$created_by')");
+  }
+
+  $transaction_count = get_one("select sum(CASE WHEN status_id = 2 THEN 1 ELSE 0 END) AS `pending`,sum(CASE WHEN status_id = 3 THEN 1 ELSE 0 END) AS `approved`, sum(CASE WHEN status_id = 5 THEN 1 ELSE 0 END) AS `cancelled`, sum(CASE WHEN status_id = 6 THEN 1 ELSE 0 END) AS `rejected` from tbl_transactions where invoice_id = $invoice_id group by invoice_id");
+
+  $data = array(
+    'approved' => $transaction_count->approved,
+    'cancelled' => $transaction_count->cancelled,
+    'rejected' => $transaction_count->rejected
+  );
+
+  $max_transaction_status = array_keys($data, max($data));
+
+  // invoice status partial approve or approved
+  $approved_status = (empty($transaction_count->pending)) ? 3 : 2;
+
+
+  $status = array(
+    'approved' => $approved_status,
+    'cancelled' => 6,
+    'rejected' => 7
+  );
+
+  $new_status = $status[$max_transaction_status[0]];
+  if ($transaction_count->approved > 0) {
+    $new_status = $status['approved'];
+  }
+
+  $new_invoice_status = (($transaction_count->cancelled == $transaction_count->approved && $transaction_count->approved > 0) || ($transaction_count->rejected == $transaction_count->approved && $transaction_count->approved > 0)) ? 3 : $new_status; // update invoice & insert invoice history
+  query("update tbl_invoice set status_id = $new_invoice_status where id = $invoice_id ");
+  query("insert into tbl_invoice_status_history (invoice_id, status_id, created_by) values('$invoice_id','$new_invoice_status','$created_by')");
+
+
+  return alert("Order Updated!");
+}
+
+echo isset($_POST['cancel']) ? update_item($_POST['id'], $_POST['invoice_id'], 5) : '';
+
+// echo isset($_POST['cancel']) ? update_transaction($_POST['id'], $_POST['status']) : '';
+
 $customer_id = $_SESSION['user']->id;
 $tmp = array();
 $tmp_res = get_list("select t.id,t.qty,s.status,t.date_updated,t.status_id,i.invoice, i.date_created as invoice_date,is.status as `invoice_status`, p.id as `product_id`,p.name,p.price as product_price from tbl_transactions t inner join tbl_status s on s.id = t.status_id inner join tbl_invoice i on i.id = t.invoice_id  inner join tbl_product p on p.id = t.product_id inner join tbl_invoice_status `is` on is.id = i.status_id where t.is_deleted = 0 and t.status_id > 1 and buyer_id = '$customer_id' and p.is_deleted = 0 order by t.date_created desc");
+
 foreach ($tmp_res as $res) {
   $tmp['invoice'][$res['invoice']][$res['id']] = $res;
   $tmp['status'][$res['invoice']] = $res['invoice_status'];
@@ -58,6 +110,7 @@ foreach ($tmp_res as $res) {
                       <td class="text-end" style="width: 0.1%;">
                         <?php if ($sub_res['status_id'] == 2) { ?>
                           <form method="post">
+                            <input type="hidden" name="invoice_id" value="<?php echo $sub_res['invoice']; ?>">
                             <input type="hidden" name="id" value="<?php echo $sub_res['id']; ?>">
                             <input type="hidden" name="status" value="5">
                             <button type="submit" class="btn btn-sm btn-secondary" name="cancel"> Cancel</button>

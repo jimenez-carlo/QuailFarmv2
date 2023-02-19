@@ -127,7 +127,7 @@ echo isset($_POST['reject']) ? update_order($_POST['id'], 6) : '';
 <script>
   $('table').DataTable({
     dom: '<"top"<"left-col"B><"center-col"><"right-col"f>> <"row"<"col-sm-12"tr>><"row"<"col-sm-10"i><"col-sm-2"p>>',
-    "order": []
+    "order": false
   });
 </script>
 <?php include_once('footer.php') ?>

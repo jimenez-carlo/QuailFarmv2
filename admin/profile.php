@@ -2,7 +2,7 @@
 <?php
 
 
-$info = get_one("select g.gender,UPPER(a.name) as 'access',ui.*,u.* from tbl_users u inner join tbl_users_info ui on ui.id = u.id inner join tbl_access a on a.id = u.access_id inner join tbl_gender g on g.id = ui.gender_id WHERE u.id = " . $_SESSION['user']->id);
+
 
 function update_profile($data)
 {
@@ -42,6 +42,10 @@ function change_password($data)
 ?>
 <?= (isset($_POST['update_profile'])) ? update_profile($_POST) : ''; ?>
 <?= (isset($_POST['change_password'])) ? change_password($_POST) : ''; ?>
+<?php
+
+$info = get_one("select g.gender,UPPER(a.name) as 'access',ui.*,u.* from tbl_users u inner join tbl_users_info ui on ui.id = u.id inner join tbl_access a on a.id = u.access_id left join tbl_gender g on g.id = ui.gender_id WHERE u.id = " . $_SESSION['user']->id);
+?>
 <main class="content">
   <div class="container-fluid p-0">
 
@@ -60,9 +64,19 @@ function change_password($data)
                 <label class="form-label" for="inputEmail4">*Username</label>
                 <input type="text" name="username" class="form-control form-control-sm" id="inputEmail4" placeholder="Username" value="<?= isset($_POST['new_password']) && isset($_POST['update_profile']) ? $_POST['username'] : $info->username ?>">
               </div>
+
               <div class="mb-3 col-md-6">
-                <label class="form-label" for="inputPassword4">*Email</label>
-                <input type="email" name="email" class="form-control form-control-sm" id="inputPassword4" placeholder="Email" value="<?= isset($_POST['email']) && isset($_POST['update_profile']) ? $_POST['email'] : $info->email ?>">
+                <label class="form-label" for="inputPassword4">Gender</label>
+                <select name="gender" id="" class="form-control form-control-sm">
+                  <?php foreach (get_list("select id,UPPER(gender) as 'gender' from tbl_gender") as $res) {
+                    if ($info->gender_id == $res['id']) {
+                      echo '<option value="' . $res['id'] . '" selected>' . $res['gender'] . '</option>';
+                    } else {
+                      echo '<option value="' . $res['id'] . '">' . $res['gender'] . '</option>';
+                    }
+                  } ?>
+                </select>
+
               </div>
             </div>
 
@@ -81,27 +95,46 @@ function change_password($data)
               <div class="mb-3 col-md-6">
                 <div class="col-md-12">
                   <label for="lastname" class="form-label">*Province</label>
-                  <input type="text" class="form-control form-control-sm" id="province" required name="province" placeholder="province" value="<?= isset($_POST['update_profile']) ? $_POST['province'] : $info->province; ?>">
+                  <select name="province" id="" class="form-control form-control-sm">
+                    <?php $tmp_dropdown = isset($_POST['province']) ? $_POST['province'] : $info->province ?>
+                    <?php foreach (get_list("select * from tbl_province order by name asc") as $res) {
+                      if ($tmp_dropdown == $res['id']) {
+                        echo '<option value="' . $res['id'] . '" selected>' . $res['name'] . '</option>';
+                      } else {
+                        echo '<option value="' . $res['id'] . '">' . $res['name'] . '</option>';
+                      }
+                    } ?>
+                  </select>
+
                   <label for="lastname" class="form-label">*City</label>
-                  <input type="text" class="form-control form-control-sm" id="city" required name="city" placeholder="city" value="<?= isset($_POST['update_profile']) ? $_POST['city'] : $info->city; ?>">
+                  <select name="city" id="" class="form-control form-control-sm">
+                    <?php $tmp_dropdown = isset($_POST['city']) ? '0128' : $info->province ?>
+                    <?php foreach (get_list("select * from tbl_city where province_id = '$tmp_dropdown' order by name asc") as $res) {
+                      if ($info->city == $res['id']) {
+                        echo '<option value="' . $res['id'] . '" selected>' . $res['name'] . '</option>';
+                      } else {
+                        echo '<option value="' . $res['id'] . '">' . $res['name'] . '</option>';
+                      }
+                    } ?>
+                  </select>
                   <label for="lastname" class="form-label">*Barangay</label>
-                  <input type="text" class="form-control form-control-sm" id="barangay" required name="barangay" placeholder="barangay" value="<?= isset($_POST['update_profile']) ? $_POST['barangay'] : $info->barangay; ?>">
+                  <select name="barangay" id="" class="form-control form-control-sm">
+                    <?php $tmp_dropdown = isset($_POST['barangay']) ? '012801' : $info->city ?>
+                    <?php foreach (get_list("select * from tbl_barangay where city_id = '$tmp_dropdown' order by name asc") as $res) {
+                      if ($info->barangay  == $res['id']) {
+                        echo '<option value="' . $res['id'] . '" selected>' . $res['name'] . '</option>';
+                      } else {
+                        echo '<option value="' . $res['id'] . '">' . $res['name'] . '</option>';
+                      }
+                    } ?>
+                  </select>
                 </div>
               </div>
               <div class="mb-3 col-md-6">
                 <label class="form-label" for="inputPassword4">*Contact</label>
                 <input type="number" name="contact_no" class="form-control form-control-sm" id="inputPassword4" placeholder="Contact" value="<?= isset($_POST['re_password']) && isset($_POST['update_profile']) ? $_POST['contact_no'] : $info->contact_no ?>">
 
-                <label class="form-label" for="inputPassword4">Gender</label>
-                <select name="gender" id="" class="form-control form-control-sm">
-                  <?php foreach (get_list("select id,UPPER(gender) as 'gender' from tbl_gender") as $res) {
-                    if ($info->gender_id == $res['id']) {
-                      echo '<option value="' . $res['id'] . '" selected>' . $res['gender'] . '</option>';
-                    } else {
-                      echo '<option value="' . $res['id'] . '">' . $res['gender'] . '</option>';
-                    }
-                  } ?>
-                </select>
+
               </div>
             </div>
 
@@ -112,7 +145,7 @@ function change_password($data)
     </div>
 
 
-    <div class="col-12 col-lg-12">
+    <!-- <div class="col-12 col-lg-12">
       <div class="card">
         <div class="card-header">
           <h5 class="card-title mb-0">Change Password</h5>
@@ -137,8 +170,39 @@ function change_password($data)
           </form>
         </div>
       </div>
-    </div>
+    </div> -->
 
   </div>
 </main>
 <?php include_once('footer.php') ?>
+<script>
+  $('select[name="province"]').on('change', function() {
+    city();
+    barangay();
+  });
+
+  $('select[name="city"]').on('change', function() {
+    barangay();
+  });
+
+  function city() {
+    $.ajax({
+        method: "POST",
+        url: "<?= $base_url ?>city.php?id=" + $('select[name="province"]').val()
+      })
+      .done(function(result) {
+        $('select[name="city"]').html(result);
+        barangay();
+      });
+  }
+
+  function barangay() {
+    $.ajax({
+        method: "POST",
+        url: "<?= $base_url ?>barangay.php?id=" + $('select[name="city"]').val()
+      })
+      .done(function(result) {
+        $('select[name="barangay"]').html(result);
+      });
+  }
+</script>
