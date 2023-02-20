@@ -81,7 +81,7 @@ echo isset($_POST['reject']) ? update_order($_POST['id'], 6) : '';
                 </tr>
               </thead>
               <tbody>
-                <?php foreach (get_list("select i.paid_status_id,ps.name as `paid_status`,t.date_updated, s.id as `seller_id`, b.id as `buyer_id`, t.id,sum(IF(t.status_id in (2,3,4), t.price, 0)) as `total_price`,sum(IF(t.status_id in (2,3,4), t.qty, 0)) as qty,i.invoice,p.name,p.price,i.status_id,concat('',b.last_name,', ',b.first_name) as buyer_name ,concat(' ',s.last_name,', ',s.first_name) as seller_name,is.status as `status` FROM tbl_transactions t inner join tbl_invoice i on i.id = t.invoice_id inner join tbl_invoice_status `is` on `is`.id = i.status_id inner join tbl_product p on p.id = t.product_id inner join tbl_users_info b on b.id = t.buyer_id left join tbl_users_info s on s.id = t.seller_id inner join tbl_paid_status ps on ps.id = i.paid_status_id where t.status_id > 1 and t.is_deleted = 0 group by t.invoice_id order by t.date_created desc") as $res) { ?>
+                <?php foreach (get_list("select i.paid_status_id,ps.name as `paid_status`,t.date_updated, s.id as `seller_id`, b.id as `buyer_id`, t.id,sum(IF(t.status_id in (2,3,4), t.price, 0)) as `total_price`,sum(IF(t.status_id in (2,3,4), t.qty, 0)) as qty,i.invoice,p.name,p.price,i.status_id,concat('',b.last_name,', ',b.first_name) as buyer_name ,concat(' ',s.last_name,', ',s.first_name) as seller_name,is.status as `status` FROM tbl_transactions t inner join tbl_invoice i on i.id = t.invoice_id inner join tbl_invoice_status `is` on `is`.id = i.status_id inner join tbl_product p on p.id = t.product_id inner join tbl_users_info b on b.id = t.buyer_id left join tbl_users_info s on s.id = t.seller_id inner join tbl_paid_status ps on ps.id = i.paid_status_id where t.status_id > 1 and t.is_deleted = 0 group by t.invoice_id order by t.invoice_id desc") as $res) { ?>
                   <tr>
                     <td class="text-center"><?php echo $res['invoice']; ?></td>
                     <td class="text-center"><?php echo $res['status']; ?></td>
@@ -89,7 +89,8 @@ echo isset($_POST['reject']) ? update_order($_POST['id'], 6) : '';
                     <td class="text-center"><?php echo $res['seller_name']; ?> </td>
                     <!-- <td class="text-center"><a href="customer_view.php?id=<?php echo $res['buyer_id']; ?>" target="_blank"> <?php echo $res['buyer_name']; ?> </a> </td>
                     <td class="text-center"><a href="user_edit.php?id=<?php echo $res['seller_id']; ?>" target="_blank"> <?php echo $res['seller_name']; ?> </a></td> -->
-                    <td class="text-center"><?php echo $res['date_updated']; ?></td>
+                    <?php $tmp = date_create($res['date_updated']); ?>
+                    <td class="text-center"><?php echo date_format($tmp, "F d Y") ?> </td>
                     <td class="text-center"><?php echo $res['paid_status']; ?></td>
                     <td class="text-center"><?php echo $res['qty']; ?></td>
                     <td class="text-center"><?php echo number_format($res['total_price'], 2); ?></td>

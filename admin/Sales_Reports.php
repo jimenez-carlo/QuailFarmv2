@@ -62,7 +62,7 @@
                 <?php $tmp_products = array(); ?>
                 <?php $where = isset($_GET['search']) ? " and t.date_created between '" . $_GET['from'] . "' and '" . $_GET['to'] . "'" : "" ?>
                 <?php if (isset($_GET['search'])) { ?>
-                  <?php foreach (get_list("select p.id as product_id,p.name,t.id as trans_id,t.price,t.qty,t.date_created,i.invoice, concat(ui.first_name, ' ',ui.last_name) as customer_name,h.original_qty,h.qty as new_qty from tbl_transactions t inner join tbl_product p on p.id = t.product_id inner join tbl_invoice i on i.id= t.invoice_id inner join tbl_users_info ui on ui.id = i.customer_id inner join tbl_inventory_history h on h.product_id = t.product_id and h.qty = (t.qty*-1) where 1 = 1 and t.status_id = 3 $where group by t.id order by t.date_created desc") as $res) { ?>
+                  <?php foreach (get_list("select p.id as product_id,p.name,t.id as trans_id,t.price,t.qty,t.date_created,i.invoice, concat(ui.first_name, ' ',ui.last_name) as customer_name,h.original_qty,h.qty as new_qty from tbl_transactions t inner join tbl_product p on p.id = t.product_id inner join tbl_invoice i on i.id= t.invoice_id inner join tbl_users_info ui on ui.id = i.customer_id inner join tbl_inventory_history h on h.product_id = t.product_id and h.qty = (t.qty*-1) where 1 = 1 and t.status_id = 3 $where group by t.id order by t.invoice_id desc") as $res) { ?>
                     <tr>
                       <td class="text-center"><?php echo $res['invoice']; ?></td>
                       <td class="text-center"><?php echo $res['trans_id']; ?></td>

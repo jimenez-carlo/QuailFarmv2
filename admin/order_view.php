@@ -1,4 +1,29 @@
 <?php include_once('header.php') ?>
+<style>
+  @media print {
+    .myDivToPrint {
+      background-color: white;
+      height: 100%;
+      width: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      margin: 0;
+      padding: 15px;
+      font-size: 14px;
+      line-height: 18px;
+      display: block !important;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0 !important;
+      padding: 0 !important;
+      overflow: hidden;
+    }
+  }
+</style>
 <?php
 function pay($id, $amount, $change, $total)
 {
@@ -32,7 +57,7 @@ function update_order($id, $status)
   }
 
 
-  $transaction_count = get_one("select sum(CASE WHEN status_id = 3 THEN 1 ELSE 0 END) AS `approved`, sum(CASE WHEN status_id = 5 THEN 1 ELSE 0 END) AS `cancelled`, sum(CASE WHEN status_id = 6 THEN 1 ELSE 0 END) AS `rejected` from tbl_transactions where invoice_id = $invoice_id group by invoice_id");
+  $transaction_count = get_one("select sum(CASE WHEN status_id = 3 THEN 1 ELSE 0 END) AS approved, sum(CASE WHEN status_id = 5 THEN 1 ELSE 0 END) AS cancelled, sum(CASE WHEN status_id = 6 THEN 1 ELSE 0 END) AS rejected from tbl_transactions where invoice_id = $invoice_id group by invoice_id");
 
   $data = array(
     'approved' => $transaction_count->approved,
@@ -74,7 +99,7 @@ function update_item($id, $invoice_id, $status)
     query("insert into tbl_inventory_history (product_id,original_qty,qty,created_by) values($prd_id,$original_qty,-$quantity,'$created_by')");
   }
 
-  $transaction_count = get_one("select sum(CASE WHEN status_id = 2 THEN 1 ELSE 0 END) AS `pending`,sum(CASE WHEN status_id = 3 THEN 1 ELSE 0 END) AS `approved`, sum(CASE WHEN status_id = 5 THEN 1 ELSE 0 END) AS `cancelled`, sum(CASE WHEN status_id = 6 THEN 1 ELSE 0 END) AS `rejected` from tbl_transactions where invoice_id = $invoice_id group by invoice_id");
+  $transaction_count = get_one("select sum(CASE WHEN status_id = 2 THEN 1 ELSE 0 END) AS pending,sum(CASE WHEN status_id = 3 THEN 1 ELSE 0 END) AS approved, sum(CASE WHEN status_id = 5 THEN 1 ELSE 0 END) AS cancelled, sum(CASE WHEN status_id = 6 THEN 1 ELSE 0 END) AS rejected from tbl_transactions where invoice_id = $invoice_id group by invoice_id");
 
   $data = array(
     'approved' => $transaction_count->approved,
@@ -114,7 +139,7 @@ echo isset($_POST['approve_all']) ? update_order($_POST['id'], 3) : '';
 echo isset($_POST['reject_all']) ? update_order($_POST['id'], 6) : '';
 
 $id = $_GET['id'];
-$main = get_list("select t.invoice_id,t.date_updated,p.id as `product_id`,t.id,t.buyer_id,t.price as `total_price`,t.qty,i.invoice,p.name,p.price,t.status_id,ss.status,concat('(ID#',b.id,') ',b.last_name,', ',b.first_name) as buyer_name ,concat('(ID#',s.id,') ',s.last_name,', ',s.first_name) as seller_name FROM tbl_transactions t inner join tbl_invoice i on i.id = t.invoice_id inner join tbl_product p on p.id = t.product_id inner join tbl_users_info b on b.id = t.buyer_id left join tbl_users_info s on s.id = t.seller_id inner join tbl_status ss on ss.id = t.status_id where t.status_id > 1 and t.is_deleted = 0 and i.invoice = '$id' and p.is_deleted = 0 order by t.date_updated desc");
+$main = get_list("select t.invoice_id,t.date_updated,p.id as product_id,t.id,t.buyer_id,t.price as total_price,t.qty,i.invoice,p.name,p.price,t.status_id,ss.status,concat('(ID#',b.id,') ',b.last_name,', ',b.first_name) as buyer_name ,concat('(ID#',s.id,') ',s.last_name,', ',s.first_name) as seller_name FROM tbl_transactions t inner join tbl_invoice i on i.id = t.invoice_id inner join tbl_product p on p.id = t.product_id inner join tbl_users_info b on b.id = t.buyer_id left join tbl_users_info s on s.id = t.seller_id inner join tbl_status ss on ss.id = t.status_id where t.status_id > 1 and t.is_deleted = 0 and i.invoice = '$id' and p.is_deleted = 0 order by t.date_updated desc");
 $customer_id = reset($main)['buyer_id'];
 $invoice_id = reset($main)['invoice_id'];
 $transactions = $main;
@@ -125,7 +150,10 @@ $actual_invoice = get_one("SELECT * FROM tbl_invoice where invoice = '$id' limit
 <main class="content">
   <div class="container-fluid p-0">
 
-    <h1 class="h3 mb-3"><strong> Order #<?php echo reset($transactions)['invoice']; ?></strong> <a href="order.php" class="btn btn-sm btn-secondary float-end"> Back</a></h1>
+    <h1 class="h3 mb-3"><strong> Order #<?php echo reset($transactions)['invoice']; ?></strong>
+      <a href="order.php" class="btn btn-sm btn-secondary float-end"> Back</a>
+      <button type="button" onclick="return tae();" class="btn btn-secondary btn-sm float-end" style="margin-right: 10px;">Print</button>
+    </h1>
     <div class="card">
 
       <div class="card-header">
@@ -151,6 +179,17 @@ $actual_invoice = get_one("SELECT * FROM tbl_invoice where invoice = '$id' limit
                 </thead>
                 <tbody>
                   <?php
+
+                  function color($status)
+                  {
+                    if (in_array($status, array(5, 6))) {
+                      return 'danger';
+                    } else if (in_array($status, array(3))) {
+                      return 'success';
+                    } else {
+                      return  'secondary';
+                    }
+                  }
                   $price = 0;
                   $qty = 0;
                   $total_price = 0;
@@ -165,20 +204,23 @@ $actual_invoice = get_one("SELECT * FROM tbl_invoice where invoice = '$id' limit
                       <td class="text-center"><?php echo number_format($res['price'], 2); ?></td>
                       <td class="text-center"><?php echo $res['qty']; ?></td>
                       <td class="text-center"><?php echo number_format($res['total_price'], 2); ?></td>
-                      <td class="text-center"><?php echo $res['date_updated']; ?></td>
+                      <?php $tmp = date_create($res['date_updated']); ?>
+                      <td class="text-center"><?php echo date_format($tmp, "F d Y") ?> </td>
                       <td class="text-center"> <?php if (in_array($res['status_id'], array(2))) { ?>
                           <form method="post" onsubmit="return confirm('Are You Sure?')">
                             <input type="hidden" name="id" value="<?php echo $res['id']; ?>">
                             <input type="hidden" name="invoice_id" value="<?php echo reset($transactions)['invoice']; ?>">
-                            <button type="submit" class="btn btn-sm btn-secondary" name="approve"> Approve </button>
+                            <button type="submit" class="btn btn-sm btn-<?= (in_array($res['status_id'], array(3))) ? 'success' : 'secondary' ?>" name="approve"> Approve </button>
+                            <!-- <button type="submit" class="btn btn-sm btn-<?= (in_array($res['status_id'], array(5, 6))) ? 'danger' : 'secondary' ?>" name="reject"> Reject </button> -->
                             <button type="submit" class="btn btn-sm btn-secondary" name="reject"> Reject </button>
                             <!-- <button type="button" class="btn btn-sm btn-secondary btn-view" name="transaction_view" value="<?php echo $res['id']; ?>"> View <i class="fa fa-eye"></i> </button> -->
                           </form>
                           <?php $approvable++; ?>
                         <?php } else { ?>
-                          <button type="button" class="btn btn-sm btn-secondary" disabled> Approve </button>
-                          <button type="button" class="btn btn-sm btn-secondary" disabled> Reject </button>
-                          <!-- <button type="button" class="btn btn-sm btn-secondary btn-view" name="transaction_view" value="<?php echo $res['id']; ?>"> View <i class="fa fa-eye"></i> </button> -->
+                          <button type="button" class="btn btn-sm btn-<?= (in_array($res['status_id'], array(3))) ? 'success' : 'secondary' ?>" disabled> Approve </button>
+                          <!-- <button type="submit" class="btn btn-sm btn-<?= (in_array($res['status_id'], array(5, 6))) ? 'danger' : 'secondary' ?>" name="reject"> Reject </button> -->
+                          <button type="button" class="btn btn-sm btn-secondary" disabled name="reject"> Reject </button>
+                          <!-- <button type=" button" class="btn btn-sm btn-secondary btn-view" name="transaction_view" value="<?php echo $res['id']; ?>"> View <i class="fa fa-eye"></i> </button> -->
                         <?php } ?>
                       </td>
                     </tr>
@@ -299,7 +341,7 @@ $actual_invoice = get_one("SELECT * FROM tbl_invoice where invoice = '$id' limit
                   </tr>
                 </thead>
                 <tbody>
-                  <?php foreach (get_list('select sh.date_created,sh.id,UPPER(s.status) as `status`,u.id as user_id,concat("(ID#",u.id,") ",u.last_name,", ", u.first_name) as `user`,ac.access_id FROM tbl_invoice_status_history sh inner join tbl_invoice_status s on s.id = sh.status_id inner join tbl_users_info u on u.id = sh.created_by inner join tbl_users ac on ac.id = sh.created_by where sh.invoice_id = ' . $invoice_id . ' order by id desc') as $res) { ?>
+                  <?php foreach (get_list('select sh.date_created,sh.id,UPPER(s.status) as status,u.id as user_id,concat("(ID#",u.id,") ",u.last_name,", ", u.first_name) as user,ac.access_id FROM tbl_invoice_status_history sh inner join tbl_invoice_status s on s.id = sh.status_id inner join tbl_users_info u on u.id = sh.created_by inner join tbl_users ac on ac.id = sh.created_by where sh.invoice_id = ' . $invoice_id . ' order by id desc') as $res) { ?>
                     <tr>
                       <td class="text-center"><?php echo $res['id']; ?></td>
                       <td class="text-center"><?php echo $res['status']; ?></td>
@@ -317,6 +359,95 @@ $actual_invoice = get_one("SELECT * FROM tbl_invoice where invoice = '$id' limit
 
       </div>
     </div> -->
+  </div>
+
+  <div class="card myDivToPrint" style="display:none">
+
+    <div class="card-header">
+      <h5 class="card-title mb-0">
+        <h1 class="h3"><strong> Order #<?php echo reset($transactions)['invoice']; ?></strong>
+      </h5>
+    </div>
+    <div class="card-body">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <table style="margin-top:-40px">
+
+              <?php $userinfo = get_one("select u.first_name,u.last_name,b.name as `barangay`,c.name as `city`,p.name as `province` from tbl_invoice i 
+inner join tbl_users_info u on u.id = i.customer_id
+left join tbl_barangay b on b.id = u.barangay 
+left join tbl_city c on c.id = u.city  
+left join tbl_province p on p.id = u.province  
+where i.invoice = '" . reset($transactions)['invoice'] . "'") ?>
+              <tr>
+                <td>Company: </td>
+                <td>Quail Farm</td>
+              </tr>
+              <tr>
+                <td>Name: </td>
+                <td><?= $userinfo->first_name . " " . $userinfo->last_name ?></td>
+              </tr>
+              <tr>
+                <td>Address: </td>
+                <td><?= $userinfo->province . ", " . $userinfo->city . ", " . strtoupper($userinfo->barangay) ?></td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <h5>Point of Sales</h5>
+                </td>
+              </tr>
+
+            </table>
+            <table class="table table-sm table-striped table-hover table-bordered">
+              <thead class="table-secondary">
+                <tr>
+                  <th scope="col" class="text-center">Product Name</th>
+                  <th scope="col" class="text-center">TXN#</th>
+                  <th scope="col" class="text-center">Status</th>
+                  <!-- <th scope="col" class="text-center">PID#</th> -->
+                  <th scope="col" class="text-center">Product Price</th>
+                  <th scope="col" class="text-center">Qty</th>
+                  <th scope="col" class="text-center">Total Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php
+                $price = 0;
+                $qty = 0;
+                $total_price = 0;
+                $approvable = 0;
+                ?>
+                <?php foreach ($transactions as $res) { ?>
+                  <tr>
+                    <td class="text-center"><?php echo $res['name']; ?></td>
+                    <td class="text-center"><?php echo $res['id']; ?></td>
+                    <td class="text-center"><?php echo ($res['status'] == 'order placed') ? 'PENDING' : strtoupper($res['status']); ?></td>
+                    <!-- <td class="text-center"><a href="#" class="a-view" name="product_edit" value="<?php echo $res['product_id']; ?>"><?php echo $res['product_id']; ?></a></td> -->
+                    <td class="text-center"><?php echo number_format($res['price'], 2); ?></td>
+                    <td class="text-center"><?php echo $res['qty']; ?></td>
+                    <td class="text-center"><?php echo number_format($res['total_price'], 2); ?></td>
+
+                  </tr>
+                  <?php $price += $res['price']; ?>
+                  <?php $total_price += $res['total_price']; ?>
+                  <?php $qty += $res['qty']; ?>
+                <?php } ?>
+                <tr class="fw-bold">
+                  <td colspan="5">Grand Total</td>
+
+                  <td id="total_final_price" class="text-center"><?php echo number_format($total_price, 2); ?></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+
+
+        </div>
+      </div>
+
+    </div>
   </div>
 </main>
 <script>
@@ -342,5 +473,9 @@ $actual_invoice = get_one("SELECT * FROM tbl_invoice where invoice = '$id' limit
     amount_post.value = amount.value;
     change_post.value = change.value;
   });
+
+  function tae() {
+    window.print();
+  }
 </script>
 <?php include_once('footer.php') ?>

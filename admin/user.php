@@ -41,7 +41,8 @@ echo isset($_POST['delete']) ? delete($_POST) : '';
                     <!-- <td class="text-center"><?php echo $res['email']; ?></td> -->
                     <td class="text-center"><?php echo ucwords($res['first_name'] . ' ' . $res['last_name']); ?></td>
                     <td class="text-center"><?php echo $res['contact_no']; ?></td>
-                    <td class="text-center"><?php echo $res['date_created']; ?></td>
+                    <?php $tmp = date_create($res['date_created']); ?>
+                    <td class="text-center"><?php echo date_format($tmp, "F d Y") ?> </td>
                     <td class="text-center">
                       <?php if ($res['access_id'] == 1) { ?>
                         <button type="button" class="btn btn-sm btn-secondary" disabled> Edit </button>

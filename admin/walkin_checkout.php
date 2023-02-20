@@ -40,14 +40,15 @@ function checkout_cart($data)
     }
 
     $invoice = time();
-    $invoice_id = get_inserted_id("insert into tbl_invoice (invoice,customer_id,status_id) VALUES('$invoice','$customer_id',1)");
+    $invoice_id = get_inserted_id("insert into tbl_invoice (invoice,customer_id,status_id) VALUES('$invoice','$customer_id',3)");
 
     foreach (get_list("select t.* from tbl_transactions t where t.status_id = 1 and t.is_deleted = 0 and t.buyer_id = '$customer_id'") as $res) {
       $id = $res['id'];
       // $q = mysqli_query($_SESSION['conn'], "UPDATE tbl_inventory SET qty=qty-'".$res['qty']."' WHERE product_id='".$res['product_id']."'") or die($conn);
       query("insert into tbl_status_history (transaction_id,status_id,created_by) VALUES('$id',2,'$customer_id')");
+      query("insert into tbl_status_history (transaction_id,status_id,created_by) VALUES('$id',3,'$customer_id')");
     }
-    query("update tbl_transactions set status_id = 2, invoice_id= '$invoice_id' where status_id = 1 and is_deleted = 0 and buyer_id = '$customer_id'");
+    query("update tbl_transactions set status_id = 3, invoice_id= '$invoice_id' where status_id = 1 and is_deleted = 0 and buyer_id = '$customer_id'");
     return alert_redirect("Successfully Checked Out!", "walkin_checkout.php");
   }
 }

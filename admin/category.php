@@ -33,7 +33,8 @@ echo isset($_POST['delete']) ? delete($_POST) : '';
                   <tr>
                     <!-- <td><?php echo $res['id']; ?></td> -->
                     <td class="text-center"><?php echo $res['name']; ?></td>
-                    <td class="text-center"><?php echo $res['date_created']; ?></td>
+                    <?php $tmp = date_create($res['date_created']); ?>
+                    <td class="text-center"><?php echo date_format($tmp, "F d Y") ?> </td>
                     <td style="width: 25%;">
                       <center>
                         <form method="post" onsubmit="return confirm('Are You Sure?')">
