@@ -53,6 +53,22 @@ function update_order($id, $status)
 
   return alert("Order Updated!");
 }
+
+function get_color($id)
+{
+  switch ($id) {
+    case 1:
+    case 6:
+    case 7:
+      $color = 'danger';
+      break;
+    case 2:
+    case 3:
+      $color = 'primary';
+      break;
+  }
+  return $color;
+}
 echo isset($_POST['paid']) ? update_paid($_POST['id']) : '';
 echo isset($_POST['approve']) ? update_order($_POST['id'], 3) : '';
 echo isset($_POST['reject']) ? update_order($_POST['id'], 6) : '';
@@ -98,7 +114,7 @@ echo isset($_POST['reject']) ? update_order($_POST['id'], 6) : '';
                       <form method="post" onsubmit="return confirm('Are You Sure?')">
                         <?php if (in_array($res['status_id'], array(1, 2))) { ?>
                           <input type="hidden" name="id" value="<?php echo $res['invoice']; ?>">
-                          <button type="submit" class="btn btn-sm btn-secondary" name="paid" <?= ($res['paid_status_id'] != 1 || $res['status'] != 'APPROVED') ? 'disabled' : '' ?>> Paid </button>
+                          <button type="submit" class="btn btn-sm btn-<?= get_color($res['status_id']) ?>" name="paid" <?= ($res['paid_status_id'] != 1 || $res['status'] != 'APPROVED') ? 'disabled' : '' ?>> Paid </button>
                           <!-- <button type="submit" class="btn btn-sm btn-secondary" name="approve"> Approve </button>
                           <button type="submit" class="btn btn-sm btn-secondary" name="reject"> Reject </button> -->
                           <!-- <button type="button" class="btn btn-sm btn-secondary"> View </button> -->
@@ -106,7 +122,7 @@ echo isset($_POST['reject']) ? update_order($_POST['id'], 6) : '';
                         <?php } else { ?>
                           <input type="hidden" name="id" value="<?php echo $res['invoice']; ?>">
                           <input type="hidden" name="id" value="<?php echo $res['invoice']; ?>">
-                          <button type="submit" class="btn btn-sm btn-secondary" name="paid" <?= ($res['paid_status_id'] != 1 || $res['status'] != 'APPROVED')  ? 'disabled' : '' ?>> Paid </button>
+                          <button type="submit" class="btn btn-sm btn-<?= get_color($res['status_id']) ?>" name=" paid" <?= ($res['paid_status_id'] != 1 || $res['status'] != 'APPROVED')  ? 'disabled' : '' ?>> Paid </button>
                           <!-- <button type="button" class="btn btn-sm btn-secondary" disabled> Approve </button>
                           <button type="submit" class="btn btn-sm btn-secondary" disabled> Reject </button> -->
                           <!-- <button type="button" class="btn btn-sm btn-secondary"> View </button> -->
