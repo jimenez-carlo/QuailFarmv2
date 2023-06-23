@@ -28,7 +28,7 @@
 function pay($id, $amount, $change, $total)
 {
   if ($total > $amount) {
-    return alert($amount . "Paid Amount Not Enough!" . $total);
+    return alert("Paid Amount Not Enough!" . $total);
   }
   query("update tbl_invoice set paid_status_id = 2,amount= '$amount',`change`='$change'  where invoice = '$id'");
   return alert("Order Updated!");
@@ -225,7 +225,7 @@ $actual_invoice = get_one("SELECT * FROM tbl_invoice where invoice = '$id' limit
                       </td>
                     </tr>
                     <?php $price += $res['price']; ?>
-                    <?php $total_price += $res['total_price']; ?>
+                    <?php $total_price += ($res['status'] == 'order placed' || $res['status'] == 'approved') ? $res['total_price'] : 0; ?>
                     <?php $qty += $res['qty']; ?>
                   <?php } ?>
                   <tr class="fw-bold">
@@ -241,7 +241,7 @@ $actual_invoice = get_one("SELECT * FROM tbl_invoice where invoice = '$id' limit
                 </tbody>
               </table>
             </div>
-            <!-- 
+
             <div class="row">
               <div class="col-md-4">
                 <label for="" class="form-label">Total</label>
@@ -255,7 +255,11 @@ $actual_invoice = get_one("SELECT * FROM tbl_invoice where invoice = '$id' limit
 
                   <form method="post" onsubmit="return confirm('Are You Sure?')">
                     <?php if ($actual_invoice->paid_status_id == 1) { ?>
-                      <input type="hidden" name="total" value="value=" <?= $total_price ?>"">
+                      <?php
+
+                      // print_r($_POST);
+                      ?>
+                      <input type="hidden" name="total" value="<?= $total_price ?>">
                       <input type="hidden" name="amount_post" id="amount_post">
                       <input type="hidden" name="change_post" id="change_post">
                       <button type="submit" class="btn btn-sm btn-secondary" name="pay" value="<?php echo reset($transactions)['invoice']; ?>"> PAY </button>
@@ -264,7 +268,6 @@ $actual_invoice = get_one("SELECT * FROM tbl_invoice where invoice = '$id' limit
                     <?php } ?>
                   </form>
                 </div>
-
               </div>
 
               <div class="col-md-4">
@@ -272,7 +275,7 @@ $actual_invoice = get_one("SELECT * FROM tbl_invoice where invoice = '$id' limit
                 <input type="text" class="form-control form-control-sm" disabled id="change" value="<?= ($actual_invoice->paid_status_id == 2) ? $actual_invoice->change : 0 ?>">
               </div>
 
-            </div> -->
+            </div>
 
             <div class="col-md-12 mt-3">
               <div class="pull-right">
